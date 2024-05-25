@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smartbet/socket/provider.dart';
+import 'package:smartbet/socket/socket_client.dart';
+
+class SocketMethods {
+  final _socket = SocketClient.instance.socket!;
+
+  Map eventListeners = {
+    "count_down": "counter",
+    "output": "result",
+    "history": "latesthistory"
+  };
+
+  void counterEvent(BuildContext context) {
+    _socket.on(eventListeners["count_down"], (data) {
+      print(data["value"]);
+      final socketInstance =
+          Provider.of<SocketProvider>(context, listen: false);
+      socketInstance.setCounter(data["value"]);
+    });
+  }
+
+  void resultEvent(BuildContext context) {
+    _socket.on(eventListeners["output"], (data) {
+      print(data["data"]);
+      final socketInstance =
+          Provider.of<SocketProvider>(context, listen: false);
+      socketInstance.setGameOutput(data["data"]);
+    });
+  }
+
+  void resultHistory(BuildContext context) {
+    _socket.on(eventListeners["history"], (data) {
+      print(data["data"]);
+      final socketInstance =
+          Provider.of<SocketProvider>(context, listen: false);
+      socketInstance.setGameHistory(data["data"]);
+    });
+  }
+}
