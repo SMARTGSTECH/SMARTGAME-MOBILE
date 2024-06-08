@@ -74,7 +74,7 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
             ),
             backgroundColor: ColorConfig.appBar,
           ),
-          body: true
+          body: !true
               ? Center(
                   child: Text(
                     "On Maintenance",

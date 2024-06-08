@@ -26,8 +26,8 @@ class ThemeClass {
     ),
     brightness: Brightness.dark,
     textTheme: TextTheme(
-      bodyText1: TextStyle(color: Colors.black.withOpacity(0.5)),
-      headline6: const TextStyle(
+      bodyLarge: TextStyle(color: Colors.black.withOpacity(0.5)),
+      titleLarge: const TextStyle(
           color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
     ),
   );

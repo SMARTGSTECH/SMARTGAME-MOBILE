@@ -42,7 +42,8 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 160.h,
+                  //     color: Colors.amber,
+                  height: 190.h,
                   width: 347.w,
                   // decoration: BoxDecoration(
                   //   border: Border.all(color: ColorConfig.lightBoarder),
@@ -53,18 +54,7 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
                 ).paddingTop(11.h),
               ],
             ),
-            8.h.toInt().height,
-            AnimatedSmoothIndicator(
-              activeIndex: 0,
-              count: 2,
-              effect: WormEffect(
-                activeDotColor: Colors.yellow,
-                dotColor: Colors.grey,
-                dotHeight: 8.h,
-                dotWidth: 8.h,
-              ),
-            ),
-            8.h.toInt().height,
+            //4.h.toInt().height,
             Consumer<CoinCapProvider>(
               builder: (BuildContext context, provider, _) {
                 return provider.coinArray.isEmpty
@@ -111,7 +101,7 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
                           ],
                           options: CarouselOptions(
                             autoPlay: true,
-                            height: 200,
+                            // height: 150,
                             autoPlayInterval: const Duration(seconds: 4),
                             enableInfiniteScroll: true,
                           ),

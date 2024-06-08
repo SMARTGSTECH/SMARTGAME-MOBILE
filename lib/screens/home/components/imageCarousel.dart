@@ -64,40 +64,40 @@ class _HomeImageCarouselState extends State<HomeImageCarousel> {
         : Column(
             children: [
               Container(
-                  height: 320,
-                  margin: EdgeInsets.only(bottom: 10.0),
+                  //height: 320,
+                  //  margin: EdgeInsets.only(bottom: 10.0),
                   child: CarouselSlider(
-                    items: dataList.expand<Widget>((item) {
-                      return (item["response"]["data"] as List<dynamic>)
-                          .map<Widget>((innerItem) {
-                        String imageUrl = innerItem['image'] ?? 'N/A';
+                items: dataList.expand<Widget>((item) {
+                  return (item["response"]["data"] as List<dynamic>)
+                      .map<Widget>((innerItem) {
+                    String imageUrl = innerItem['image'] ?? 'N/A';
 
-                        return Container(
-                          //  height: 320,
-                          width: double.infinity,
-                          margin: EdgeInsets.all(8.0),
-                          child: Image.network(
-                            'https://webadmin.smartcryptobet.co/images/ads/$imageUrl',
-                            fit: BoxFit.cover,
-                          ).cornerRadiusWithClipRRect(10),
-                        ).onTap(() {
-                          // html.window.open(innerItem['url'], '_blank');
-                          print(innerItem['url']);
-                        });
-                      }).toList();
-                    }).toList(),
-                    options: CarouselOptions(
-                      aspectRatio: 16 / 9,
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
-                      viewportFraction: 1,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          currentIndex = index;
-                        });
-                      },
-                    ),
-                  )),
+                    return Container(
+                      //  height: 320,
+                      width: double.infinity,
+                      margin: EdgeInsets.all(8.0),
+                      child: Image.network(
+                        'https://webadmin.smartcryptobet.co/images/ads/$imageUrl',
+                        fit: BoxFit.cover,
+                      ).cornerRadiusWithClipRRect(10),
+                    ).onTap(() {
+                      // html.window.open(innerItem['url'], '_blank');
+                      print(innerItem['url']);
+                    });
+                  }).toList();
+                }).toList(),
+                options: CarouselOptions(
+                  // aspectRatio: 18 / 9,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  viewportFraction: 1,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                ),
+              )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
@@ -107,7 +107,7 @@ class _HomeImageCarouselState extends State<HomeImageCarousel> {
                     return buildIndicator(index);
                   },
                 ),
-              ),
+              ).paddingTop(2),
             ],
           );
   }
@@ -119,7 +119,7 @@ class _HomeImageCarouselState extends State<HomeImageCarousel> {
       },
       child: Container(
         width: 10.0,
-        height: 10.0,
+        height: 13.0,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
