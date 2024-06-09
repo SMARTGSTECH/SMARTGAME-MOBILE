@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/comingSoon.dart';
@@ -64,8 +65,14 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
                         itemBuilder: (context, index) {
+                          final coinP = Provider.of<CoinCapProvider>(context,
+                              listen: false);
+                          print(coinP.coinArray
+                              .where((element) => element.name == "bnb")
+                              .first
+                              .imageUrl);
                           return ExpandedWidget(
-                            img: ,
+                            img: '',
                             text: "\$106.85 Available",
                             onTapFuntion: () {
                               // text2.toLowerCase() == "Dice".toLowerCase()
