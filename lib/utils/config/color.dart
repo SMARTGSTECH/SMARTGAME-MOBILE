@@ -64,8 +64,12 @@ class AppImageDetails {
   static const String coin = 'assets/images/coin.png';
   static const String fruit = 'assets/images/fruits.png';
   static const String car = 'assets/images/car.png';
+  static const String padLottie = 'assets/images/newpad.json';
+  static const String eventLottie = 'assets/images/chart.json';
 
   static const String footballname = "FOOTBALL MATCH";
+  static const String liveEvents = "LIVE EVENT";
+  static const String snartTrades = "VIRTUAL GAME";
   static const String dicename = "THROW DICE";
   static const String coinname = "TOSS COIN";
   static const String carname = "CAR RACING";

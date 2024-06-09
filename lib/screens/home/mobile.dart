@@ -112,8 +112,8 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
             8.h.toInt().height,
             HomeContainerBox(
               // isFitted: true,
-              name: AppImageDetails.footballname,
-              img: AppImageDetails.pitch2,
+              name: AppImageDetails.liveEvents,
+              img: AppImageDetails.eventLottie,
               onTap: () {
                 CustomSnackBar(
                     leftColor: ColorConfig.yellow,
@@ -124,40 +124,69 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
                 print("m");
               },
             ),
+
             HomeContainerBox(
-              isFitted: true,
-              name: AppImageDetails.coinname,
-              img: AppImageDetails.coin,
+              //\\ isFitted: true,
+              name: AppImageDetails.snartTrades,
+              img: AppImageDetails.padLottie,
               onTap: () {
-                CoinMobileScreen().launch(context);
-              },
-            ),
-            HomeContainerBox(
-              name: AppImageDetails.carname,
-              img: AppImageDetails.car,
-              onTap: () {
-                print("m");
-                CarMobileScreen().launch(context);
-              },
-            ),
-            HomeContainerBox(
-              isFitted: true,
-              name: AppImageDetails.dicename,
-              img: AppImageDetails.dice,
-              onTap: () {
-                DiceMobileScreen().launch(context);
+                CustomSnackBar(
+                    leftColor: ColorConfig.yellow,
+                    //  icon: Icon(),
+                    context: context,
+                    message: "Coming Soon",
+                    width: SizeConfigs.getPercentageWidth(38));
                 print("m");
               },
             ),
-            HomeContainerBox(
-              // isFitted: true,
-              name: AppImageDetails.fruitname,
-              img: AppImageDetails.fruit,
-              onTap: () {
-                FruitMobileScreen().launch(context);
-                print("m");
-              },
-            ),
+            // HomeContainerBox(
+            //   // isFitted: true,
+            //   name: AppImageDetails.footballname,
+            //   img: AppImageDetails.pitch2,
+            //   onTap: () {
+            //     CustomSnackBar(
+            //         leftColor: ColorConfig.yellow,
+            //         //  icon: Icon(),
+            //         context: context,
+            //         message: "Coming Soon",
+            //         width: SizeConfigs.getPercentageWidth(38));
+            //     print("m");
+            //   },
+            // ),
+            // HomeContainerBox(
+            //   isFitted: true,
+            //   name: AppImageDetails.coinname,
+            //   img: AppImageDetails.coin,
+            //   onTap: () {
+            //     CoinMobileScreen().launch(context);
+            //   },
+            // ),
+            // HomeContainerBox(
+            //   name: AppImageDetails.carname,
+            //   img: AppImageDetails.car,
+            //   onTap: () {
+            //     print("m");
+            //     CarMobileScreen().launch(context);
+            //   },
+            // ),
+            // HomeContainerBox(
+            //   isFitted: true,
+            //   name: AppImageDetails.dicename,
+            //   img: AppImageDetails.dice,
+            //   onTap: () {
+            //     DiceMobileScreen().launch(context);
+            //     print("m");
+            //   },
+            // ),
+            // HomeContainerBox(
+            //   // isFitted: true,
+            //   name: AppImageDetails.fruitname,
+            //   img: AppImageDetails.fruit,
+            //   onTap: () {
+            //     FruitMobileScreen().launch(context);
+            //     print("m");
+            //   },
+            // ),
             90.h.toInt().height,
           ],
         ),
