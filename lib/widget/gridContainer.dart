@@ -22,6 +22,7 @@ class ExpandedWidget extends StatelessWidget {
       children: [
         img.contains("http")
             ? Container(
+                height: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
                   border: Border.all(
@@ -29,7 +30,12 @@ class ExpandedWidget extends StatelessWidget {
                     width: 2,
                   ),
                 ),
-                child: Image.network(img),
+                child: Padding(
+                  padding: const EdgeInsets.all(35.0),
+                  child: Image.network(
+                    img,
+                  ),
+                ),
               )
             : Container(
                 decoration: BoxDecoration(
