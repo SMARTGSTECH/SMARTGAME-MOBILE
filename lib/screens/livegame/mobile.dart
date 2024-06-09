@@ -64,10 +64,16 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
                         itemBuilder: (context, index) {
-                          return Container(
-                            alignment: Alignment.center,
-                            color: Colors.blue,
-                            child: Text('Item $index'),
+                          return ExpandedWidget(
+                            img: ,
+                            text: "\$106.85 Available",
+                            onTapFuntion: () {
+                              // text2.toLowerCase() == "Dice".toLowerCase()
+                              //     ? DiceMobileScreen().launch(context,
+                              //         pageRouteAnimation: PageRouteAnimation.Fade)
+                              //     : FruitMobileScreen().launch(context,
+                              //         pageRouteAnimation: PageRouteAnimation.Fade);
+                            },
                           );
                         },
                       ),
