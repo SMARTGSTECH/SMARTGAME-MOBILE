@@ -20,56 +20,64 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
   Widget build(BuildContext context) {
     return Consumer<LiveEventProvider>(
       builder: (BuildContext context, model, _) {
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(11.0),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsetsDirectional.all(4),
-                    height: 40.h,
-                    width: 340.w,
-                    decoration: BoxDecoration(
-                        color: ColorConfig.appBar,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ...List.generate(
-                            model.tabItemHeader.length,
-                            (index) => TabCard(
-                                  isActive:
-                                      model.selectedTab == index ? true : false,
-                                  title: model.tabItemHeader[index],
-                                  action: () {
-                                    index == 2
-                                        ? toast("COMING SOON",
-                                            bgColor: ColorConfig.yellow)
-                                        : model.toggleTab(index);
-                                  },
-                                )),
-                      ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(11.0),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsetsDirectional.all(4),
+                      height: 40.h,
+                      width: 340.w,
+                      decoration: BoxDecoration(
+                          color: ColorConfig.appBar,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ...List.generate(
+                              model.tabItemHeader.length,
+                              (index) => TabCard(
+                                    isActive: model.selectedTab == index
+                                        ? true
+                                        : false,
+                                    title: model.tabItemHeader[index],
+                                    action: () {
+                                      index == 2
+                                          ? toast("COMING SOON",
+                                              bgColor: ColorConfig.yellow)
+                                          : model.toggleTab(index);
+                                    },
+                                  )),
+                        ],
+                      ),
                     ),
-                  ),
-                  QuadrantBox(),
-                  CustomGridView(
-                    itemCount: 20,
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 10.0,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        alignment: Alignment.center,
-                        color: Colors.blue[100 * ((index % 8) + 1)],
-                        child: Text('Item $index'),
-                      );
-                    },
-                  ),
-                ],
+                    // QuadrantBox(),
+                    SizedBox(
+                      height: SizeConfig.screenHeight! * 0.75,
+                      width: double.infinity,
+                      child: CustomGridView(
+                        itemCount: 30,
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            alignment: Alignment.center,
+                            color: Colors.blue,
+                            child: Text('Item $index'),
+                          );
+                        },
+                      ),
+                    ),
+                    // 100.height
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

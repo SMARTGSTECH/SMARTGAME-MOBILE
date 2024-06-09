@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class CustomGridView extends StatelessWidget {
   final int itemCount;
@@ -18,7 +20,7 @@ class CustomGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(1.0),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
@@ -28,6 +30,6 @@ class CustomGridView extends StatelessWidget {
         itemCount: itemCount,
         itemBuilder: itemBuilder,
       ),
-    );
+    ).paddingTop(10.h);
   }
 }
