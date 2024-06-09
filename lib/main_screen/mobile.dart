@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:smartbet/main_screen/provider.dart';
 import 'package:smartbet/screens/car/mobile.dart';
 import 'package:smartbet/screens/coin/mobile.dart';
-import 'package:smartbet/screens/football/mobile.dart';
+import 'package:smartbet/screens/livegame/mobile.dart';
 import 'package:smartbet/screens/home/mobile.dart';
 import 'package:smartbet/socket/socket_method.dart';
 import 'package:smartbet/utils/config/color.dart';

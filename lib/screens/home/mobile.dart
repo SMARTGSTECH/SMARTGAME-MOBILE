@@ -123,6 +123,7 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
                     width: SizeConfigs.getPercentageWidth(38));
                 print("m");
               },
+              index: 0,
             ),
 
             HomeContainerBox(
@@ -138,6 +139,7 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
                     width: SizeConfigs.getPercentageWidth(38));
                 print("m");
               },
+              index: 2,
             ),
             // HomeContainerBox(
             //   // isFitted: true,

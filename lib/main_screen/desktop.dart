@@ -10,7 +10,7 @@ import 'package:provider/provider.dart' as provider;
 import 'package:smartbet/screens/car/desktop.dart';
 import 'package:smartbet/screens/coin/desktop.dart';
 import 'package:smartbet/screens/dice/desktop.dart';
-import 'package:smartbet/screens/football/desktop.dart';
+import 'package:smartbet/screens/livegame/desktop.dart';
 import 'package:smartbet/screens/fruit/desktop.dart';
 import 'package:smartbet/screens/history/desktop.dart';
 import 'package:smartbet/screens/home/desktop.dart';
