@@ -65,21 +65,20 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
                         itemBuilder: (context, index) {
-                          // final coinP = Provider.of<CoinCapProvider>(context,
-                          //     listen: false);
-                          // print(coinP.coinArray
-                          //     .where((element) =>
-                          //         element.name.toLowerCase() == "bnb")
-                          //     .first
-                          //     .imageUrl);
-                          // String dataImg = coinP.coinArray
-                          //     .where((element) =>
-                          //         element.name.toLowerCase() == "bnb")
-                          //     .first
-                          //     .imageUrl;
+                          final coinP = Provider.of<CoinCapProvider>(context,
+                              listen: false);
+                          print(coinP.coinArray
+                              .where((element) =>
+                                  element.symbol.toLowerCase() == "ton")
+                              .first
+                              .imageUrl);
+                          String dataImg = coinP.coinArray
+                              .where((element) =>
+                                  element.symbol.toLowerCase() == "sol")
+                              .first
+                              .imageUrl;
                           return ExpandedWidget(
-                            img:
-                                "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
+                            img: dataImg,
                             text: "\$106.85 Available",
                             onTapFuntion: () {
                               // text2.toLowerCase() == "Dice".toLowerCase()
