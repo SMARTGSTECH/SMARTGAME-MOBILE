@@ -7,7 +7,7 @@ import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/comingSoon.dart';
 import 'package:smartbet/widget/customGridview.dart';
-import 'package:smartbet/widget/quadContainer.dart';
+import 'package:smartbet/widget/gridContainer.dart';
 
 class LiveGameMobileScreen extends StatefulWidget {
   const LiveGameMobileScreen({super.key});
@@ -65,14 +65,21 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
                         itemBuilder: (context, index) {
-                          final coinP = Provider.of<CoinCapProvider>(context,
-                              listen: false);
-                          print(coinP.coinArray
-                              .where((element) => element.name == "bnb")
-                              .first
-                              .imageUrl);
+                          // final coinP = Provider.of<CoinCapProvider>(context,
+                          //     listen: false);
+                          // print(coinP.coinArray
+                          //     .where((element) =>
+                          //         element.name.toLowerCase() == "bnb")
+                          //     .first
+                          //     .imageUrl);
+                          // String dataImg = coinP.coinArray
+                          //     .where((element) =>
+                          //         element.name.toLowerCase() == "bnb")
+                          //     .first
+                          //     .imageUrl;
                           return ExpandedWidget(
-                            img: '',
+                            img:
+                                "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
                             text: "\$106.85 Available",
                             onTapFuntion: () {
                               // text2.toLowerCase() == "Dice".toLowerCase()
