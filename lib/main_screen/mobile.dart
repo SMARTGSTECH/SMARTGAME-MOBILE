@@ -84,7 +84,7 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
               : IndexedStack(
                   index: provider.currentIndex,
                   children: [
-                    FootBallMobileScreen(),
+                    LiveGameMobileScreen(),
                     HomeMobileScreen(),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,

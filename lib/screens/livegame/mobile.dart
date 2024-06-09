@@ -2,68 +2,95 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/comingSoon.dart';
 
-class FootBallMobileScreen extends StatefulWidget {
-  const FootBallMobileScreen({super.key});
+class LiveGameMobileScreen extends StatefulWidget {
+  const LiveGameMobileScreen({super.key});
 
   @override
-  State<FootBallMobileScreen> createState() => _FootBallMobileScreenState();
+  State<LiveGameMobileScreen> createState() => _LiveGameMobileScreenState();
 }
 
-class _FootBallMobileScreenState extends State<FootBallMobileScreen> {
+class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
   @override
   Widget build(BuildContext context) {
-
-    return Consumer(
-      builder: (BuildContext context, model, _) { 
-        return 
-       Column(
-        children: [
-          Container(
-            padding: EdgeInsetsDirectional.all(3),
-            height: 32.h,
-            //width: 340.w,
-            decoration: BoxDecoration(
-                // color: ColorConfig.scaffold,
-                borderRadius: BorderRadius.circular(10)),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+    return Consumer<LiveEventProvider>(
+      builder: (BuildContext context, model, _) {
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(11.0),
+              child: Column(
                 children: [
-                  ...List.generate(
-                      model.tabItemHeader.length,
-                      (index) => Container(
-                            decoration: BoxDecoration(
-                                color: model.tabItemHeader[index] == '1D'
-                                    ? ColorConfig.primary
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(20)),
-                            width: 45.w,
-                            //height: 55.h,
-                            child: Text(
-                              model.tabItemHeader[index],
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  color:true
-                                      ? Colors.white
-                                      : ColorConfig.red,
-                                  fontWeight: FontWeight.w600),
-                            ).center(),
-                          )),
+                  Container(
+                    padding: EdgeInsetsDirectional.all(4),
+                    height: 40.h,
+                    width: 340.w,
+                    decoration: BoxDecoration(
+                        color: ColorConfig.appBar,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ...List.generate(
+                            model.tabItemHeader.length,
+                            (index) => TabCard(
+                                  isActive:
+                                      model.selectedTab == index ? true : false,
+                                  title: model.tabItemHeader[index],
+                                  action: () {
+                                    index == 2
+                                        ? toast("COMING SOON",
+                                            bgColor: ColorConfig.yellow)
+                                        : model.toggleTab(index);
+                                  },
+                                )),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    
+          ],
+        );
       },
-      child:
-      
     );
- 
+  }
+}
+
+class TabCard extends StatelessWidget {
+  final Function()? action;
+  final bool isActive;
+  final String title;
+  const TabCard(
+      {super.key, this.action, required this.isActive, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: action,
+        child: Container(
+          height: 35.h,
+          decoration: BoxDecoration(
+              color: isActive ? ColorConfig.yellow : Colors.transparent,
+              borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                textAlign: TextAlign.center,
+                title,
+                style: TextStyle(
+                    color: isActive ? Colors.black : Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
