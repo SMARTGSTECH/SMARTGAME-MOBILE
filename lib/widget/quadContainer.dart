@@ -12,37 +12,69 @@ import 'package:smartbet/utils/config/color.dart';
 class QuadrantBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: Container(
-            decoration: boxDecorationWithRoundedCorners(
-                //             border: Border.all(color: ColorConfig.lightBoarder),
-                backgroundColor: Colors.transparent,
-                borderRadius: BorderRadius.circular(4.r)),
-            width: 260.h,
-            height: 260.h,
-            child: Row(
-              children: [
-                ExpandedBotton(
-                  img1: AppImageDetails.car,
-                  text1: "CAR RACING",
-                  img2: AppImageDetails.dice,
-                  text2: "DICE",
-                ),
-                ExpandedBotton(
-                  img1: AppImageDetails.coin,
-                  img2: AppImageDetails.fruit,
-                  text1: 'COIN',
-                  text2: 'FRUITS',
-                ),
-              ],
-            ),
-          ).cornerRadiusWithClipRRect(10.r),
-        ),
-      ],
-    );
+    return true
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Container(
+                  decoration: boxDecorationWithRoundedCorners(
+                      //             border: Border.all(color: ColorConfig.lightBoarder),
+                      backgroundColor: Colors.transparent,
+                      borderRadius: BorderRadius.circular(4.r)),
+                  width: 260.h,
+                  height: 260.h,
+                  child: Row(
+                    children: [
+                      ExpandedBotton(
+                        img1: AppImageDetails.car,
+                        text1: "CAR RACING",
+                        img2: AppImageDetails.dice,
+                        text2: "DICE",
+                      ),
+                      ExpandedBotton(
+                        img1: AppImageDetails.coin,
+                        img2: AppImageDetails.fruit,
+                        text1: 'COIN',
+                        text2: 'FRUITS',
+                      ),
+                    ],
+                  ),
+                ).cornerRadiusWithClipRRect(10.r),
+              ),
+            ],
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Container(
+                  decoration: boxDecorationWithRoundedCorners(
+                      //             border: Border.all(color: ColorConfig.lightBoarder),
+                      backgroundColor: Colors.transparent,
+                      borderRadius: BorderRadius.circular(4.r)),
+                  width: 260.h,
+                  height: 260.h,
+                  child: Row(
+                    children: [
+                      ExpandedBotton(
+                        img1: AppImageDetails.car,
+                        text1: "CAR RACING",
+                        img2: AppImageDetails.dice,
+                        text2: "DICE",
+                      ),
+                      ExpandedBotton(
+                        img1: AppImageDetails.coin,
+                        img2: AppImageDetails.fruit,
+                        text1: 'COIN',
+                        text2: 'FRUITS',
+                      ),
+                    ],
+                  ),
+                ).cornerRadiusWithClipRRect(10.r),
+              ),
+            ],
+          );
   }
 }
 
@@ -127,11 +159,35 @@ class ExpandedWidget extends StatelessWidget {
             ),
           ),
           Container(
-            height: 25.h,
-            color: Colors.black.withOpacity(0.4),
+            height: 65.h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              border: const Border(
+                left: BorderSide(
+                  color: Colors
+                      .white, // Assuming ColorConfig.white is Colors.white
+                  //  width: 1,
+                ),
+                bottom: BorderSide(
+                  color: Colors
+                      .white, // Assuming ColorConfig.white is Colors.white
+                  // width: 1,
+                ),
+              ),
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(0, 110, 109, 109),
+                  Colors.black, // Transparent color at the top
+                  // Solid color at the bottom
+                ],
+              ),
+            ),
+            //  color: Colors.black.withOpacity(0.4),
           ),
           Shimmer.fromColors(
-            baseColor: Colors.white70,
+            baseColor: Colors.grey,
             highlightColor: Colors.white,
             period: Duration(milliseconds: 1500),
             child: Text(

@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/comingSoon.dart';
+import 'package:smartbet/widget/customGridview.dart';
+import 'package:smartbet/widget/quadContainer.dart';
 
 class LiveGameMobileScreen extends StatefulWidget {
   const LiveGameMobileScreen({super.key});
@@ -49,7 +51,21 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                 )),
                       ],
                     ),
-                  )
+                  ),
+                  QuadrantBox(),
+                  CustomGridView(
+                    itemCount: 20,
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        alignment: Alignment.center,
+                        color: Colors.blue[100 * ((index % 8) + 1)],
+                        child: Text('Item $index'),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
