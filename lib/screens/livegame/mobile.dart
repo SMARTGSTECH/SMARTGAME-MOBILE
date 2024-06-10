@@ -81,8 +81,13 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                     .first
                                     .imageUrl;
                                 return ExpandedWidget(
-                                  symbol: "",
-                                  img: dataImg,
+                                  symbol: dataImg[0],
+                                  img: coinP.coinArray
+                                      .where((element) =>
+                                          element.symbol.toLowerCase() ==
+                                          model.stGrid[index])
+                                      .first
+                                      .imageUrl,
                                   text: "\$106.85 Available",
                                   onTapFuntion: () {
                                     // text2.toLowerCase() == "Dice".toLowerCase()
