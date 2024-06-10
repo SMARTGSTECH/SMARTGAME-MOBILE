@@ -49,26 +49,40 @@ class ExpandedWidget extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          color: ColorConfig.red,
-                          height: 30.h,
+                          color: Colors.transparent,
+                          height: 25.h,
                           width: 164.w,
                           child: Row(
                             children: [
                               Container(
+                                child: Text(
+                                  "BNB",
+                                  style: TextStyle(
+                                      fontSize: 15.sp,
+                                      // color: ColorConfig.iconColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
                                 decoration: BoxDecoration(
-                                  color: ColorConfig.black,
+                                  color: ColorConfig.appBar,
                                   borderRadius: BorderRadius.only(
                                       topLeft: radiusCircular(10.r),
-                                      topRight: radiusCircular(10.r)),
+                                      topRight: radiusCircular(10.r),
+                                      bottomRight: radiusCircular(10.r)),
                                 ),
                                 height: 30.h,
-                                width: 60.w,
+                                width: 50.w,
                               ),
                               Container().expand(),
                               Container(
-                                color: ColorConfig.black,
+                                decoration: BoxDecoration(
+                                  color: ColorConfig.appBar,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: radiusCircular(10.r),
+                                      topRight: radiusCircular(10.r),
+                                      bottomLeft: radiusCircular(10.r)),
+                                ),
                                 height: 30.h,
-                                width: 60.w,
+                                width: 50.w,
                               )
                             ],
                           ),
