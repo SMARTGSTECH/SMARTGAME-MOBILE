@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/screens/coin/mobile.dart';
 import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/screens/livegame/provider.dart';
+import 'package:smartbet/screens/smartTrade/index.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/comingSoon.dart';
 import 'package:smartbet/widget/customGridview.dart';
@@ -96,6 +98,9 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                       .imageUrl,
                                   text: "\$106.85 Available",
                                   onTapFuntion: () {
+                                    SmartTradeMobileScreen().launch(context,
+                                        pageRouteAnimation:
+                                            PageRouteAnimation.Fade);
                                     // text2.toLowerCase() == "Dice".toLowerCase()
                                     //     ? DiceMobileScreen().launch(context,
                                     //         pageRouteAnimation: PageRouteAnimation.Fade)
@@ -129,6 +134,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                   img: dataImg,
                                   text: "\$106.85 Available",
                                   onTapFuntion: () {
+                                    SmartTradeMobileScreen().launch(context);
                                     // text2.toLowerCase() == "Dice".toLowerCase()
                                     //     ? DiceMobileScreen().launch(context,
                                     //         pageRouteAnimation: PageRouteAnimation.Fade)
