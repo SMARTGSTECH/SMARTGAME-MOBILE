@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smartbet/screens/coin/coinhistory/historyMobile.dart';
 import 'package:smartbet/screens/coin/provider.dart';
 import 'package:smartbet/screens/history/mobile.dart';
@@ -478,79 +479,115 @@ class gameCard extends StatelessWidget {
           width: 1,
         ),
       ),
-      child: Stack(children: [
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: Image.network(
-                img,
-              ).cornerRadiusWithClipRRect(50),
+      child: Column(
+        children: [
+          Stack(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network(
+                  img,
+                  height: 100,
+                ).cornerRadiusWithClipRRect(50),
+              ],
             ),
-          ],
-        ),
-        Row(
-          children: [
-            Container(
-              color: Colors.transparent,
-              height: 25.h,
-              width: 298.w,
-              child: Row(
-                children: [
-                  symbol != ''
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: ColorConfig.appBar,
-                            borderRadius: BorderRadius.only(
-                                topLeft: radiusCircular(10.r),
-                                topRight: radiusCircular(10.r),
-                                bottomRight: radiusCircular(10.r)),
-                          ),
-                          height: 30.h,
-                          width: 50.w,
-                          child: Text(
-                            symbol,
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                              // color: ColorConfig.iconColor,
-                            ),
-                          ).center(),
-                        )
-                      : Container(),
-                  Container().expand(),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.person,
-                          color: ColorConfig.iconColor,
+            Row(
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  height: 25.h,
+                  width: 298.w,
+                  child: Row(
+                    children: [
+                      symbol != ''
+                          ? Container(
+                              decoration: BoxDecoration(
+                                color: ColorConfig.appBar,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: radiusCircular(10.r),
+                                    topRight: radiusCircular(10.r),
+                                    bottomRight: radiusCircular(10.r)),
+                              ),
+                              height: 30.h,
+                              width: 50.w,
+                              child: Text(
+                                symbol,
+                                style: TextStyle(
+                                  fontSize: 15.sp,
+                                  // color: ColorConfig.iconColor,
+                                ),
+                              ).center(),
+                            )
+                          : Container(),
+                      Container().expand(),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: ColorConfig.appBar,
+                          borderRadius: BorderRadius.only(
+                              topLeft: radiusCircular(10.r),
+                              topRight: radiusCircular(10.r),
+                              bottomLeft: radiusCircular(10.r)),
                         ),
-                        Text(
-                          count,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            // color: ColorConfig.iconColor,
-                          ),
-                        ).center(),
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                      color: ColorConfig.appBar,
-                      borderRadius: BorderRadius.only(
-                          topLeft: radiusCircular(10.r),
-                          topRight: radiusCircular(10.r),
-                          bottomLeft: radiusCircular(10.r)),
-                    ),
-                    height: 30.h,
-                    width: 50.w,
-                  )
-                ],
-              ),
+                        height: 30.h,
+                        width: 50.w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.person,
+                              color: ColorConfig.iconColor,
+                            ),
+                            Text(
+                              count,
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                // color: ColorConfig.iconColor,
+                              ),
+                            ).center(),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ]),
+          ]),
+          Container().expand(),
+          Padding(
+            padding: const EdgeInsets.all(7.0),
+            child: Row(
+              children: [
+                Shimmer.fromColors(
+                  baseColor: Colors.grey,
+                  highlightColor: Colors.white,
+                  period: Duration(milliseconds: 1500),
+                  child: Text(
+                    "Total Pool: ",
+                    style: TextStyle(
+                        fontSize: 15.sp,
+                        // color: ColorConfig.iconColor,
+                        fontWeight: FontWeight.bold),
+                  ).paddingBottom(6.h).paddingLeft(1.w),
+                ),
+                Container().expand(),
+                Shimmer.fromColors(
+                  baseColor: Colors.grey,
+                  highlightColor: Colors.white,
+                  period: Duration(milliseconds: 1500),
+                  child: Text(
+                    "\$40",
+                    style: TextStyle(
+                        fontSize: 15.sp,
+                        // color: ColorConfig.iconColor,
+                        fontWeight: FontWeight.bold),
+                  ).paddingBottom(6.h).paddingLeft(1.w),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
