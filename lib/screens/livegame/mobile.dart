@@ -56,40 +56,78 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                       ),
                     ),
                     // QuadrantBox(),
+                    model.selectedTab == 0 ? 70.h.toInt().height : Container(),
                     SizedBox(
                       height: SizeConfig.screenHeight! * 0.75,
                       width: double.infinity,
-                      child: CustomGridView(
-                        itemCount: 30,
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        itemBuilder: (context, index) {
-                          final coinP = Provider.of<CoinCapProvider>(context,
-                              listen: false);
-                          print(coinP.coinArray
-                              .where((element) =>
-                                  element.symbol.toLowerCase() == "ton")
-                              .first
-                              .imageUrl);
-                          String dataImg = coinP.coinArray
-                              .where((element) =>
-                                  element.symbol.toLowerCase() == "sol")
-                              .first
-                              .imageUrl;
-                          return ExpandedWidget(
-                            img: dataImg,
-                            text: "\$106.85 Available",
-                            onTapFuntion: () {
-                              // text2.toLowerCase() == "Dice".toLowerCase()
-                              //     ? DiceMobileScreen().launch(context,
-                              //         pageRouteAnimation: PageRouteAnimation.Fade)
-                              //     : FruitMobileScreen().launch(context,
-                              //         pageRouteAnimation: PageRouteAnimation.Fade);
-                            },
-                          );
-                        },
-                      ),
+                      child: model.selectedTab == 0
+                          ? CustomGridView(
+                              itemCount: model.selectedTab == 0 ? 4 : 30,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10.0,
+                              mainAxisSpacing: 10.0,
+                              itemBuilder: (context, index) {
+                                final coinP = Provider.of<CoinCapProvider>(
+                                    context,
+                                    listen: false);
+                                print(coinP.coinArray
+                                    .where((element) =>
+                                        element.symbol.toLowerCase() == "ton")
+                                    .first
+                                    .imageUrl);
+                                String dataImg = coinP.coinArray
+                                    .where((element) =>
+                                        element.symbol.toLowerCase() == "sol")
+                                    .first
+                                    .imageUrl;
+                                return ExpandedWidget(
+                                  symbol: "",
+                                  img: dataImg,
+                                  text: "\$106.85 Available",
+                                  onTapFuntion: () {
+                                    // text2.toLowerCase() == "Dice".toLowerCase()
+                                    //     ? DiceMobileScreen().launch(context,
+                                    //         pageRouteAnimation: PageRouteAnimation.Fade)
+                                    //     : FruitMobileScreen().launch(context,
+                                    //         pageRouteAnimation: PageRouteAnimation.Fade);
+                                  },
+                                  count: '08',
+                                );
+                              },
+                            )
+                          : CustomGridView(
+                              itemCount: model.selectedTab == 0 ? 4 : 30,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10.0,
+                              mainAxisSpacing: 10.0,
+                              itemBuilder: (context, index) {
+                                final coinP = Provider.of<CoinCapProvider>(
+                                    context,
+                                    listen: false);
+                                print(coinP.coinArray
+                                    .where((element) =>
+                                        element.symbol.toLowerCase() == "ton")
+                                    .first
+                                    .imageUrl);
+                                String dataImg = coinP.coinArray
+                                    .where((element) =>
+                                        element.symbol.toLowerCase() == "sol")
+                                    .first
+                                    .imageUrl;
+                                return ExpandedWidget(
+                                  img: dataImg,
+                                  text: "\$106.85 Available",
+                                  onTapFuntion: () {
+                                    // text2.toLowerCase() == "Dice".toLowerCase()
+                                    //     ? DiceMobileScreen().launch(context,
+                                    //         pageRouteAnimation: PageRouteAnimation.Fade)
+                                    //     : FruitMobileScreen().launch(context,
+                                    //         pageRouteAnimation: PageRouteAnimation.Fade);
+                                  },
+                                  count: '03',
+                                );
+                              },
+                            ),
                     ),
                     // 100.height
                   ],

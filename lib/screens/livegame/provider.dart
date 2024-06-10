@@ -6,6 +6,8 @@ class LiveEventProvider extends ChangeNotifier {
     "Live Event",
   ];
 
+  List stGrid = ['sol', 'eth', 'bnb', 'ton'];
+
   int selectedTab = 0;
 
   toggleTab(int index) {

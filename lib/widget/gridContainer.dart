@@ -58,7 +58,7 @@ class ExpandedWidget extends StatelessWidget {
                           width: 164.w,
                           child: Row(
                             children: [
-                              symbol == ''
+                              symbol != ''
                                   ? Container(
                                       decoration: BoxDecoration(
                                         color: ColorConfig.appBar,
@@ -70,7 +70,7 @@ class ExpandedWidget extends StatelessWidget {
                                       height: 30.h,
                                       width: 50.w,
                                       child: Text(
-                                        "BNB",
+                                        symbol,
                                         style: TextStyle(
                                           fontSize: 15.sp,
                                           // color: ColorConfig.iconColor,
@@ -88,7 +88,7 @@ class ExpandedWidget extends StatelessWidget {
                                       color: ColorConfig.iconColor,
                                     ),
                                     Text(
-                                      "03",
+                                      count ?? "03",
                                       style: TextStyle(
                                         fontSize: 15.sp,
                                         // color: ColorConfig.iconColor,
