@@ -81,7 +81,13 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                     .first
                                     .imageUrl;
                                 return ExpandedWidget(
-                                  symbol: dataImg[0],
+                                  symbol: coinP.coinArray
+                                      .where((element) =>
+                                          element.symbol.toLowerCase() ==
+                                          model.stGrid[index])
+                                      .first
+                                      .symbol
+                                      .toUpperCase(),
                                   img: coinP.coinArray
                                       .where((element) =>
                                           element.symbol.toLowerCase() ==
@@ -96,7 +102,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                     //     : FruitMobileScreen().launch(context,
                                     //         pageRouteAnimation: PageRouteAnimation.Fade);
                                   },
-                                  count: '08',
+                                  count: index.toString(),
                                 );
                               },
                             )
