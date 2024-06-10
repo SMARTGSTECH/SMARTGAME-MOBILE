@@ -93,7 +93,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                           children: [
                             11.w.toInt().width,
                             Text(
-                              "Correct Side Wins:",
+                              "Correct Prediction Wins:",
                               style: TextStyle(
                                 color: ColorConfig.iconColor,
                                 fontSize: 13.sp,
@@ -102,22 +102,37 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               ),
                             ),
                             Container().expand(),
+                            //   Card(ch)
                             Container(
-                              decoration:
-                                  BoxDecoration(color: ColorConfig.yellow),
-                              height: 19.h,
-                              width: 35.h,
-                              child: Center(
-                                child: Text(
-                                  "$coinOdds" 'x',
-                                  style: TextStyle(
-                                    color: ColorConfig.black,
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.bold,
+                              decoration: BoxDecoration(
+                                color: ColorConfig.yellow,
+                                borderRadius: BorderRadius.circular(5.r),
+                              ),
+                              padding: EdgeInsets.all(
+                                  4.r), // Adding padding if needed
+                              child: IntrinsicWidth(
+                                child: IntrinsicHeight(
+                                  child: Center(
+                                    child: Text(
+                                      "\$$coinOdds / \$30.4",
+                                      style: TextStyle(
+                                        color: ColorConfig.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
+                                  // child: YourChildWidget(), // Replace with your actual child widget
                                 ),
                               ),
-                            ).cornerRadiusWithClipRRect(5.r),
+                            ),
+                            // Container(
+                            //   decoration:
+                            //       BoxDecoration(color: ColorConfig.yellow),
+                            //   height: 19.h,
+                            //   width: 58.h,
+                            //   child:
+                            // ).cornerRadiusWithClipRRect(5.r),
                             11.w.toInt().width,
                           ],
                         ),
