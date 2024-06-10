@@ -72,16 +72,16 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                 final coinP = Provider.of<CoinCapProvider>(
                                     context,
                                     listen: false);
-                                print(coinP.coinArray
-                                    .where((element) =>
-                                        element.symbol.toLowerCase() == "ton")
-                                    .first
-                                    .imageUrl);
-                                String dataImg = coinP.coinArray
-                                    .where((element) =>
-                                        element.symbol.toLowerCase() == "sol")
-                                    .first
-                                    .imageUrl;
+                                // print(coinP.coinArray
+                                //     .where((element) =>
+                                //         element.symbol.toLowerCase() == "ton")
+                                //     .first
+                                //     .imageUrl);
+                                // String dataImg = coinP.coinArray
+                                //     .where((element) =>
+                                //         element.symbol.toLowerCase() == "sol")
+                                //     .first
+                                //     .imageUrl;
                                 return ExpandedWidget(
                                   symbol: coinP.coinArray
                                       .where((element) =>
@@ -98,7 +98,21 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                       .imageUrl,
                                   text: "\$106.85 Available",
                                   onTapFuntion: () {
-                                    SmartTradeMobileScreen().launch(context,
+                                    SmartTradeMobileScreen(
+                                      symbol: coinP.coinArray
+                                          .where((element) =>
+                                              element.symbol.toLowerCase() ==
+                                              model.stGrid[index])
+                                          .first
+                                          .symbol
+                                          .toUpperCase(),
+                                      img: coinP.coinArray
+                                          .where((element) =>
+                                              element.symbol.toLowerCase() ==
+                                              model.stGrid[index])
+                                          .first
+                                          .imageUrl,
+                                    ).launch(context,
                                         pageRouteAnimation:
                                             PageRouteAnimation.Fade);
                                     // text2.toLowerCase() == "Dice".toLowerCase()
@@ -134,7 +148,20 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                   img: dataImg,
                                   text: "\$106.85 Available",
                                   onTapFuntion: () {
-                                    SmartTradeMobileScreen().launch(context);
+                                    SmartTradeMobileScreen(
+                                      symbol: coinP.coinArray
+                                          .where((element) =>
+                                              element.symbol.toLowerCase() ==
+                                              model.stGrid[index])
+                                          .first
+                                          .symbol,
+                                      img: coinP.coinArray
+                                          .where((element) =>
+                                              element.symbol.toLowerCase() ==
+                                              model.stGrid[index])
+                                          .first
+                                          .imageUrl,
+                                    ).launch(context);
                                     // text2.toLowerCase() == "Dice".toLowerCase()
                                     //     ? DiceMobileScreen().launch(context,
                                     //         pageRouteAnimation: PageRouteAnimation.Fade)

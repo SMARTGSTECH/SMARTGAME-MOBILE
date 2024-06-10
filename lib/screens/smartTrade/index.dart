@@ -18,8 +18,11 @@ import 'package:smartbet/widget/resultWidget.dart';
 import 'package:smartbet/widget/stakeContainer.dart';
 
 class SmartTradeMobileScreen extends StatefulWidget {
-  const SmartTradeMobileScreen({super.key});
+  const SmartTradeMobileScreen(
+      {super.key, required this.symbol, required this.img});
 
+  final String symbol;
+  final String img;
   @override
   State<SmartTradeMobileScreen> createState() => _SmartTradeMobileScreenState();
 }
@@ -64,6 +67,11 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                   padding: EdgeInsets.symmetric(vertical: 10.h),
                   child: Column(
                     children: [
+                      gameCard(
+                        count: 3.toString(),
+                        img: widget.img,
+                        symbol: widget.symbol,
+                      ),
                       Row(
                         children: [
                           Icon(
@@ -243,46 +251,46 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                       //10.h.toInt().height,
 
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            //  color: ColorConfig.coindollars,
-                            width: double.infinity,
-                            height: 250.h,
-                          ),
-                          Consumer<SocketProvider>(
-                              builder: (BuildContext context, provider, _) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.h, horizontal: 20.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                // color: Colors.deepOrangeAccent,
-                                border:
-                                    Border.all(color: ColorConfig.lightBoarder),
-                              ),
-                              height: 180.h,
-                              width: 200.w,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      //  opacity: 0.5,
-                                      fit: BoxFit.fill,
-                                      image: provider.counter == 49 ||
-                                              provider.counter == 48 ||
-                                              provider.counter == 47 ||
-                                              provider.counter == 46
-                                          ? AssetImage(
-                                              "assets/images/${provider.result["coin"]}.png")
-                                          : AssetImage(
-                                              "assets/images/coin.gif")),
-                                ),
-                              ),
-                            );
-                          })
-                        ],
-                      ),
+                      // Stack(
+                      //   alignment: Alignment.center,
+                      //   children: [
+                      //     Container(
+                      //       //  color: ColorConfig.coindollars,
+                      //       width: double.infinity,
+                      //       height: 250.h,
+                      //     ),
+                      //     Consumer<SocketProvider>(
+                      //         builder: (BuildContext context, provider, _) {
+                      //       return Container(
+                      //         padding: EdgeInsets.symmetric(
+                      //             vertical: 10.h, horizontal: 20.w),
+                      //         decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(10.r),
+                      //           // color: Colors.deepOrangeAccent,
+                      //           border:
+                      //               Border.all(color: ColorConfig.lightBoarder),
+                      //         ),
+                      //         height: 180.h,
+                      //         width: 200.w,
+                      //         child: Container(
+                      //           decoration: BoxDecoration(
+                      //             image: DecorationImage(
+                      //                 //  opacity: 0.5,
+                      //                 fit: BoxFit.fill,
+                      //                 image: provider.counter == 49 ||
+                      //                         provider.counter == 48 ||
+                      //                         provider.counter == 47 ||
+                      //                         provider.counter == 46
+                      //                     ? AssetImage(
+                      //                         "assets/images/${provider.result["coin"]}.png")
+                      //                     : AssetImage(
+                      //                         "assets/images/coin.gif")),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     })
+                      //   ],
+                      // ),
 
                       Consumer<CoinStateProvider>(
                           builder: (BuildContext context, provider, _) {
@@ -453,7 +461,8 @@ class gameCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: double.infinity,
+      height: 150.h,
+      width: 300.w,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
@@ -470,18 +479,22 @@ class gameCard extends StatelessWidget {
         ),
       ),
       child: Stack(children: [
-        Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Image.network(
-            img,
-          ).cornerRadiusWithClipRRect(50),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: Image.network(
+                img,
+              ).cornerRadiusWithClipRRect(50),
+            ),
+          ],
         ),
         Row(
           children: [
             Container(
               color: Colors.transparent,
               height: 25.h,
-              width: 164.w,
+              width: 298.w,
               child: Row(
                 children: [
                   symbol != ''
@@ -496,7 +509,7 @@ class gameCard extends StatelessWidget {
                           height: 30.h,
                           width: 50.w,
                           child: Text(
-                            "BNB",
+                            symbol,
                             style: TextStyle(
                               fontSize: 15.sp,
                               // color: ColorConfig.iconColor,
@@ -514,7 +527,7 @@ class gameCard extends StatelessWidget {
                           color: ColorConfig.iconColor,
                         ),
                         Text(
-                          count ?? "03",
+                          count,
                           style: TextStyle(
                             fontSize: 15.sp,
                             // color: ColorConfig.iconColor,
@@ -535,188 +548,6 @@ class gameCard extends StatelessWidget {
                 ],
               ),
             ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  //  color: ColorConfig.coindollars,
-                  width: double.infinity,
-                  height: 250.h,
-                ),
-                Consumer<SocketProvider>(
-                    builder: (BuildContext context, provider, _) {
-                  return Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      // color: Colors.deepOrangeAccent,
-                      border: Border.all(color: ColorConfig.lightBoarder),
-                    ),
-                    height: 180.h,
-                    width: 200.w,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            //  opacity: 0.5,
-                            fit: BoxFit.fill,
-                            image: provider.counter == 49 ||
-                                    provider.counter == 48 ||
-                                    provider.counter == 47 ||
-                                    provider.counter == 46
-                                ? AssetImage(
-                                    "assets/images/${provider.result["coin"]}.png")
-                                : AssetImage("assets/images/coin.gif")),
-                      ),
-                    ),
-                  );
-                })
-              ],
-            ),
-
-            Consumer<CoinStateProvider>(
-                builder: (BuildContext context, provider, _) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // MobileGameWidget(
-                  //   dym: 30,
-                  //   wt: 2.h,
-                  //   txtButton: 'Head',
-                  //   colorImg: true,
-                  //   backgroundCar: true,
-                  //   currentTab: provider.head,
-                  //   function: () {
-                  //     provider.setCurrentTab(
-                  //       head: !provider.head,
-                  //       tail: false,
-                  //     );
-                  //   },
-                  // ),
-                  CustomAppButton(
-                    text: 'Head',
-                    isMobileWidget: provider.head,
-
-                    ///  shimmer: true,
-                    onPressed: () {
-                      provider.setCurrentTab(
-                        head: !provider.head,
-                        tail: false,
-                      );
-                      // Add your onPressed logic here
-                    },
-                    color: provider.head
-                        ? ColorConfig.yellow
-                        : ColorConfig.tabincurrentindex,
-                    textColor: Colors.white,
-                    borderRadius: 4.r,
-                    height: 22.h,
-                    width: 60.w,
-                    size: 14,
-                    //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                  ),
-                  CustomAppButton(
-                    text: 'Tail',
-                    isMobileWidget: provider.tail,
-
-                    ///  shimmer: true,
-                    onPressed: () {
-                      provider.setCurrentTab(
-                        tail: !provider.tail,
-                        head: false,
-                      );
-                      // Add your onPressed logic here
-                    },
-                    color: provider.tail
-                        ? ColorConfig.yellow
-                        : ColorConfig.tabincurrentindex,
-                    textColor: Colors.white,
-                    borderRadius: 4.r,
-                    height: 22.h,
-                    width: 60.w,
-                    size: 14,
-                    //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                  ),
-                ],
-              ).paddingSymmetric(horizontal: 50.w);
-            }),
-            15.h.toInt().height,
-
-            // Text(
-            //   "Select Side",
-            //   style: TextStyle(
-            //     fontSize: 13.sp,
-            //     color: ColorConfig.iconColor,
-            //   ),
-            // ),
-            15.h.toInt().height,
-
-            Consumer<SocketProvider>(builder: (BuildContext context, model, _) {
-              if (model.counter <= 10) {
-                return CustomAppButton(
-                  color: Colors.grey,
-                  textColor: Colors.black,
-                  borderRadius: 5,
-                  height: 24,
-                  width: 60,
-                  size: 16,
-
-                  ///    shimmer: true,
-                  onPressed: () {
-                    CustomSnackBar(
-                        context: context,
-                        message: "Game Session Ended!",
-                        width: 195);
-                  },
-
-                  ///  color: Colors.grey,
-                  text: 'Play',
-                );
-              }
-              return CustomAppButton(
-                text: 'Play',
-                color: ColorConfig.yellow,
-                textColor: Colors.white,
-                borderRadius: 4.r,
-                height: 22.h,
-                width: 55.w,
-                size: 14,
-                onPressed: () {
-                  final gameState =
-                      Provider.of<CoinStateProvider>(context, listen: false);
-
-                  if (gameState.head || gameState.tail) {
-                    showDialog(
-                      useRootNavigator: false,
-                      barrierDismissible: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          // shape: CircleBorder(),
-                          backgroundColor: Colors.transparent,
-                          elevation: 10,
-                          child: StakeContainer(
-                            fruit: false,
-                            car: false,
-                            coin: true,
-                            dice: false,
-                            maxAmount: 0.000048,
-                            minAmount: 0.00005,
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    CustomSnackBar(
-                        context: context,
-                        message: "Please Select A Side",
-                        width: 195);
-                  }
-                },
-              );
-            }),
-
-            //10.h.toInt().height,
           ],
         ),
       ]),
