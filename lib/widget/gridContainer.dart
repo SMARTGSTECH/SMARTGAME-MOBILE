@@ -9,10 +9,14 @@ class ExpandedWidget extends StatelessWidget {
       {super.key,
       required this.img,
       required this.text,
-      required this.onTapFuntion});
+      required this.onTapFuntion,
+      this.symbol = '',
+      required this.count});
 
   final String img;
   final String text;
+  final String symbol;
+  final String count;
   final VoidCallback onTapFuntion;
 
   @override
@@ -54,26 +58,44 @@ class ExpandedWidget extends StatelessWidget {
                           width: 164.w,
                           child: Row(
                             children: [
-                              Container(
-                                child: Text(
-                                  "BNB",
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      // color: ColorConfig.iconColor,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: ColorConfig.appBar,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: radiusCircular(10.r),
-                                      topRight: radiusCircular(10.r),
-                                      bottomRight: radiusCircular(10.r)),
-                                ),
-                                height: 30.h,
-                                width: 50.w,
-                              ),
+                              symbol == ''
+                                  ? Container(
+                                      decoration: BoxDecoration(
+                                        color: ColorConfig.appBar,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: radiusCircular(10.r),
+                                            topRight: radiusCircular(10.r),
+                                            bottomRight: radiusCircular(10.r)),
+                                      ),
+                                      height: 30.h,
+                                      width: 50.w,
+                                      child: Text(
+                                        "BNB",
+                                        style: TextStyle(
+                                          fontSize: 15.sp,
+                                          // color: ColorConfig.iconColor,
+                                        ),
+                                      ).center(),
+                                    )
+                                  : Container(),
                               Container().expand(),
                               Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.person,
+                                      color: ColorConfig.iconColor,
+                                    ),
+                                    Text(
+                                      "03",
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        // color: ColorConfig.iconColor,
+                                      ),
+                                    ).center(),
+                                  ],
+                                ),
                                 decoration: BoxDecoration(
                                   color: ColorConfig.appBar,
                                   borderRadius: BorderRadius.only(
