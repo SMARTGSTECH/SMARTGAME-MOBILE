@@ -356,7 +356,7 @@ class _CoinMobileScreenState extends State<CoinMobileScreen> {
                             // ),
                             CustomAppButton(
                               text: 'Head',
-                              isMobileWidget: provider.head,
+                              usePadding: provider.head,
 
                               ///  shimmer: true,
                               onPressed: () {
@@ -378,7 +378,7 @@ class _CoinMobileScreenState extends State<CoinMobileScreen> {
                             ),
                             CustomAppButton(
                               text: 'Tail',
-                              isMobileWidget: provider.tail,
+                              usePadding: provider.tail,
 
                               ///  shimmer: true,
                               onPressed: () {

@@ -315,7 +315,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                               children: [
                                 CustomAppButton(
                                   text: '\$152',
-                                  isMobileWidget: provider.head,
+                                  usePadding: provider.head,
 
                                   ///  shimmer: true,
                                   onPressed: () {
@@ -337,7 +337,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                 ),
                                 CustomAppButton(
                                   text: '\$152 -152',
-                                  isMobileWidget: provider.head,
+                                  usePadding: provider.head,
 
                                   ///  shimmer: true,
                                   onPressed: () {
@@ -363,7 +363,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                               children: [
                                 CustomAppButton(
                                   text: '\$152',
-                                  isMobileWidget: provider.tail,
+                                  usePadding: provider.tail,
 
                                   ///  shimmer: true,
                                   onPressed: () {
@@ -385,7 +385,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                 ),
                                 CustomAppButton(
                                   text: '\$1502 -1000',
-                                  isMobileWidget: provider.tail,
+                                  usePadding: provider.tail,
 
                                   ///  shimmer: true,
                                   onPressed: () {

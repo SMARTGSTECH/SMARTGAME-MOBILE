@@ -86,7 +86,7 @@ class CustomAppButton extends StatelessWidget {
   final double width;
   final int size;
   final bool shimmer;
-  final bool isMobileWidget;
+  final bool usePadding;
 
   const CustomAppButton(
       {required this.text,
@@ -101,7 +101,7 @@ class CustomAppButton extends StatelessWidget {
       this.width = double.infinity,
       this.shimmer = false,
       this.size = 13,
-      this.isMobileWidget = false});
+      this.usePadding = false});
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +146,6 @@ class CustomAppButton extends StatelessWidget {
       ),
     ).onTap(() {
       onPressed();
-    }, borderRadius: BorderRadius.circular(10)).paddingTop(20);
+    }, borderRadius: BorderRadius.circular(10)).paddingTop(usePadding ? 0 : 20);
   }
 }

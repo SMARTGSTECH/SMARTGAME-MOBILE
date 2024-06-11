@@ -401,7 +401,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                           children: [
                             CustomAppButton(
                               text: '1',
-                              isMobileWidget: provider.one,
+                              usePadding: provider.one,
 
                               ///  shimmer: true,
                               onPressed: () {
@@ -426,7 +426,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                             ),
                             CustomAppButton(
                               text: '2',
-                              isMobileWidget: provider.two,
+                              usePadding: provider.two,
 
                               ///  shimmer: true,
                               onPressed: () {
@@ -451,7 +451,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                             ),
                             CustomAppButton(
                               text: '3',
-                              isMobileWidget: provider.three,
+                              usePadding: provider.three,
 
                               ///  shimmer: true,
                               onPressed: () {
@@ -476,7 +476,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                             ),
                             CustomAppButton(
                               text: '4',
-                              isMobileWidget: provider.four,
+                              usePadding: provider.four,
 
                               ///  shimmer: true,
                               onPressed: () {
@@ -501,7 +501,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                             ),
                             CustomAppButton(
                               text: '5',
-                              isMobileWidget: provider.five,
+                              usePadding: provider.five,
 
                               ///  shimmer: true,
                               onPressed: () {
@@ -526,7 +526,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                             ),
                             CustomAppButton(
                               text: '6',
-                              isMobileWidget: provider.six,
+                              usePadding: provider.six,
 
                               ///  shimmer: true,
                               onPressed: () {

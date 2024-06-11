@@ -8,12 +8,14 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smartbet/screens/coin/coinhistory/historyMobile.dart';
 import 'package:smartbet/screens/coin/provider.dart';
 import 'package:smartbet/screens/history/mobile.dart';
+import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/services/oddsClient.dart';
 import 'package:smartbet/socket/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
 import 'package:smartbet/widget/button.dart';
 import 'package:smartbet/widget/customAppBar.dart';
+import 'package:smartbet/widget/customGridview.dart';
 import 'package:smartbet/widget/gameWidget.dart';
 import 'package:smartbet/widget/resultWidget.dart';
 import 'package:smartbet/widget/stakeContainer.dart';
@@ -291,30 +293,88 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       //     })
                       //   ],
                       // ),
-                      20.h.toInt().height,
-                      // Consumer<CoinStateProvider>(
-                      //     builder: (BuildContext context, provider, _) {
-                      //   return Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //     children: [
-                      //       // MobileGameWidget(
-                      //       //   dym: 30,
-                      //       //   wt: 2.h,
-                      //       //   txtButton: 'Head',
-                      //       //   colorImg: true,
-                      //       //   backgroundCar: true,
-                      //       //   currentTab: provider.head,
-                      //       //   function: () {
-                      //       //     provider.setCurrentTab(
-                      //       //       head: !provider.head,
-                      //       //       tail: false,
-                      //       //     );
-                      //       //   },
-                      //       // ),
 
-                      //     ],
-                      //   ).paddingSymmetric(horizontal: 50.w);
-                      // }),
+                      Container(
+                        color: ColorConfig.blue,
+                        width: 300.w,
+                        height: 115.h,
+                        child: Consumer<CoinStateProvider>(
+                            builder: (BuildContext context, provider, _) {
+                          return CustomGridView(
+                            useAspectRatio: true,
+                            itemCount: 4,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 1.0,
+                            itemBuilder: (context, index) {
+                              final coinP = Provider.of<CoinCapProvider>(
+                                  context,
+                                  listen: false);
+                              print(coinP.coinArray
+                                  .where((element) =>
+                                      element.symbol.toLowerCase() == "ton")
+                                  .first
+                                  .imageUrl);
+                              String dataImg = coinP.coinArray
+                                  .where((element) =>
+                                      element.symbol.toLowerCase() == "sol")
+                                  .first
+                                  .imageUrl;
+                              return CustomAppButton(
+                                text: '\$1520 - \$1520',
+                                usePadding: provider.tail,
+
+                                ///  shimmer: true,
+                                onPressed: () {
+                                  provider.setCurrentTab(
+                                    tail: !provider.tail,
+                                    head: false,
+                                  );
+                                  // Add your onPressed logic here
+                                },
+                                color: provider.tail
+                                    ? ColorConfig.yellow
+                                    : ColorConfig.tabincurrentindex,
+                                textColor: Colors.white,
+                                borderRadius: 4.r,
+                                height: 0,
+                                width: 0,
+                                size: 14,
+                                //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                              );
+                            },
+                          );
+                          // return Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //   children: [
+
+                          //     CustomAppButton(
+                          //       text: '\$152',
+                          //       isMobileWidget: provider.tail,
+
+                          //       ///  shimmer: true,
+                          //       onPressed: () {
+                          //         provider.setCurrentTab(
+                          //           tail: !provider.tail,
+                          //           head: false,
+                          //         );
+                          //         // Add your onPressed logic here
+                          //       },
+                          //       color: provider.tail
+                          //           ? ColorConfig.yellow
+                          //           : ColorConfig.tabincurrentindex,
+                          //       textColor: Colors.white,
+                          //       borderRadius: 4.r,
+                          //       height: 22.h,
+                          //       width: 120.w,
+                          //       size: 14,
+                          //       //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                          //     ),
+                          //   ],
+                          // ).paddingSymmetric(horizontal: 50.w);
+                        }),
+                      ),
+
                       15.h.toInt().height,
 
                       // Text(
@@ -332,10 +392,10 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                           return CustomAppButton(
                             color: Colors.grey,
                             textColor: Colors.black,
-                            borderRadius: 5,
-                            height: 24,
-                            width: 60,
-                            size: 16,
+                            borderRadius: 4.r,
+                            height: 22.h,
+                            width: 55.w,
+                            size: 14,
 
                             ///    shimmer: true,
                             onPressed: () {
