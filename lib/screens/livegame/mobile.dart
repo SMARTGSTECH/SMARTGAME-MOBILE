@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:smartbet/screens/coin/mobile.dart';
 import 'package:smartbet/screens/home/provider.dart';
+import 'package:smartbet/screens/liveEvent/index.dart';
 import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/screens/smartTrade/index.dart';
 import 'package:smartbet/utils/config/color.dart';
@@ -148,13 +149,14 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                   img: dataImg,
                                   text: "\$106.85 Available",
                                   onTapFuntion: () {
-                                    SmartTradeMobileScreen(
+                                    LiveEventMobileScreen(
                                       symbol: coinP.coinArray
                                           .where((element) =>
                                               element.symbol.toLowerCase() ==
                                               model.stGrid[index])
                                           .first
-                                          .symbol,
+                                          .symbol
+                                          .toUpperCase(),
                                       img: coinP.coinArray
                                           .where((element) =>
                                               element.symbol.toLowerCase() ==

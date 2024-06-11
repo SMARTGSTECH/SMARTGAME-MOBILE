@@ -68,7 +68,7 @@ class AppImageDetails {
   static const String eventLottie = 'assets/images/chart.json';
 
   static const String footballname = "FOOTBALL MATCH";
-  static const String liveEvents = "LIVE EVENT";
+  static const String liveEvents = "LIVE PREDICTION";
   static const String snartTrades = "VIRTUAL GAME";
   static const String dicename = "THROW DICE";
   static const String coinname = "TOSS COIN";
