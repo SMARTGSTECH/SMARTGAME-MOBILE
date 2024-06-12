@@ -318,6 +318,8 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                   ///  shimmer: true,
                                   onPressed: () {
                                     print(provider.gameOption[index]);
+                                    provider.toggleOption(
+                                        provider.gameOption[index]);
                                     // provider.setCurrentTab(
                                     //   tail: !provider.tail,
                                     //   head: false,
