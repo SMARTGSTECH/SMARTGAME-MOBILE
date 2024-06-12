@@ -6,7 +6,7 @@ import 'package:smartbet/screens/coin/mobile.dart';
 import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/screens/liveEvent/index.dart';
 import 'package:smartbet/screens/livegame/provider.dart';
-import 'package:smartbet/screens/smartTrade/index.dart';
+import 'package:smartbet/screens/smartTrade/smartTrade_view.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/comingSoon.dart';
 import 'package:smartbet/widget/customGridview.dart';

@@ -295,7 +295,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       // ),
 
                       Container(
-                        color: ColorConfig.blue,
+                        //  color: ColorConfig.blue,
                         width: 300.w,
                         height: 100.h,
                         child: Consumer<CoinStateProvider>(
