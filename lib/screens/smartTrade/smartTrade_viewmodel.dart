@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SmartTradeProvider extends ChangeNotifier {
-  List tabItemHeader = [
-    "Smart Trade",
-    "Live Event",
-  ];
-
-  List stGrid = ['sol', 'eth', 'bnb', 'ton'];
+  List gameOption = ['\$30 - \$200', '\$10 - \$500', '\$30 - \$200', '\$30'];
 
   int selectedOption = 0;
 

@@ -9,6 +9,7 @@ import 'package:smartbet/screens/coin/coinhistory/historyMobile.dart';
 import 'package:smartbet/screens/coin/provider.dart';
 import 'package:smartbet/screens/history/mobile.dart';
 import 'package:smartbet/screens/home/provider.dart';
+import 'package:smartbet/screens/smartTrade/smartTrade_viewmodel.dart';
 import 'package:smartbet/services/oddsClient.dart';
 import 'package:smartbet/socket/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
@@ -298,7 +299,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                         //  color: ColorConfig.blue,
                         width: 300.w,
                         height: 100.h,
-                        child: Consumer<CoinStateProvider>(
+                        child: Consumer<SmartTradeProvider>(
                             builder: (BuildContext context, provider, _) {
                           return CustomGridView(
                             gridCount: true,
@@ -311,20 +312,19 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomAppButton(
-                                  text: '\$152 - \$152',
+                                  text: provider.gameOption[index],
                                   usePadding: true,
 
                                   ///  shimmer: true,
                                   onPressed: () {
-                                    provider.setCurrentTab(
-                                      tail: !provider.tail,
-                                      head: false,
-                                    );
+                                    print(provider.gameOption[index]);
+                                    // provider.setCurrentTab(
+                                    //   tail: !provider.tail,
+                                    //   head: false,
+                                    // );
                                     // Add your onPressed logic here
                                   },
-                                  color: provider.tail
-                                      ? ColorConfig.yellow
-                                      : ColorConfig.tabincurrentindex,
+                                  color: ColorConfig.tabincurrentindex,
                                   textColor: Colors.white,
                                   borderRadius: 4.r,
                                   height: 0,
