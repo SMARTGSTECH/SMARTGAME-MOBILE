@@ -9,8 +9,10 @@ class CustomGridView extends StatelessWidget {
   final double mainAxisSpacing;
   final IndexedWidgetBuilder itemBuilder;
   final bool useAspectRatio;
+  final bool gridCount;
 
   CustomGridView({
+    this.gridCount = false,
     required this.itemCount,
     required this.crossAxisCount,
     required this.crossAxisSpacing,
@@ -24,11 +26,12 @@ class CustomGridView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: GridView.builder(
+        physics: BouncingScrollPhysics(),
         gridDelegate: useAspectRatio
             ? SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
                 crossAxisSpacing: crossAxisSpacing,
-                // mainAxisSpacing: mainAxisSpacing,
+                mainAxisSpacing: mainAxisSpacing,
                 childAspectRatio: 2.7)
             : SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
@@ -37,6 +40,25 @@ class CustomGridView extends StatelessWidget {
               ),
         itemCount: itemCount,
         itemBuilder: itemBuilder,
+      ),
+    ).paddingTop(useAspectRatio ? 0 : 10.h);
+  }
+}
+
+class CustomGridCount extends StatelessWidget {
+  final List<Widget> children;
+
+  CustomGridCount({
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: GridView.count(
+        crossAxisCount: 2,
+        children: children,
       ),
     ).paddingTop(10.h);
   }

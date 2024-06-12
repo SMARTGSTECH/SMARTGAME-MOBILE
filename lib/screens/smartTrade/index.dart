@@ -297,85 +297,48 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       Container(
                         color: ColorConfig.blue,
                         width: 300.w,
-                        height: 115.h,
+                        height: 100.h,
                         child: Consumer<CoinStateProvider>(
                             builder: (BuildContext context, provider, _) {
                           return CustomGridView(
+                            gridCount: true,
                             useAspectRatio: true,
                             itemCount: 4,
                             crossAxisCount: 2,
                             crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 1.0,
-                            itemBuilder: (context, index) {
-                              final coinP = Provider.of<CoinCapProvider>(
-                                  context,
-                                  listen: false);
-                              print(coinP.coinArray
-                                  .where((element) =>
-                                      element.symbol.toLowerCase() == "ton")
-                                  .first
-                                  .imageUrl);
-                              String dataImg = coinP.coinArray
-                                  .where((element) =>
-                                      element.symbol.toLowerCase() == "sol")
-                                  .first
-                                  .imageUrl;
-                              return CustomAppButton(
-                                text: '\$1520 - \$1520',
-                                usePadding: provider.tail,
+                            mainAxisSpacing: 1.h,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomAppButton(
+                                  text: '\$152 - \$152',
+                                  usePadding: true,
 
-                                ///  shimmer: true,
-                                onPressed: () {
-                                  provider.setCurrentTab(
-                                    tail: !provider.tail,
-                                    head: false,
-                                  );
-                                  // Add your onPressed logic here
-                                },
-                                color: provider.tail
-                                    ? ColorConfig.yellow
-                                    : ColorConfig.tabincurrentindex,
-                                textColor: Colors.white,
-                                borderRadius: 4.r,
-                                height: 0,
-                                width: 0,
-                                size: 14,
-                                //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                                  ///  shimmer: true,
+                                  onPressed: () {
+                                    provider.setCurrentTab(
+                                      tail: !provider.tail,
+                                      head: false,
+                                    );
+                                    // Add your onPressed logic here
+                                  },
+                                  color: provider.tail
+                                      ? ColorConfig.yellow
+                                      : ColorConfig.tabincurrentindex,
+                                  textColor: Colors.white,
+                                  borderRadius: 4.r,
+                                  height: 0,
+                                  width: 0,
+                                  size: 14,
+                                  //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                                ),
                               );
                             },
                           );
-                          // return Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          //   children: [
-
-                          //     CustomAppButton(
-                          //       text: '\$152',
-                          //       isMobileWidget: provider.tail,
-
-                          //       ///  shimmer: true,
-                          //       onPressed: () {
-                          //         provider.setCurrentTab(
-                          //           tail: !provider.tail,
-                          //           head: false,
-                          //         );
-                          //         // Add your onPressed logic here
-                          //       },
-                          //       color: provider.tail
-                          //           ? ColorConfig.yellow
-                          //           : ColorConfig.tabincurrentindex,
-                          //       textColor: Colors.white,
-                          //       borderRadius: 4.r,
-                          //       height: 22.h,
-                          //       width: 120.w,
-                          //       size: 14,
-                          //       //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                          //     ),
-                          //   ],
-                          // ).paddingSymmetric(horizontal: 50.w);
                         }),
-                      ),
+                      ).paddingTop(30.h),
 
-                      15.h.toInt().height,
+                      //15.h.toInt().height,
 
                       // Text(
                       //   "Select Side",
