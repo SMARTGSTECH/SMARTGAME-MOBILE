@@ -254,13 +254,12 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                         symbol: widget.symbol,
                       ),
 
-                      Container(
-                        //  color: ColorConfig.blue,
-                        width: 300.w,
-                        height: 100.h,
-                        child: Consumer<LiveEventPredictionProvider>(
-                            builder: (BuildContext context, provider, _) {
-                          return CustomGridView(
+                      Consumer<LiveEventPredictionProvider>(
+                          builder: (BuildContext context, provider, _) {
+                        return Container(
+                          width: 300.w,
+                          height: 100.h,
+                          child: CustomGridView(
                             gridCount: true,
                             useAspectRatio: true,
                             itemCount: 4,
@@ -310,9 +309,9 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                 ),
                               );
                             },
-                          );
-                        }),
-                      ).paddingTop(30.h),
+                          ),
+                        );
+                      }).paddingTop(30.h),
                       //  15.h.toInt().height,
 
                       // Text(
