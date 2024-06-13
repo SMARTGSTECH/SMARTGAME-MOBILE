@@ -253,47 +253,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                         img: widget.img,
                         symbol: widget.symbol,
                       ),
-                      // Stack(
-                      //   alignment: Alignment.center,
-                      //   children: [
-                      //     Container(
-                      //       //  color: ColorConfig.coindollars,
-                      //       width: double.infinity,
-                      //       height: 250.h,
-                      //     ),
-                      //     Consumer<SocketProvider>(
-                      //         builder: (BuildContext context, provider, _) {
-                      //       return Container(
-                      //         padding: EdgeInsets.symmetric(
-                      //             vertical: 10.h, horizontal: 20.w),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(10.r),
-                      //           // color: Colors.deepOrangeAccent,
-                      //           border:
-                      //               Border.all(color: ColorConfig.lightBoarder),
-                      //         ),
-                      //         height: 180.h,
-                      //         width: 200.w,
-                      //         child: Container(
-                      //           decoration: BoxDecoration(
-                      //             image: DecorationImage(
-                      //                 //  opacity: 0.5,
-                      //                 fit: BoxFit.fill,
-                      //                 image: provider.counter == 49 ||
-                      //                         provider.counter == 48 ||
-                      //                         provider.counter == 47 ||
-                      //                         provider.counter == 46
-                      //                     ? AssetImage(
-                      //                         "assets/images/${provider.result["coin"]}.png")
-                      //                     : AssetImage(
-                      //                         "assets/images/coin.gif")),
-                      //           ),
-                      //         ),
-                      //       );
-                      //     })
-                      //   ],
-                      // ),
-                      //  20.h.toInt().height,
+
                       Container(
                         //  color: ColorConfig.blue,
                         width: 300.w,
@@ -352,7 +312,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                             },
                           );
                         }),
-                      ).paddingTop(15.h),
+                      ).paddingTop(30.h),
                       //  15.h.toInt().height,
 
                       // Text(
@@ -380,7 +340,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                               CustomSnackBar(
                                   context: context,
                                   message: "Game Session Ended!",
-                                  width: 195);
+                                  width: 220);
                             },
 
                             ///  color: Colors.grey,
@@ -425,7 +385,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                               CustomSnackBar(
                                   context: context,
                                   message: "Please Select A Side",
-                                  width: 195);
+                                  width: 220);
                             }
                           },
                         );

@@ -382,7 +382,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               CustomSnackBar(
                                   context: context,
                                   message: "Game Session Ended!",
-                                  width: 195);
+                                  width: 220);
                             },
 
                             ///  color: Colors.grey,
@@ -427,7 +427,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               CustomSnackBar(
                                   context: context,
                                   message: "Please Select A Side",
-                                  width: 195);
+                                  width: 220);
                             }
                           },
                         );
