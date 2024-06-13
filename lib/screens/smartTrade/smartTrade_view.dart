@@ -317,16 +317,31 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                                   ///  shimmer: true,
                                   onPressed: () {
-                                    print(provider.gameOption[index]);
                                     provider.toggleOption(
                                         provider.gameOption[index]);
+                                    provider.toggleOptionIndex(provider
+                                        .gameOption
+                                        .indexOf(provider.gameOption[index]));
+                                    print([
+                                      provider.gameOption[index],
+                                      provider.gameOption.indexOf(
+                                        provider.selectedOption,
+                                      ),
+                                      provider.gameOption.indexOf(
+                                              provider.gameOption[index]) ==
+                                          provider.selectedOptionIndex
+                                    ]);
                                     // provider.setCurrentTab(
                                     //   tail: !provider.tail,
                                     //   head: false,
                                     // );
                                     // Add your onPressed logic here
                                   },
-                                  color: ColorConfig.tabincurrentindex,
+                                  color: provider.gameOption.indexOf(
+                                              provider.gameOption[index]) ==
+                                          provider.selectedOptionIndex
+                                      ? ColorConfig.yellow
+                                      : ColorConfig.tabincurrentindex,
                                   textColor: Colors.white,
                                   borderRadius: 4.r,
                                   height: 0,
@@ -383,11 +398,11 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                           width: 55.w,
                           size: 14,
                           onPressed: () {
-                            final gameState = Provider.of<CoinStateProvider>(
+                            final gameState = Provider.of<SmartTradeProvider>(
                                 context,
                                 listen: false);
 
-                            if (gameState.head || gameState.tail) {
+                            if (gameState.selectedOptionIndex != 100) {
                               showDialog(
                                 useRootNavigator: false,
                                 barrierDismissible: true,
