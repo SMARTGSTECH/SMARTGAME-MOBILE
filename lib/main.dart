@@ -29,7 +29,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => UserWeb3Provider()),
     ChangeNotifierProvider(create: (_) => SocketProvider()),
     ChangeNotifierProvider(create: (_) => LiveEventProvider()),
-    ChangeNotifierProvider(create: (_) => SmartTradeProvider())
+    ChangeNotifierProvider(create: (_) => SmartTradeProvider()),
+    ChangeNotifierProvider(create: (_) => LiveEventProvider())
     // ChangeNotifierProvider(create: (_) => HistoryDataClass()),
     // ChangeNotifierProvider(create: (_) => OddsProvider())
   ], child: const MyApp()));

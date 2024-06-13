@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:smartbet/screens/coin/mobile.dart';
 import 'package:smartbet/screens/home/provider.dart';
-import 'package:smartbet/screens/liveEvent/index.dart';
+import 'package:smartbet/screens/liveEvent/liveEvent_view.dart';
 import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/screens/smartTrade/smartTrade_view.dart';
 import 'package:smartbet/utils/config/color.dart';
