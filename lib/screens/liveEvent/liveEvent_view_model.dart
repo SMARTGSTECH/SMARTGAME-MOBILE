@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
-class LiveEventProvider extends ChangeNotifier {
-  List gameOption = ['\$30 - \$209', '\$10 - \$500', '\$30 - \$204', '\$30'];
+class LiveEventPredictionProvider extends ChangeNotifier {
+  List gameOption = [
+    '\$30 - \$209',
+    '\$10 - \$500',
+    '\$30 - \$204',
+    '\$30',
+    '\$30 - \$219',
+    '\$10 - \$510',
+    '\$30 - \$214',
+    '\$310',
+    'Option1',
+    'Option2'
+  ];
 
   int selectedOptionIndex = 100;
   String selectedOption = '';

@@ -9,6 +9,8 @@ import 'package:smartbet/screens/dice/provider.dart';
 import 'package:smartbet/screens/fruit/provider.dart';
 import 'package:smartbet/screens/history/provider.dart';
 import 'package:smartbet/screens/home/provider.dart';
+import 'package:smartbet/screens/liveEvent/liveEvent_view_model.dart';
+
 import 'package:smartbet/screens/livegame/mobile.dart';
 import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/screens/smartTrade/smartTrade_viewmodel.dart';
@@ -30,7 +32,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => SocketProvider()),
     ChangeNotifierProvider(create: (_) => LiveEventProvider()),
     ChangeNotifierProvider(create: (_) => SmartTradeProvider()),
-    ChangeNotifierProvider(create: (_) => LiveEventProvider())
+    ChangeNotifierProvider(create: (_) => LiveEventPredictionProvider())
     // ChangeNotifierProvider(create: (_) => HistoryDataClass()),
     // ChangeNotifierProvider(create: (_) => OddsProvider())
   ], child: const MyApp()));

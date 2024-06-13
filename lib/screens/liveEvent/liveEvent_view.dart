@@ -8,12 +8,14 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smartbet/screens/coin/coinhistory/historyMobile.dart';
 import 'package:smartbet/screens/coin/provider.dart';
 import 'package:smartbet/screens/history/mobile.dart';
+import 'package:smartbet/screens/liveEvent/liveEvent_view_model.dart';
 import 'package:smartbet/services/oddsClient.dart';
 import 'package:smartbet/socket/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
 import 'package:smartbet/widget/button.dart';
 import 'package:smartbet/widget/customAppBar.dart';
+import 'package:smartbet/widget/customGridview.dart';
 import 'package:smartbet/widget/gameWidget.dart';
 import 'package:smartbet/widget/resultWidget.dart';
 import 'package:smartbet/widget/stakeContainer.dart';
@@ -291,125 +293,66 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                       //     })
                       //   ],
                       // ),
-                      20.h.toInt().height,
-                      Consumer<CoinStateProvider>(
-                          builder: (BuildContext context, provider, _) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            // MobileGameWidget(
-                            //   dym: 30,
-                            //   wt: 2.h,
-                            //   txtButton: 'Head',
-                            //   colorImg: true,
-                            //   backgroundCar: true,
-                            //   currentTab: provider.head,
-                            //   function: () {
-                            //     provider.setCurrentTab(
-                            //       head: !provider.head,
-                            //       tail: false,
-                            //     );
-                            //   },
-                            // ),
-                            Column(
-                              children: [
-                                CustomAppButton(
-                                  text: '\$152',
-                                  usePadding: provider.head,
+                      //  20.h.toInt().height,
+                      Container(
+                        //  color: ColorConfig.blue,
+                        width: 300.w,
+                        height: 100.h,
+                        child: Consumer<LiveEventPredictionProvider>(
+                            builder: (BuildContext context, provider, _) {
+                          return CustomGridView(
+                            gridCount: true,
+                            useAspectRatio: true,
+                            itemCount: 4,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 1.h,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomAppButton(
+                                  text: provider.gameOption[index],
+                                  usePadding: true,
 
                                   ///  shimmer: true,
                                   onPressed: () {
-                                    provider.setCurrentTab(
-                                      head: !provider.head,
-                                      tail: false,
-                                    );
+                                    provider.toggleOption(
+                                        provider.gameOption[index]);
+                                    provider.toggleOptionIndex(provider
+                                        .gameOption
+                                        .indexOf(provider.gameOption[index]));
+                                    print([
+                                      provider.gameOption[index],
+                                      provider.gameOption.indexOf(
+                                        provider.selectedOption,
+                                      ),
+                                      provider.gameOption.indexOf(
+                                              provider.gameOption[index]) ==
+                                          provider.selectedOptionIndex
+                                    ]);
+                                    // provider.setCurrentTab(
+                                    //   tail: !provider.tail,
+                                    //   head: false,
+                                    // );
                                     // Add your onPressed logic here
                                   },
-                                  color: provider.head
+                                  color: provider.gameOption.indexOf(
+                                              provider.gameOption[index]) ==
+                                          provider.selectedOptionIndex
                                       ? ColorConfig.yellow
                                       : ColorConfig.tabincurrentindex,
                                   textColor: Colors.white,
                                   borderRadius: 4.r,
-                                  height: 22.h,
-                                  width: 120.w,
+                                  height: 0,
+                                  width: 0,
                                   size: 14,
                                   //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                                 ),
-                                CustomAppButton(
-                                  text: '\$152 -152',
-                                  usePadding: provider.head,
-
-                                  ///  shimmer: true,
-                                  onPressed: () {
-                                    provider.setCurrentTab(
-                                      head: !provider.head,
-                                      tail: false,
-                                    );
-                                    // Add your onPressed logic here
-                                  },
-                                  color: provider.head
-                                      ? ColorConfig.yellow
-                                      : ColorConfig.tabincurrentindex,
-                                  textColor: Colors.white,
-                                  borderRadius: 4.r,
-                                  height: 22.h,
-                                  width: 120.w,
-                                  size: 14,
-                                  //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                CustomAppButton(
-                                  text: '\$152',
-                                  usePadding: provider.tail,
-
-                                  ///  shimmer: true,
-                                  onPressed: () {
-                                    provider.setCurrentTab(
-                                      tail: !provider.tail,
-                                      head: false,
-                                    );
-                                    // Add your onPressed logic here
-                                  },
-                                  color: provider.tail
-                                      ? ColorConfig.yellow
-                                      : ColorConfig.tabincurrentindex,
-                                  textColor: Colors.white,
-                                  borderRadius: 4.r,
-                                  height: 22.h,
-                                  width: 120.w,
-                                  size: 14,
-                                  //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                ),
-                                CustomAppButton(
-                                  text: '\$1502 -1000',
-                                  usePadding: provider.tail,
-
-                                  ///  shimmer: true,
-                                  onPressed: () {
-                                    provider.setCurrentTab(
-                                      tail: !provider.tail,
-                                      head: false,
-                                    );
-                                    // Add your onPressed logic here
-                                  },
-                                  color: provider.tail
-                                      ? ColorConfig.yellow
-                                      : ColorConfig.tabincurrentindex,
-                                  textColor: Colors.white,
-                                  borderRadius: 4.r,
-                                  height: 22.h,
-                                  width: 120.w,
-                                  size: 14,
-                                  //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ).paddingSymmetric(horizontal: 50.w);
-                      }),
+                              );
+                            },
+                          );
+                        }),
+                      ).paddingTop(15.h),
                       //  15.h.toInt().height,
 
                       // Text(
