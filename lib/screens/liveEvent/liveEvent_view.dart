@@ -419,6 +419,7 @@ class gameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(img);
     return Container(
       height: 150.h,
       width: 300.w,
@@ -426,13 +427,18 @@ class gameCard extends StatelessWidget {
           ? BoxDecoration(
               image: DecorationImage(
                   //  opacity: 0.5,
-                  fit: BoxFit.fill,
-                  image: AssetImage(img)),
-              gradient: const LinearGradient(
-                colors: [
-                  Color.fromARGB(0, 70, 59, 59),
-                  Colors.black,
-                ],
+                  fit: BoxFit.fitHeight,
+                  image: NetworkImage(img)),
+              gradient: LinearGradient(
+                colors: symbol == ''
+                    ? [
+                        Color.fromARGB(0, 0, 0, 0),
+                        Colors.transparent,
+                      ]
+                    : [
+                        Color.fromARGB(0, 70, 59, 59),
+                        Colors.black,
+                      ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),

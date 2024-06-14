@@ -9,7 +9,8 @@ class SocketMethods {
   Map eventListeners = {
     "count_down": "counter",
     "output": "result",
-    "history": "latesthistory"
+    "history": "latesthistory",
+    "coins": "coincompare"
   };
 
   void counterEvent(BuildContext context) {
