@@ -251,17 +251,17 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                       gameCard(
                         count: 30.toString(),
                         img: widget.img,
-                        symbol: widget.symbol,
+                        symbol: '',
                       ),
 
                       Consumer<LiveEventPredictionProvider>(
                           builder: (BuildContext context, provider, _) {
                         return Container(
-                          //  color: ColorConfig.blue,
+                          ///color: ColorConfig.blue,
                           width: 300.w,
                           height: provider.isOdd(provider.gameOption.length)
-                              ? provider.gameOption.length * 30.5.w
-                              : provider.gameOption.length * 28.w,
+                              ? provider.gameOption.length * 30.h
+                              : provider.gameOption.length * 24.3.h,
                           child: CustomGridView(
                             gridCount: true,
                             useAspectRatio: true,
