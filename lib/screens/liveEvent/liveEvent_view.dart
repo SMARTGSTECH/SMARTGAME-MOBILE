@@ -327,10 +327,10 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                           return CustomAppButton(
                             color: Colors.grey,
                             textColor: Colors.black,
-                            borderRadius: 5,
-                            height: 24,
-                            width: 60,
-                            size: 16,
+                            borderRadius: 4.r,
+                            height: 22.h,
+                            width: 55.w,
+                            size: 14,
 
                             ///    shimmer: true,
                             onPressed: () {
