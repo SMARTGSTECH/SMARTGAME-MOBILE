@@ -257,9 +257,11 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                       Consumer<LiveEventPredictionProvider>(
                           builder: (BuildContext context, provider, _) {
                         return Container(
-                          // color: ColorConfig.blue,
+                          //  color: ColorConfig.blue,
                           width: 300.w,
-                          height: provider.gameOption.length * 28.w,
+                          height: provider.isOdd(provider.gameOption.length)
+                              ? provider.gameOption.length * 30.5.w
+                              : provider.gameOption.length * 28.w,
                           child: CustomGridView(
                             gridCount: true,
                             useAspectRatio: true,

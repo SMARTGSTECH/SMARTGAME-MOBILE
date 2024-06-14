@@ -7,10 +7,11 @@ class LiveEventPredictionProvider extends ChangeNotifier {
     '\$30 - \$204',
     '\$30',
     '\$30 - \$219',
-    '\$10 - \$510',
-    '\$30 - \$214',
-    '\$310',
-    'Option1',
+    // '\$10 - \$510',
+    // '\$30 - \$214',
+    // '\$310',
+    // 'Option1',
+    // 'Option2',
   ];
 
   bool isOdd(int number) {
