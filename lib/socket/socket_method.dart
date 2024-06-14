@@ -25,9 +25,9 @@ class SocketMethods {
   void priceEvent(BuildContext context) {
     _socket.on(eventListeners["coins"], (data) {
       print(data["value"]);
-      final socketInstance =
-          Provider.of<SocketProvider>(context, listen: false);
-      socketInstance.setCounter(data["value"]);
+      // final socketInstance =
+      //     Provider.of<SocketProvider>(context, listen: false);
+      // socketInstance.setCounter(data["value"]);
     });
   }
 

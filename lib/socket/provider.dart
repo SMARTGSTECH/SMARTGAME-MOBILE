@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart';
 class SocketProvider extends ChangeNotifier {
   int _counter = 0;
   Map _result = {};
+  Map _coin = {};
   List _gameHistory = [];
 
   int get counter => _counter;
+  Map get coin => _coin;
   Map get result => _result;
   List get gameHistory => _gameHistory;
 
@@ -16,6 +18,11 @@ class SocketProvider extends ChangeNotifier {
 
   void setGameOutput(value) {
     _result = value;
+    notifyListeners();
+  }
+
+  void setCoin(value) {
+    _coin = value;
     notifyListeners();
   }
 
