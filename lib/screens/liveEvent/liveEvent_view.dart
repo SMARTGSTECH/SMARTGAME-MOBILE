@@ -258,11 +258,11 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                           builder: (BuildContext context, provider, _) {
                         return Container(
                           width: 300.w,
-                          height: 100.h,
+                          height: provider.selectedOption.length * 30.w,
                           child: CustomGridView(
                             gridCount: true,
                             useAspectRatio: true,
-                            itemCount: 4,
+                            itemCount: provider.selectedOption.length,
                             crossAxisCount: 2,
                             crossAxisSpacing: 10.0,
                             mainAxisSpacing: 1.h,
@@ -320,8 +320,6 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                       //     fontSize: 13.sp,
                       //     color: ColorConfig.iconColor,
                       //   ),
-                      // ),
-                      15.h.toInt().height,
 
                       Consumer<SocketProvider>(
                           builder: (BuildContext context, model, _) {
@@ -389,7 +387,8 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                           },
                         );
                       }),
-
+                      // ),
+                      25.h.toInt().height,
                       //10.h.toInt().height,
                     ],
                   ),
