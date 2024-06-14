@@ -249,10 +249,12 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       20.h.toInt().height,
 
                       //10.h.toInt().height,
+
                       gameCard(
                         count: 30.toString(),
                         img: widget.img,
                         symbol: widget.symbol,
+                        rate: '',
                       ),
                       // Stack(
                       //   alignment: Alignment.center,
@@ -450,10 +452,12 @@ class gameCard extends StatelessWidget {
     required this.img,
     required this.symbol,
     required this.count,
+    required this.rate,
   });
   final String img;
   final String symbol;
   final String count;
+  final String rate;
 
   @override
   Widget build(BuildContext context) {
@@ -489,7 +493,7 @@ class gameCard extends StatelessWidget {
                 ).cornerRadiusWithClipRRect(50),
                 15.w.toInt().width,
                 Text(
-                  "\$150",
+                  "\${$rate}",
                   style: TextStyle(
                       fontSize: 25.sp,
                       color: ColorConfig.iconColor,

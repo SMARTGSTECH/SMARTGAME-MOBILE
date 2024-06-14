@@ -18,11 +18,13 @@ class SocketProvider extends ChangeNotifier {
 
   void setGameOutput(value) {
     _result = value;
+
     notifyListeners();
   }
 
   void setCoin(value) {
     _coin = value;
+    //print("thi is the ${_coin}");
     notifyListeners();
   }
 
