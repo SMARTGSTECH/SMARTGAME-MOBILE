@@ -11,8 +11,11 @@ class LiveEventPredictionProvider extends ChangeNotifier {
     '\$30 - \$214',
     '\$310',
     'Option1',
-    'Option2'
   ];
+
+  bool isOdd(int number) {
+    return number % 2 != 0;
+  }
 
   int selectedOptionIndex = 100;
   String selectedOption = '';
