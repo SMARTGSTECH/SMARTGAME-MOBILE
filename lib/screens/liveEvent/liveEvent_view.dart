@@ -252,6 +252,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                         count: 30.toString(),
                         img: widget.img,
                         symbol: '',
+                        tp: '',
                       ),
 
                       Consumer<LiveEventPredictionProvider>(
@@ -409,53 +410,79 @@ class gameCard extends StatelessWidget {
     required this.img,
     required this.symbol,
     required this.count,
+    required this.tp,
   });
   final String img;
   final String symbol;
   final String count;
+  final String tp;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 150.h,
       width: 300.w,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            Color.fromARGB(0, 70, 59, 59),
-            Colors.black,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(
-          color: ColorConfig.white,
-          width: 1,
-        ),
-      ),
+      decoration: symbol == ''
+          ? BoxDecoration(
+              image: DecorationImage(
+                  //  opacity: 0.5,
+                  fit: BoxFit.fill,
+                  image: AssetImage(img)),
+              gradient: const LinearGradient(
+                colors: [
+                  Color.fromARGB(0, 70, 59, 59),
+                  Colors.black,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(
+                color: ColorConfig.white,
+                width: 1,
+              ),
+            )
+          : BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color.fromARGB(0, 70, 59, 59),
+                  Colors.black,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(
+                color: ColorConfig.white,
+                width: 1,
+              ),
+            ),
       child: Column(
         children: [
           Stack(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            symbol == ''
+                ? Row(
+                    children: [],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
 
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.network(
-                  img,
-                  height: 75.h,
-                ).cornerRadiusWithClipRRect(50),
-                15.w.toInt().width,
-                Text(
-                  "\$150",
-                  style: TextStyle(
-                      fontSize: 25.sp,
-                      color: ColorConfig.iconColor,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
-            ).paddingTop(28.h),
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network(
+                        img,
+                        height: 75.h,
+                      ).cornerRadiusWithClipRRect(50),
+                      15.w.toInt().width,
+                      Text(
+                        "\$150",
+                        style: TextStyle(
+                            fontSize: 25.sp,
+                            color: ColorConfig.iconColor,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ).paddingTop(28.h),
             Row(
               children: [
                 Container(
