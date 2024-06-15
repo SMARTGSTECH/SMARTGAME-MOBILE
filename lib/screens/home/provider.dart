@@ -43,7 +43,6 @@ class CoinCapProvider extends ChangeNotifier {
         print("This is the data gotten from the api");
         Provider.of<SocketProvider>(context, listen: false)
             .setInitGameVale(data);
-
         return data;
       } else {
         throw Exception('Failed 1');

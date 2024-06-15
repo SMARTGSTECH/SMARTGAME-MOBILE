@@ -253,7 +253,6 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       Consumer<SocketProvider>(
                           builder: (BuildContext context, provider, _) {
                         var formatter = NumberFormat('#,###');
-
                         return gameCard(
                             count: 30.toString(),
                             img: widget.img,
