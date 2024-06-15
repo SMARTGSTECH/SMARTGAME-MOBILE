@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
@@ -249,13 +250,18 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       20.h.toInt().height,
 
                       //10.h.toInt().height,
+                      Consumer<SocketProvider>(
+                          builder: (BuildContext context, provider, _) {
+                        var formatter = NumberFormat('#,###');
 
-                      gameCard(
-                        count: 30.toString(),
-                        img: widget.img,
-                        symbol: widget.symbol,
-                        rate: '',
-                      ),
+                        return gameCard(
+                            count: 30.toString(),
+                            img: widget.img,
+                            symbol: widget.symbol,
+                            rate: provider.coin[widget.symbol]
+                                .toStringAsFixed(2));
+                      }),
+
                       // Stack(
                       //   alignment: Alignment.center,
                       //   children: [
@@ -461,6 +467,7 @@ class gameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat('#,###');
     return Container(
       height: 150.h,
       width: 300.w,
@@ -493,7 +500,8 @@ class gameCard extends StatelessWidget {
                 ).cornerRadiusWithClipRRect(50),
                 15.w.toInt().width,
                 Text(
-                  "\${$rate}",
+                  "\$${formatter.format(double.tryParse(rate))}" +
+                      '.${rate.toString().split('.')[1]}',
                   style: TextStyle(
                       fontSize: 25.sp,
                       color: ColorConfig.iconColor,

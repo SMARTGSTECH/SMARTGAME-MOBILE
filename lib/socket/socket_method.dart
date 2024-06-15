@@ -10,7 +10,8 @@ class SocketMethods {
     "count_down": "counter",
     "output": "result",
     "history": "latesthistory",
-    "coins": "coincompare"
+    "coins": "coincompare",
+    'init_value': "gamestart"
   };
 
   void counterEvent(BuildContext context) {
