@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartbet/socket/provider.dart';
@@ -24,12 +26,14 @@ class SocketMethods {
   }
 
   void initialVal(BuildContext context) {
-    // _socket.on(eventListeners["init_value"], (data) {
-    //   print('this is the initial value' + data["value"]);
-    //   // final socketInstance =
-    //   //     Provider.of<SocketProvider>(context, listen: false);
-    //   // socketInstance.setCoin(data["value"]);
-    // });
+    _socket.on(eventListeners["init_value"], (data) {
+      Map initals = data["initals"];
+      print("This is the data gotten from the socket");
+      print(initals);
+      final socketInstance =
+          Provider.of<SocketProvider>(context, listen: false);
+      socketInstance.setInitGameVale(initals);
+    });
   }
 
   void priceEvent(BuildContext context) {
