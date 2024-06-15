@@ -12,6 +12,12 @@ class SmartTradeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List get gameOptions {
+    List dataVal = [];
+
+    return [];
+  }
+
   toggleOption(String option) {
     selectedOption = option;
     print(selectedOption);
