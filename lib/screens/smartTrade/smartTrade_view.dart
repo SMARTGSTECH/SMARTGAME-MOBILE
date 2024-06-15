@@ -258,9 +258,10 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                             count: 30.toString(),
                             img: widget.img,
                             symbol: widget.symbol,
-                            rate: provider.coin[widget.symbol]
-                                    .toStringAsFixed(2) ??
-                                0.00);
+                            rate: provider.coin[widget.symbol] == null
+                                ? 0.00
+                                : provider.coin[widget.symbol]
+                                    .toStringAsFixed(2));
                       }),
 
                       // Stack(
