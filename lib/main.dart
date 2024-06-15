@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
     _socketMethods.resultEvent(context);
     _socketMethods.resultHistory(context);
     _socketMethods.priceEvent(context);
+    _socketMethods.initialVal(context);
     print("initilized desktop and mobile class");
     print("saved  changes  for test");
     return ResponsiveLayout(

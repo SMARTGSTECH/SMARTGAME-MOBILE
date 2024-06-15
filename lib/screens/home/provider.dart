@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:smartbet/model/coinCapModel.dart';
 import 'package:http/http.dart' as http;
+import 'package:smartbet/socket/provider.dart';
 
 class CoinCapProvider extends ChangeNotifier {
   List<coinCapModel> _coinArray = [];
@@ -27,6 +29,26 @@ class CoinCapProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw Exception('Failed to load coins');
+    }
+  }
+
+  Future<Map> fetchInitialdata(context) async {
+    final url = Uri.parse(
+        'https://server.smartcryptobet.co/v1/game/coinsessionprices?key=K10llGN3RB');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final Map data = json.decode(response.body)['data'];
+        print(data);
+        Provider.of<SocketProvider>(context, listen: false)
+            .smartTradeOptionValue = data;
+
+        return data;
+      } else {
+        throw Exception('Failed 1');
+      }
+    } catch (e) {
+      throw Exception('Failed 2: $e');
     }
   }
 }

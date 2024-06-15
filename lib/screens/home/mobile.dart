@@ -30,6 +30,8 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
     // TODO: implement initState
 
     Provider.of<CoinCapProvider>(context, listen: false).fetchCoin();
+    Provider.of<CoinCapProvider>(context, listen: false)
+        .fetchInitialdata(context);
   }
 
   @override

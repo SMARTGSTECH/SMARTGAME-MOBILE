@@ -4,6 +4,7 @@ class SocketProvider extends ChangeNotifier {
   int _counter = 0;
   Map _result = {};
   Map _coin = {};
+  Map smartTradeOptionValue = {};
   List _gameHistory = [];
 
   int get counter => _counter;
@@ -23,7 +24,13 @@ class SocketProvider extends ChangeNotifier {
   }
 
   void setCoin(value) {
-    _coin = value;
+    _coin = value ?? _coin;
+    //print("thi is the ${_coin}");
+    notifyListeners();
+  }
+
+  void setInitGameVale(value) {
+    _coin = value ?? _coin;
     //print("thi is the ${_coin}");
     notifyListeners();
   }

@@ -20,7 +20,7 @@ class CoinData {
     required this.createdAt,
   });
 
-factory CoinData.fromJson(Map<String, dynamic> json) {
+  factory CoinData.fromJson(Map<String, dynamic> json) {
     String createdAtString = json['createdAt'] ?? '';
     if (createdAtString.isNotEmpty) {
       createdAtString = createdAtString.replaceFirst('.000Z', '');
@@ -49,16 +49,17 @@ factory CoinData.fromJson(Map<String, dynamic> json) {
         odds: 0.0,
         side: 0.0,
         type: '',
-        createdAt: DateTime.now(), 
+        createdAt: DateTime.now(),
       );
     }
   }
 }
-
+//https://server.smartcryptobet.co/v1/game/coinsessionprices
+//K10llGN3RB
 
 Future<List<CoinData>> fetchCoinOdds() async {
-  final url =
-      Uri.parse('https://server.smartcryptobet.co/v1/coin/history?key=K10llGN3RB');
+  final url = Uri.parse(
+      'https://server.smartcryptobet.co/v1/coin/history?key=K10llGN3RB');
 
   try {
     final response = await http.get(url);
@@ -73,11 +74,10 @@ Future<List<CoinData>> fetchCoinOdds() async {
   }
 }
 
-
 // K10llGN3RB
 
-
-String shortenWalletAddress(String address, {int prefixLength = 6, int suffixLength = 6}) {
+String shortenWalletAddress(String address,
+    {int prefixLength = 6, int suffixLength = 6}) {
   if (address.length <= prefixLength + suffixLength) {
     return address;
   } else {

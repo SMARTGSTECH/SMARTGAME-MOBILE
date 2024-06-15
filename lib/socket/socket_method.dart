@@ -23,9 +23,18 @@ class SocketMethods {
     });
   }
 
+  void initialVal(BuildContext context) {
+    // _socket.on(eventListeners["init_value"], (data) {
+    //   print('this is the initial value' + data["value"]);
+    //   // final socketInstance =
+    //   //     Provider.of<SocketProvider>(context, listen: false);
+    //   // socketInstance.setCoin(data["value"]);
+    // });
+  }
+
   void priceEvent(BuildContext context) {
     _socket.on(eventListeners["coins"], (data) {
-      print(data["value"]);
+      // print(data["value"]);
       final socketInstance =
           Provider.of<SocketProvider>(context, listen: false);
       socketInstance.setCoin(data["value"]);
