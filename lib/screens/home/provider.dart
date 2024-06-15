@@ -41,7 +41,7 @@ class CoinCapProvider extends ChangeNotifier {
         final Map data = json.decode(response.body)['data'];
         print(data);
         Provider.of<SocketProvider>(context, listen: false)
-            .smartTradeOptionValue = data;
+            .setInitGameVale(data);
 
         return data;
       } else {

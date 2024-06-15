@@ -30,8 +30,8 @@ class SocketProvider extends ChangeNotifier {
   }
 
   void setInitGameVale(value) {
-    _coin = value ?? _coin;
-    //print("thi is the ${_coin}");
+    smartTradeOptionValue = value;
+    print("thi is the ${smartTradeOptionValue}");
     notifyListeners();
   }
 
