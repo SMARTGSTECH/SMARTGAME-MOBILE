@@ -40,7 +40,7 @@ class SocketProvider extends ChangeNotifier {
     // print(object)
     //print(smartTradeOptionValue[sym].runtimeType);
 
-    double valA = sym == "BTC"
+    double val = sym == "BTC"
         ? 20.25
         : sym == "SOL"
             ? 0.2
@@ -48,22 +48,14 @@ class SocketProvider extends ChangeNotifier {
                 ? 2.2
                 : 2.8;
 
-    double valD = sym == "BTC"
-        ? 20.25
-        : sym == "SOL"
-            ? 0.2
-            : sym == "BNB"
-                ? 2.2
-                : 2.8;
-    // double.parse((smartTradeOptionValue[sym] + )
-    print(valA);
+    print(val);
     double option1 =
-        double.parse((smartTradeOptionValue[sym] + valA).toStringAsFixed(2));
+        double.parse((smartTradeOptionValue[sym] + val).toStringAsFixed(2));
     // print(double.parse((smartTradeOptionValue[sym] + 0.2).toString()));
     int option2 = 10;
     int option3 = 20;
     double option4 =
-        double.parse((smartTradeOptionValue[sym] - valA).toStringAsFixed(2));
+        double.parse((smartTradeOptionValue[sym] - val).toStringAsFixed(2));
 //'\$${option1} \u2014 ∞',
     return [
       '\$${option1} > ∞',
