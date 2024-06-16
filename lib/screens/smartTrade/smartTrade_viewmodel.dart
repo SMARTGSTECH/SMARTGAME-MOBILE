@@ -14,10 +14,10 @@ class SmartTradeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List gameOptions(context, symbol) {
+  List gameOptions({context, symbol}) {
     Map val = Provider.of<SocketProvider>(context, listen: false)
         .smartTradeOptionValue;
-    double option1 = 0;
+    double option1 = val[symbol];
     double option2 = 0;
     double option3 = 0;
     double option4 = 0;
