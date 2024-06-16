@@ -328,11 +328,15 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                                   ///  shimmer: true,
                                   onPressed: () {
-                                    socketTradeProvider
-                                        .gameSocketOption(widget.symbol);
-                                    smartTradeProvider.toggleOptionIndex(
+                                    // socketTradeProvider
+                                    print(double.parse(
                                         socketTradeProvider.gameSocketOption(
-                                            widget.symbol)[index]);
+                                            widget.symbol)[index]));
+                                    //     .gameSocketOption(widget.symbol);
+                                    smartTradeProvider.toggleOptionIndex(
+                                        int.parse(socketTradeProvider
+                                            .gameSocketOption(
+                                                widget.symbol)[index]));
                                     print([
                                       socketTradeProvider.gameSocketOption(
                                           widget.symbol)[index],
