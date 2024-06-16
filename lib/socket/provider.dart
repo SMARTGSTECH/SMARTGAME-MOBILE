@@ -63,7 +63,7 @@ class SocketProvider extends ChangeNotifier {
     int option2 = 10;
     int option3 = 20;
     double option4 =
-        double.parse((smartTradeOptionValue[sym] + valA).toStringAsFixed(2));
+        double.parse((smartTradeOptionValue[sym] - valA).toStringAsFixed(2));
 //'\$${option1} \u2014 ∞',
     return [
       '\$${option1} > ∞',
