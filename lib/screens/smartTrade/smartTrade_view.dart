@@ -323,26 +323,26 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomAppButton(
                                   text: socketTradeProvider
-                                      .gameOption(widget.symbol)[index],
+                                      .gameSocketOption(widget.symbol)[index],
                                   usePadding: true,
 
                                   ///  shimmer: true,
                                   onPressed: () {
                                     socketTradeProvider
-                                        .gameOption(widget.symbol);
+                                        .gameSocketOption(widget.symbol);
                                     smartTradeProvider.toggleOptionIndex(
-                                        socketTradeProvider
-                                            .gameOption(widget.symbol)[index]);
+                                        socketTradeProvider.gameSocketOption(
+                                            widget.symbol)[index]);
                                     print([
+                                      socketTradeProvider.gameSocketOption(
+                                          widget.symbol)[index],
                                       socketTradeProvider
-                                          .gameOption(widget.symbol)[index],
-                                      socketTradeProvider
-                                          .gameOption(widget.symbol)
+                                          .gameSocketOption(widget.symbol)
                                           .indexOf(
                                             smartTradeProvider.selectedOption,
                                           ),
                                       socketTradeProvider
-                                              .gameOption(widget.symbol)
+                                              .gameSocketOption(widget.symbol)
                                               .indexOf(smartTradeProvider
                                                   .gameOptions[index]) ==
                                           smartTradeProvider.selectedOptionIndex
@@ -354,7 +354,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                     // Add your onPressed logic here
                                   },
                                   color: socketTradeProvider
-                                              .gameOption(widget.symbol)
+                                              .gameSocketOption(widget.symbol)
                                               .indexOf(smartTradeProvider
                                                   .gameOptions[index]) ==
                                           smartTradeProvider.selectedOptionIndex

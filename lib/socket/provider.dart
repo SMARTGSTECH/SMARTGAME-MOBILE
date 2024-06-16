@@ -36,7 +36,7 @@ class SocketProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  gameOption(sym) {
+  gameSocketOption(sym) {
     smartTradeOptionValue[sym];
     double option1 = smartTradeOptionValue[sym];
     double option2 = 10;
