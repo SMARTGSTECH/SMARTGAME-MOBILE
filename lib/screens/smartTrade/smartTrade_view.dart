@@ -328,29 +328,34 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                                   ///  shimmer: true,
                                   onPressed: () {
+                                    print(socketTradeProvider.gameSocketOption(
+                                        widget.symbol)[index]);
                                     // socketTradeProvider
-                                    print(double.parse(
-                                        socketTradeProvider.gameSocketOption(
-                                            widget.symbol)[index]));
+                                    // print(double.parse(
+                                    //     socketTradeProvider.gameSocketOption(
+                                    //         widget.symbol)[index]));
+                                    // print("object");
                                     //     .gameSocketOption(widget.symbol);
                                     smartTradeProvider.toggleOptionIndex(
-                                        int.parse(socketTradeProvider
-                                            .gameSocketOption(
-                                                widget.symbol)[index]));
-                                    print([
-                                      socketTradeProvider.gameSocketOption(
-                                          widget.symbol)[index],
-                                      socketTradeProvider
-                                          .gameSocketOption(widget.symbol)
-                                          .indexOf(
-                                            smartTradeProvider.selectedOption,
-                                          ),
-                                      socketTradeProvider
-                                              .gameSocketOption(widget.symbol)
-                                              .indexOf(smartTradeProvider
-                                                  .gameOptions[index]) ==
-                                          smartTradeProvider.selectedOptionIndex
-                                    ]);
+                                            socketTradeProvider
+                                                .gameSocketOption(widget.symbol)
+                                                .indexOf)(
+                                        socketTradeProvider.gameSocketOption(
+                                            widget.symbol)[index]);
+                                    // print([
+                                    //   socketTradeProvider.gameSocketOption(
+                                    //       widget.symbol)[index],
+                                    //   socketTradeProvider
+                                    //       .gameSocketOption(widget.symbol)
+                                    //       .indexOf(
+                                    //         smartTradeProvider.selectedOption,
+                                    //       ),
+                                    //   socketTradeProvider
+                                    //           .gameSocketOption(widget.symbol)
+                                    //           .indexOf(smartTradeProvider
+                                    //               .gameOptions[index]) ==
+                                    //       smartTradeProvider.selectedOptionIndex
+                                    // ]);
                                     // provider.setCurrentTab(
                                     //   tail: !provider.tail,
                                     //   head: false,
