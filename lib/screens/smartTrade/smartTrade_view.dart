@@ -308,8 +308,9 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                         //  color: ColorConfig.blue,
                         width: 300.w,
                         height: 100.h,
-                        child: Consumer<SmartTradeProvider>(
-                            builder: (BuildContext context, provider, _) {
+                        child: Consumer2<SmartTradeProvider, SocketProvider>(
+                            builder: (BuildContext context, smartTradeProvider,
+                                socketTradeProvider, _) {
                           return CustomGridView(
                             gridCount: true,
                             useAspectRatio: true,
@@ -321,41 +322,30 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomAppButton(
-                                  text: provider.gameOption(
-                                      context: context,
-                                      symbol: widget.symbol)[index],
+                                  text: socketTradeProvider
+                                      .gameOption(widget.symbol)[index],
                                   usePadding: true,
 
                                   ///  shimmer: true,
                                   onPressed: () {
-                                    provider.toggleOption(provider.gameOption(
-                                        context: context,
-                                        symbol: widget.symbol)[index]);
-                                    provider.toggleOptionIndex(provider
-                                        .gameOption()
-                                        .indexOf(provider.gameOption(
-                                            context: context,
-                                            symbol: widget.symbol)[index]));
+                                    socketTradeProvider
+                                        .gameOption(widget.symbol);
+                                    smartTradeProvider.toggleOptionIndex(
+                                        socketTradeProvider
+                                            .gameOption(widget.symbol)[index]);
                                     print([
-                                      provider.gameOption(
-                                          context: context,
-                                          symbol: widget.symbol)[index],
-                                      provider
-                                          .gameOption(
-                                              context: context,
-                                              symbol: widget.symbol)
+                                      socketTradeProvider
+                                          .gameOption(widget.symbol)[index],
+                                      socketTradeProvider
+                                          .gameOption(widget.symbol)
                                           .indexOf(
-                                            provider.selectedOption,
+                                            smartTradeProvider.selectedOption,
                                           ),
-                                      provider
-                                              .gameOption(
-                                                  context: context,
-                                                  symbol: widget.symbol)
-                                              .indexOf(provider.gameOption(
-                                                  context: context,
-                                                  symbol:
-                                                      widget.symbol)[index]) ==
-                                          provider.selectedOptionIndex
+                                      socketTradeProvider
+                                              .gameOption(widget.symbol)
+                                              .indexOf(smartTradeProvider
+                                                  .gameOptions[index]) ==
+                                          smartTradeProvider.selectedOptionIndex
                                     ]);
                                     // provider.setCurrentTab(
                                     //   tail: !provider.tail,
@@ -363,15 +353,11 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                     // );
                                     // Add your onPressed logic here
                                   },
-                                  color: provider
-                                              .gameOption(
-                                                  context: context,
-                                                  symbol: widget.symbol)
-                                              .indexOf(provider.gameOption(
-                                                  context: context,
-                                                  symbol:
-                                                      widget.symbol)[index]) ==
-                                          provider.selectedOptionIndex
+                                  color: socketTradeProvider
+                                              .gameOption(widget.symbol)
+                                              .indexOf(smartTradeProvider
+                                                  .gameOptions[index]) ==
+                                          smartTradeProvider.selectedOptionIndex
                                       ? ColorConfig.yellow
                                       : ColorConfig.tabincurrentindex,
                                   textColor: Colors.white,

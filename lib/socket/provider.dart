@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class SocketProvider extends ChangeNotifier {
   int _counter = 0;
@@ -33,6 +34,26 @@ class SocketProvider extends ChangeNotifier {
     smartTradeOptionValue = value;
     print("thi is the ${smartTradeOptionValue}");
     notifyListeners();
+  }
+
+  gameOption(sym) {
+    smartTradeOptionValue[sym];
+    double option1 = smartTradeOptionValue[sym];
+    double option2 = 10;
+    double option3 = 20;
+    double option4 = 30;
+
+    return [
+      option1.toString(),
+      option2.toString(),
+      option3.toString(),
+      option4.toString()
+    ];
+  }
+
+  Map get getsmartTradeOptionValue {
+    // notifyListeners();
+    return smartTradeOptionValue;
   }
 
   void setGameHistory(value) {

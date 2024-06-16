@@ -14,21 +14,29 @@ class SmartTradeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List gameOption({context, symbol}) {
-    Map val = Provider.of<SocketProvider>(context, listen: false)
-        .smartTradeOptionValue;
-    double option1 = val[symbol];
-    double option2 = 10;
-    double option3 = 20;
-    double option4 = 30;
-    notifyListeners();
-    return [
-      option1.toString(),
-      option2.toString(),
-      option3.toString(),
-      option4.toString()
-    ];
-  }
+  // gameOption({required BuildContext context, symbol}) {
+  //   Map val = Provider.of<SocketProvider>(context, listen: false)
+  //       .getsmartTradeOptionValue;
+  //   double option1 = val[symbol];
+  //   double option2 = 10;
+  //   double option3 = 20;
+  //   double option4 = 30;
+  //   // notifyListeners();
+  //   gameOptions = [
+  //     option1.toString(),
+  //     option2.toString(),
+  //     option3.toString(),
+  //     option4.toString()
+  //   ];
+  //   notifyListeners();
+
+  //   // return [
+  //   //   option1.toString(),
+  //   //   option2.toString(),
+  //   //   option3.toString(),
+  //   //   option4.toString()
+  //   // ];
+  // }
 
   toggleOption(String option) {
     selectedOption = option;
