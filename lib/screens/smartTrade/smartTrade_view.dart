@@ -321,23 +321,40 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomAppButton(
-                                  text: provider.gameOption[index],
+                                  text: provider.gameOption(
+                                      context: context,
+                                      symbol: widget.symbol)[index],
                                   usePadding: true,
 
                                   ///  shimmer: true,
                                   onPressed: () {
-                                    provider.toggleOption(
-                                        provider.gameOption[index]);
+                                    provider.toggleOption(provider.gameOption(
+                                        context: context,
+                                        symbol: widget.symbol)[index]);
                                     provider.toggleOptionIndex(provider
-                                        .gameOption
-                                        .indexOf(provider.gameOption[index]));
+                                        .gameOption()
+                                        .indexOf(provider.gameOption(
+                                            context: context,
+                                            symbol: widget.symbol)[index]));
                                     print([
-                                      provider.gameOption[index],
-                                      provider.gameOption.indexOf(
-                                        provider.selectedOption,
-                                      ),
-                                      provider.gameOption.indexOf(
-                                              provider.gameOption[index]) ==
+                                      provider.gameOption(
+                                          context: context,
+                                          symbol: widget.symbol)[index],
+                                      provider
+                                          .gameOption(
+                                              context: context,
+                                              symbol: widget.symbol)
+                                          .indexOf(
+                                            provider.selectedOption,
+                                          ),
+                                      provider
+                                              .gameOption(
+                                                  context: context,
+                                                  symbol: widget.symbol)
+                                              .indexOf(provider.gameOption(
+                                                  context: context,
+                                                  symbol:
+                                                      widget.symbol)[index]) ==
                                           provider.selectedOptionIndex
                                     ]);
                                     // provider.setCurrentTab(
@@ -346,8 +363,14 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                     // );
                                     // Add your onPressed logic here
                                   },
-                                  color: provider.gameOption.indexOf(
-                                              provider.gameOption[index]) ==
+                                  color: provider
+                                              .gameOption(
+                                                  context: context,
+                                                  symbol: widget.symbol)
+                                              .indexOf(provider.gameOption(
+                                                  context: context,
+                                                  symbol:
+                                                      widget.symbol)[index]) ==
                                           provider.selectedOptionIndex
                                       ? ColorConfig.yellow
                                       : ColorConfig.tabincurrentindex,

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:smartbet/socket/provider.dart';
 
 class SmartTradeProvider extends ChangeNotifier {
-  List gameOption = ['\$30 - \$209', '\$10 - \$500', '\$30 - \$204', '\$30'];
+  List gameOptions = ['\$30 - \$209', '\$10 - \$500', '\$30 - \$204', '\$30'];
 
   int selectedOptionIndex = 100;
   String selectedOption = '';
@@ -14,14 +14,20 @@ class SmartTradeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List gameOptions({context, symbol}) {
+  List gameOption({context, symbol}) {
     Map val = Provider.of<SocketProvider>(context, listen: false)
         .smartTradeOptionValue;
     double option1 = val[symbol];
-    double option2 = 0;
-    double option3 = 0;
-    double option4 = 0;
-    return [option1, option2, option3, option4];
+    double option2 = 10;
+    double option3 = 20;
+    double option4 = 30;
+    notifyListeners();
+    return [
+      option1.toString(),
+      option2.toString(),
+      option3.toString(),
+      option4.toString()
+    ];
   }
 
   toggleOption(String option) {
