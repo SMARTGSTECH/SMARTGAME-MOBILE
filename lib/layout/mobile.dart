@@ -282,7 +282,7 @@ class _CoinMobileScreenState extends State<CoinMobileScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
                         // color: Colors.deepOrangeAccent,
-                        border: Border.all(color: ColorConfig.lightBoarder),
+                        //  border: Border.all(color: ColorConfig.lightBoarder),
                       ),
                       height: 180.h,
                       width: 200.w,
