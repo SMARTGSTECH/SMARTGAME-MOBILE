@@ -510,7 +510,7 @@ class _FruitMobileScreenState extends State<FruitMobileScreen> {
                           textColor: Colors.white,
                           borderRadius: 4.r,
                           height: 22.h,
-                          width: 55.w,
+                          width: 60.w,
                           size: 14,
                           onPressed: () {
                             final gameState = Provider.of<FruitStateProvider>(

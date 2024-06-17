@@ -305,9 +305,9 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       // ),
 
                       Container(
-                        //  color: ColorConfig.blue,
-                        width: 300.w,
-                        height: 100.h,
+                        //color: ColorConfig.blue,
+                        width: 230.w,
+                        height: 195.h,
                         child: Consumer2<SmartTradeProvider, SocketProvider>(
                             builder: (BuildContext context, smartTradeProvider,
                                 socketTradeProvider, _) {
@@ -315,10 +315,12 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                             gridCount: true,
                             useAspectRatio: true,
                             itemCount: 4,
-                            crossAxisCount: 2,
+                            crossAxisCount: 1,
                             crossAxisSpacing: 10.0,
                             mainAxisSpacing: 1.h,
                             itemBuilder: (BuildContext context, int index) {
+                              String indexname = socketTradeProvider
+                                  .gameSocketOption(widget.symbol)[index];
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomAppButton(
@@ -328,20 +330,13 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                                   ///  shimmer: true,
                                   onPressed: () {
-                                    print(socketTradeProvider.gameSocketOption(
-                                        widget.symbol)[index]);
-                                    // socketTradeProvider
-                                    // print(double.parse(
-                                    //     socketTradeProvider.gameSocketOption(
-                                    //         widget.symbol)[index]));
-                                    // print("object");
-                                    //     .gameSocketOption(widget.symbol);
+                                    print(indexname);
+
                                     smartTradeProvider.toggleOptionIndex(
-                                            socketTradeProvider
-                                                .gameSocketOption(widget.symbol)
-                                                .indexOf)(
-                                        socketTradeProvider.gameSocketOption(
-                                            widget.symbol)[index]);
+                                        socketTradeProvider
+                                            .gameSocketOption(widget.symbol)
+                                            .indexOf(indexname));
+
                                     // print([
                                     //   socketTradeProvider.gameSocketOption(
                                     //       widget.symbol)[index],
@@ -364,8 +359,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                   },
                                   color: socketTradeProvider
                                               .gameSocketOption(widget.symbol)
-                                              .indexOf(smartTradeProvider
-                                                  .gameOptions[index]) ==
+                                              .indexOf(indexname) ==
                                           smartTradeProvider.selectedOptionIndex
                                       ? ColorConfig.yellow
                                       : ColorConfig.tabincurrentindex,
@@ -373,14 +367,14 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                   borderRadius: 4.r,
                                   height: 0,
                                   width: 0,
-                                  size: 14,
+                                  size: 15,
                                   //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                                 ),
                               );
                             },
                           );
                         }),
-                      ).paddingTop(30.h),
+                      ).paddingTop(20.h),
 
                       //15.h.toInt().height,
 
@@ -391,7 +385,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       //     color: ColorConfig.iconColor,
                       //   ),
                       // ),
-                      15.h.toInt().height,
+                      // 1.h.toInt().height,
 
                       Consumer<SocketProvider>(
                           builder: (BuildContext context, model, _) {
@@ -422,7 +416,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                           textColor: Colors.white,
                           borderRadius: 4.r,
                           height: 22.h,
-                          width: 55.w,
+                          width: 60.w,
                           size: 14,
                           onPressed: () {
                             final gameState = Provider.of<SmartTradeProvider>(

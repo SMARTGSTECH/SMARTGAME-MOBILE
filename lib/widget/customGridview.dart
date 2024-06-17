@@ -32,7 +32,7 @@ class CustomGridView extends StatelessWidget {
                 crossAxisCount: crossAxisCount,
                 crossAxisSpacing: crossAxisSpacing,
                 mainAxisSpacing: mainAxisSpacing,
-                childAspectRatio: 2.7)
+                childAspectRatio: 4.7)
             : SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
                 crossAxisSpacing: crossAxisSpacing,

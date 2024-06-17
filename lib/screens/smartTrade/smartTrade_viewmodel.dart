@@ -44,3 +44,7 @@ class SmartTradeProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+//  height: 22.h,
+//                             width: 60.w,
+//                             size: 14,

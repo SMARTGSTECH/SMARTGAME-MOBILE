@@ -106,8 +106,8 @@ class CustomAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
-      width: width,
+      height: text.toLowerCase() == "play" ? 22.h : height,
+      width: text.toLowerCase() == "play" ? 60.w : width,
       child: Material(
         elevation: elevation,
         borderRadius: BorderRadius.circular(borderRadius),
@@ -137,7 +137,9 @@ class CustomAppButton extends StatelessWidget {
                     text,
                     style: primaryTextStyle(
                         color: ColorConfig.black,
-                        size: size.sp.toInt(),
+                        size: text.toLowerCase() == "play"
+                            ? 14.sp.toInt()
+                            : size.sp.toInt(),
                         weight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),

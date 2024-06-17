@@ -38,7 +38,7 @@ class SocketProvider extends ChangeNotifier {
 
   gameSocketOption(sym) {
     // print(object)
-    print(smartTradeOptionValue[sym].runtimeType);
+    // print(smartTradeOptionValue[sym].runtimeType);
 
     double val = sym == "BTC"
         ? 20.25
@@ -52,17 +52,16 @@ class SocketProvider extends ChangeNotifier {
     double symbolValue = double.parse(smartTradeOptionValue[sym].toString());
     double option1 = double.parse((symbolValue + val).toStringAsFixed(2));
     // print(double.parse((smartTradeOptionValue[sym] + 0.2).toString()));
-    print("here1");
+
     double option3 = double.parse((symbolValue - 0.01).toStringAsFixed(2));
-    print("here2");
 
     double option4 = double.parse((symbolValue - val).toStringAsFixed(2));
 //'\$${option1} \u2014 ∞',
-    print("here");
+
     return [
       '\$${option1} > ∞',
-      '\$${symbolValue.toStringAsFixed(2)} \u2014  \$${option1}',
-      '\$$option4 \u2014\$${option3}',
+      '\$${symbolValue.toStringAsFixed(2)} \u2014 \$${option1}',
+      '\$$option4 \u2014 \$${option3}',
       '\$${option4} < ∞'
     ];
   }

@@ -348,8 +348,8 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.r),
                                 // color: Colors.deepOrangeAccent,
-                                border:
-                                    Border.all(color: ColorConfig.lightBoarder),
+                                // border:
+                                //     Border.all(color: ColorConfig.lightBoarder),
                               ),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -630,9 +630,9 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                             color: ColorConfig.yellow,
                             textColor: Colors.white,
                             borderRadius: 5,
-                            height: 24,
-                            width: 60,
-                            size: 16
+                            height: 22.h,
+                            width: 60.w,
+                            size: 14
                             //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                             );
                       }),
