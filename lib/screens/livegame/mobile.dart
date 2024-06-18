@@ -159,11 +159,33 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                       text: model.activeLiveGame[index]
                                           ['title'],
                                       onTapFuntion: () {
+                                        final data =
+                                            model.activeLiveGame[index];
+
+                                        /// List activeOptionList =  model.activeLiveGame[index]
+                                        List options = [
+                                          data['optionone'],
+                                          data['optiontwo'],
+                                          data['optionthree'],
+                                          data['optionfour'],
+                                          data['optionfive'],
+                                          data['optionsix'],
+                                          data['optionseven'],
+                                          data['optioneight'],
+                                          data['optionnine'],
+                                          data['optionten']
+                                        ]
+                                            .where(
+                                                (option) => option.isNotEmpty)
+                                            .toList();
+
+                                        print(options);
+                                        print(options.runtimeType);
                                         LiveEventMobileScreen(
                                           symbol: '',
                                           img: model.activeLiveGame[index]
                                               ['image'],
-                                          option: model.activeLiveGame,
+                                          option: options,
                                           // img: coinP.coinArray
                                           //     .where((element) =>
                                           //         element.symbol

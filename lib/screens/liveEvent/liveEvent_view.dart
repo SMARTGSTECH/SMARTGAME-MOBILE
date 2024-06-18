@@ -251,7 +251,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                     child: CustomGridView(
                       gridCount: true,
                       useAspectRatio: true,
-                      itemCount: provider.gameOption.length,
+                      itemCount: widget.option.length,
                       crossAxisCount: 2,
                       crossAxisSpacing: 10.0,
                       mainAxisSpacing: 1.h,
