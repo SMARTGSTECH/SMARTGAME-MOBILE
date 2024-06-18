@@ -19,13 +19,13 @@ class LiveEventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map> fetchLiveEvent(context) async {
+  Future<List> fetchLiveEvent(context) async {
     final url = Uri.parse(
         'https://server.smartcryptobet.co/v1/games/active?key=K10llGN3RB');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        final Map data = json.decode(response.body)['data'];
+        final List data = json.decode(response.body)['data'];
         print(data);
         print("This is the data gotten from the live event api");
 
