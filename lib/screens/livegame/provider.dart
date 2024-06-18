@@ -14,6 +14,8 @@ class LiveEventProvider extends ChangeNotifier {
 
   int selectedTab = 0;
 
+  List activeLiveGame = [];
+
   toggleTab(int index) {
     selectedTab = index;
     notifyListeners();
