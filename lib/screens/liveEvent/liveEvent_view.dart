@@ -266,18 +266,18 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
 
                             ///  shimmer: true,
                             onPressed: () {
-                              provider.toggleOption(provider.gameOption[index]);
-                              provider.toggleOptionIndex(provider.gameOption
-                                  .indexOf(provider.gameOption[index]));
-                              print([
-                                provider.gameOption[index],
-                                provider.gameOption.indexOf(
-                                  provider.selectedOption,
-                                ),
-                                provider.gameOption
-                                        .indexOf(provider.gameOption[index]) ==
-                                    provider.selectedOptionIndex
-                              ]);
+                              provider.toggleOption(widget.option[index]);
+                              provider.toggleOptionIndex(
+                                  widget.option.indexOf(widget.option[index]));
+                              // print([
+                              //   provider.gameOption[index],
+                              //   provider.gameOption.indexOf(
+                              //     provider.selectedOption,
+                              //   ),
+                              //   provider.gameOption
+                              //           .indexOf(provider.gameOption[index]) ==
+                              //       provider.selectedOptionIndex
+                              // ]);
                               // provider.setCurrentTab(
                               //   tail: !provider.tail,
                               //   head: false,
