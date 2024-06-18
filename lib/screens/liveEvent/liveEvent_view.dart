@@ -249,7 +249,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                   return Container(
                     // color: ColorConfig.blue,
                     width: 250.w,
-                    height: widget.option.length * 50.h,
+                    height: widget.option.length * 48.h,
                     child: CustomGridView(
                       gridCount: true,
                       useAspectRatio: true,
@@ -261,7 +261,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomAppButton(
-                            text: provider.gameOption[index],
+                            text: widget.option[index],
                             usePadding: true,
 
                             ///  shimmer: true,
