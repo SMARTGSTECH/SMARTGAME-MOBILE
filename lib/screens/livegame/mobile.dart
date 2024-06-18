@@ -25,6 +25,9 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
     return Consumer<LiveEventProvider>(
       builder: (BuildContext context, model, _) {
         return SingleChildScrollView(
+          physics: model.selectedTab == 0
+              ? NeverScrollableScrollPhysics()
+              : BouncingScrollPhysics(),
           child: Column(
             children: [
               Padding(

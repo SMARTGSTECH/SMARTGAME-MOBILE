@@ -55,7 +55,7 @@ class ExpandedWidget extends StatelessWidget {
                         Container(
                           color: Colors.transparent,
                           height: 25.h,
-                          width: 164.w,
+                          width: 163.w,
                           child: Row(
                             children: [
                               symbol != ''

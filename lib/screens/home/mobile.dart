@@ -10,6 +10,7 @@ import 'package:smartbet/screens/dice/mobile.dart';
 import 'package:smartbet/screens/fruit/mobile.dart';
 import 'package:smartbet/screens/home/components/imageCarousel.dart';
 import 'package:smartbet/screens/home/provider.dart';
+import 'package:smartbet/screens/livegame/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/utils/config/size.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
@@ -32,6 +33,8 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
     Provider.of<CoinCapProvider>(context, listen: false).fetchCoin();
     Provider.of<CoinCapProvider>(context, listen: false)
         .fetchInitialdata(context);
+    Provider.of<LiveEventProvider>(context, listen: false)
+        .fetchLiveEvent(context);
   }
 
   @override

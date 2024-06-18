@@ -304,14 +304,14 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       //   ],
                       // ),
 
-                      Container(
-                        //color: ColorConfig.blue,
-                        width: 230.w,
-                        height: 195.h,
-                        child: Consumer2<SmartTradeProvider, SocketProvider>(
-                            builder: (BuildContext context, smartTradeProvider,
-                                socketTradeProvider, _) {
-                          return CustomGridView(
+                      Consumer2<SmartTradeProvider, SocketProvider>(builder:
+                          (BuildContext context, smartTradeProvider,
+                              socketTradeProvider, _) {
+                        return Container(
+                          // color: Colors.amber,
+                          width: 230.w,
+                          height: 180.h,
+                          child: CustomGridView(
                             gridCount: true,
                             useAspectRatio: true,
                             itemCount: 4,
@@ -372,9 +372,9 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                 ),
                               );
                             },
-                          );
-                        }),
-                      ).paddingTop(20.h),
+                          ),
+                        ).paddingTop(20.h);
+                      }),
 
                       //15.h.toInt().height,
 
@@ -485,10 +485,13 @@ class gameCard extends StatelessWidget {
       height: 150.h,
       width: 300.w,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [
-            Color.fromARGB(0, 70, 59, 59),
-            Colors.black,
+            //fromARGB(0, 75, 71, 71),
+            Colors.transparent,
+            ColorConfig.appBar.withOpacity(0.5),
+
+            // ColorConfig.iconColor.withOpacity(0.2),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
