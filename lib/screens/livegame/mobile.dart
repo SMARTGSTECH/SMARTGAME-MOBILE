@@ -163,6 +163,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                           symbol: '',
                                           img: model.activeLiveGame[index]
                                               ['image'],
+                                          option: model.activeLiveGame,
                                           // img: coinP.coinArray
                                           //     .where((element) =>
                                           //         element.symbol
