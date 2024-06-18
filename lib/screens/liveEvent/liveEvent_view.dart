@@ -22,10 +22,15 @@ import 'package:smartbet/widget/stakeContainer.dart';
 
 class LiveEventMobileScreen extends StatefulWidget {
   const LiveEventMobileScreen(
-      {super.key, required this.symbol, required this.img});
+      {super.key,
+      required this.symbol,
+      required this.img,
+      required this.option});
 
   final String symbol;
   final String img;
+  final List option;
+
   @override
   State<LiveEventMobileScreen> createState() => _LiveEventMobileScreenState();
 }
@@ -427,7 +432,7 @@ class gameCard extends StatelessWidget {
           ? BoxDecoration(
               image: DecorationImage(
                   //  opacity: 0.5,
-                  fit: BoxFit.fitHeight,
+                  fit: symbol == '' ? BoxFit.cover : BoxFit.fitHeight,
                   image: NetworkImage(img)),
               gradient: LinearGradient(
                 colors: symbol == ''

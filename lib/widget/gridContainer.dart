@@ -44,12 +44,24 @@ class ExpandedWidget extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: Image.network(
-                        img,
-                      ).cornerRadiusWithClipRRect(50),
-                    ),
+                    symbol != ''
+                        ? Padding(
+                            padding: const EdgeInsets.all(50.0),
+                            child: Image.network(
+                              img,
+                            ).cornerRadiusWithClipRRect(50),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  //opacity: 0.5,
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(img)),
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            width: double.infinity,
+                          ),
                     Row(
                       children: [
                         Container(
@@ -169,7 +181,7 @@ class ExpandedWidget extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-                fontSize: 15.sp,
+                fontSize: symbol == '' ? 12.sp : 15.sp,
                 // color: ColorConfig.iconColor,
                 fontWeight: FontWeight.bold),
           ).paddingBottom(6.h).paddingLeft(1.w),

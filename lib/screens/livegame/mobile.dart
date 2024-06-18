@@ -129,54 +129,58 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                 );
                               },
                             )
-                          : CustomGridView(
-                              itemCount: model.selectedTab == 0 ? 4 : 30,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 10.0,
-                              itemBuilder: (context, index) {
-                                final coinP = Provider.of<CoinCapProvider>(
-                                    context,
-                                    listen: false);
-                                print(coinP.coinArray
-                                    .where((element) =>
-                                        element.symbol.toLowerCase() == "ton")
-                                    .first
-                                    .imageUrl);
-                                String dataImg = coinP.coinArray
-                                    .where((element) =>
-                                        element.symbol.toLowerCase() == "sol")
-                                    .first
-                                    .imageUrl;
-                                return ExpandedWidget(
-                                  img: dataImg,
-                                  text: "\$106.85 Available",
-                                  onTapFuntion: () {
-                                    LiveEventMobileScreen(
-                                      symbol: coinP.coinArray
-                                          .where((element) =>
-                                              element.symbol.toLowerCase() ==
-                                              model.stGrid[index])
-                                          .first
-                                          .symbol
-                                          .toUpperCase(),
-                                      img: coinP.coinArray
-                                          .where((element) =>
-                                              element.symbol.toLowerCase() ==
-                                              model.stGrid[index])
-                                          .first
-                                          .imageUrl,
-                                    ).launch(context);
-                                    // text2.toLowerCase() == "Dice".toLowerCase()
-                                    //     ? DiceMobileScreen().launch(context,
-                                    //         pageRouteAnimation: PageRouteAnimation.Fade)
-                                    //     : FruitMobileScreen().launch(context,
-                                    //         pageRouteAnimation: PageRouteAnimation.Fade);
+                          : model.activeLiveGame == []
+                              ? Center(child: Text("No game active"))
+                              : CustomGridView(
+                                  itemCount: model.selectedTab == 0
+                                      ? 4
+                                      : model.activeLiveGame.length,
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 10.0,
+                                  itemBuilder: (context, index) {
+                                    final coinP = Provider.of<CoinCapProvider>(
+                                        context,
+                                        listen: false);
+                                    print(coinP.coinArray
+                                        .where((element) =>
+                                            element.symbol.toLowerCase() ==
+                                            "ton")
+                                        .first
+                                        .imageUrl);
+                                    String dataImg = coinP.coinArray
+                                        .where((element) =>
+                                            element.symbol.toLowerCase() ==
+                                            "sol")
+                                        .first
+                                        .imageUrl;
+                                    return ExpandedWidget(
+                                      img: model.activeLiveGame[index]['image'],
+                                      text: model.activeLiveGame[index]
+                                          ['title'],
+                                      onTapFuntion: () {
+                                        LiveEventMobileScreen(
+                                          symbol: '',
+                                          img: model.activeLiveGame[index]
+                                              ['image'],
+                                          // img: coinP.coinArray
+                                          //     .where((element) =>
+                                          //         element.symbol
+                                          //             .toLowerCase() ==
+                                          //         model.stGrid[index])
+                                          //     .first
+                                          //     .imageUrl,
+                                        ).launch(context);
+                                        // text2.toLowerCase() == "Dice".toLowerCase()
+                                        //     ? DiceMobileScreen().launch(context,
+                                        //         pageRouteAnimation: PageRouteAnimation.Fade)
+                                        //     : FruitMobileScreen().launch(context,
+                                        //         pageRouteAnimation: PageRouteAnimation.Fade);
+                                      },
+                                      count: '03',
+                                    );
                                   },
-                                  count: '03',
-                                );
-                              },
-                            ),
+                                ),
                     ),
                     // 100.height
                   ],

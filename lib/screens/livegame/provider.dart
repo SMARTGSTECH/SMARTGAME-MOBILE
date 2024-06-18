@@ -29,6 +29,7 @@ class LiveEventProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final List data = json.decode(response.body)['data'];
         print(data);
+        activeLiveGame = data;
         print("This is the data gotten from the live event api");
 
         return data;
