@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/utils/helpers.dart';
 import 'package:smartbet/walletConnect/provider.dart';
@@ -90,15 +91,23 @@ class walletContainer extends StatelessWidget {
 
                     Column(
                       children: [
-                        // Icon(
-                        //   Icons.abc_sharp,
-                        //   color: ColorConfig.red,
-                        // ).onTap(() async {
-                        //   //   await provider.service.init();
-                        //   // await provider.service
-                        //   //     .open(context: context)
-                        //   //     .whenComplete(() {});
-                        // }),
+                        Icon(
+                          Icons.abc_sharp,
+                          color: ColorConfig.red,
+                        ).onTap(() async {
+                          await provider.initTonwalletconnect();
+                          //   await provider.service.init();
+                          // await provider.service
+                          //     .open(context: context)
+                          //     .whenComplete(() {});
+                        }),
+                        if (provider.universalLink != null)
+                          QrImageView(
+                            data: provider.universalLink!,
+                            version: QrVersions.auto,
+                            size: 320,
+                            gapless: false,
+                          )
                         // WalletConnectModalConnect(
                         //   service: provider.service,
                         // ),

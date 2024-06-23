@@ -63,7 +63,8 @@ dependencies:
   url_strategy: ^0.2.0
   dio: ^5.4.1
   http: ^0.13.5
-  darttonconnect: ^1.0.3
+  darttonconnect: ^1.0.1
+  qr_flutter: ^4.1.0
   # walletconnect_flutter_v2: ^2.1.11
   # walletconnect_modal_flutter: ^2.1.14
   # web3modal_flutter: ^3.1.2

@@ -13,6 +13,8 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:darttonconnect/models/wallet_app.dart';
+import 'package:darttonconnect/ton_connect.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,47 @@ class UserWeb3Provider extends ChangeNotifier {
   List cryptoRate = [];
   String cryptoBNBUSDT = "396";
   double userConvertedStaked = 0.0;
+  String? universalLink;
+  late final TonConnect connector;
+  Map<String, String>? walletConnectionSource;
+
+  Future<void> initTonwalletconnect() async {
+    try {
+      connector = TonConnect(
+          'https://gist.githubusercontent.com/romanovichim/e81d599a6f3798bb9f74ab1970a8b376/raw/43e00b0abc824ef272ac6d0f8083d21456602adf/gistfiletest.txt');
+      final List<WalletApp> wallets = await connector.getWallets();
+      print('Wallets: $wallets');
+      walletConnectionSource = {
+        "universal_url": 'https://app.tonkeeper.com/ton-connect',
+        "bridge_url": 'https://bridge.tonapi.io/bridge'
+      };
+      final universalLink =
+          await connector.connect(walletConnectionSource as WalletApp);
+      updateQRCode(universalLink);
+    } catch (e) {
+      print(e);
+    }
+    // print(connector.provider!.connect({
+    //   "url": "https://github.com/romanovichim/dartTonconnect",
+    //   "name": "DartTonConnect",
+    //   "iconUrl":
+    //       "https://raw.githubusercontent.com/romanovichim/dartTonconnect/main/darttonconnect.png"
+    // }));
+
+    /// Update state/reactive variables to show updates in the ui.
+    // void statusChanged(dynamic walletInfo) {
+    //   print('Wallet info: $walletInfo');
+    // }
+
+    // connector.onStatusChange(statusChanged);
+  }
+
+  void updateQRCode(String newData) {
+    universalLink = newData;
+    print(universalLink);
+    notifyListeners();
+  }
+
   // late W3MService w3mService;
   // Web3App? _web3App;
   // late WalletConnectModalService service;
