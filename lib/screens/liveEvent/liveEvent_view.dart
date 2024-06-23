@@ -25,11 +25,13 @@ class LiveEventMobileScreen extends StatefulWidget {
       {super.key,
       required this.symbol,
       required this.img,
-      required this.option});
+      required this.option,
+      required this.info});
 
   final String symbol;
   final String img;
   final List option;
+  final String info;
 
   @override
   State<LiveEventMobileScreen> createState() => _LiveEventMobileScreenState();
@@ -237,9 +239,20 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                   count: 30.toString(),
                   img: widget.img,
                   symbol: '',
-                  tp: '',
+                  tp: '30',
+                  info: widget.info,
                 ),
-
+                10.h.toInt().height,
+                Text(
+                  widget.info, // example long text
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  softWrap: true, // enable soft wrapping
+                  overflow: TextOverflow.visible, // specify overflow behavior
+                  maxLines: null, // allow as many lines as needed
+                ).paddingSymmetric(horizontal: 23.w).paddingLeft(2.w),
                 Consumer<LiveEventPredictionProvider>(
                     builder: (BuildContext context, provider, _) {
                   // : provider.isOdd(provider.gameOption.length)
@@ -300,7 +313,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                       },
                     ),
                   );
-                }).paddingTop(30.h),
+                }).paddingTop(13.h),
                 //  15.h.toInt().height,
 
                 // Text(
@@ -392,8 +405,10 @@ class gameCard extends StatelessWidget {
     required this.symbol,
     required this.count,
     required this.tp,
+    required this.info,
   });
   final String img;
+  final String info;
   final String symbol;
   final String count;
   final String tp;
@@ -478,26 +493,25 @@ class gameCard extends StatelessWidget {
                   width: 298.w,
                   child: Row(
                     children: [
-                      symbol != ''
-                          ? Container(
-                              decoration: BoxDecoration(
-                                color: ColorConfig.appBar,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: radiusCircular(10.r),
-                                    topRight: radiusCircular(10.r),
-                                    bottomRight: radiusCircular(10.r)),
-                              ),
-                              height: 30.h,
-                              width: 50.w,
-                              child: Text(
-                                symbol,
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  // color: ColorConfig.iconColor,
-                                ),
-                              ).center(),
-                            )
-                          : Container(),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: ColorConfig.appBar,
+                          borderRadius: BorderRadius.only(
+                              topLeft: radiusCircular(10.r),
+                              topRight: radiusCircular(10.r),
+                              bottomRight: radiusCircular(10.r)),
+                        ),
+                        height: 30.h,
+                        width: (23 * tp.length).w,
+                        child: Text(
+                          '\$$tp',
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            // color: ColorConfig.iconColor,
+                          ),
+                        ).center(),
+                      ),
+                      //Container(),
                       Container().expand(),
                       Container(
                         decoration: BoxDecoration(
@@ -542,7 +556,7 @@ class gameCard extends StatelessWidget {
                   highlightColor: Colors.white,
                   period: Duration(milliseconds: 1500),
                   child: Text(
-                    "Total Pool: ",
+                    '',
                     style: TextStyle(
                         fontSize: 15.sp,
                         // color: ColorConfig.iconColor,
@@ -555,7 +569,7 @@ class gameCard extends StatelessWidget {
                   highlightColor: Colors.white,
                   period: Duration(milliseconds: 1500),
                   child: Text(
-                    "\$40",
+                    '',
                     style: TextStyle(
                         fontSize: 15.sp,
                         // color: ColorConfig.iconColor,

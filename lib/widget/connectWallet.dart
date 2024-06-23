@@ -10,7 +10,7 @@ import 'package:smartbet/widget/alertSnackBar.dart';
 import 'package:smartbet/widget/balalnceContainer.dart';
 import 'package:smartbet/widget/button.dart';
 import 'package:smartbet/widget/walletTabContainer.dart';
-import 'package:walletconnect_modal_flutter/widgets/walletconnect_modal_connect.dart';
+// import 'package:walletconnect_modal_flutter/widgets/walletconnect_modal_connect.dart';
 
 class walletContainer extends StatelessWidget {
   const walletContainer({
@@ -23,7 +23,7 @@ class walletContainer extends StatelessWidget {
     return Consumer<UserWeb3Provider>(
       builder: (BuildContext context, provider, _) {
         //  provider.initializeW3MService();
-        provider.initialize(context);
+        //provider.initialize(context);
         return Container(
           height: size ?? 240,
           width: size ?? 300,
@@ -99,9 +99,9 @@ class walletContainer extends StatelessWidget {
                         //   //     .open(context: context)
                         //   //     .whenComplete(() {});
                         // }),
-                        WalletConnectModalConnect(
-                          service: provider.service,
-                        ),
+                        // WalletConnectModalConnect(
+                        //   service: provider.service,
+                        // ),
                         // Icon(
                         //   Icons.h_mobiledata,
                         //   color: ColorConfig.red,

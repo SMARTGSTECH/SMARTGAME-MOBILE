@@ -187,8 +187,8 @@ class ExpandedWidget extends StatelessWidget {
             //  color: Colors.black.withOpacity(0.4),
           ),
           Shimmer.fromColors(
-            baseColor: Colors.grey,
-            highlightColor: Colors.white,
+            baseColor: Colors.white,
+            highlightColor: Colors.grey,
             period: Duration(milliseconds: 1500),
             child: Text(
               text,

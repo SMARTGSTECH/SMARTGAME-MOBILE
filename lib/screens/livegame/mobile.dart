@@ -182,6 +182,8 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                         print(options);
                                         print(options.runtimeType);
                                         LiveEventMobileScreen(
+                                          info: model.activeLiveGame[index]
+                                              ['description'],
                                           symbol: '',
                                           img: model.activeLiveGame[index]
                                               ['image'],

@@ -28,10 +28,10 @@ class ExpandedWidget extends StatelessWidget {
             ? Container(
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [
-                      Color.fromARGB(0, 70, 59, 59),
-                      Colors.black,
+                      Colors.transparent,
+                      ColorConfig.appBar.withOpacity(0.5),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -175,8 +175,10 @@ class ExpandedWidget extends StatelessWidget {
                 //  color: Colors.black.withOpacity(0.4),
               ),
         Shimmer.fromColors(
-          baseColor: Colors.grey,
-          highlightColor: Colors.white,
+          baseColor: Colors.white,
+
+          //   baseColor: Colors.grey,
+          highlightColor: Colors.grey,
           period: Duration(milliseconds: 1500),
           child: Text(
             text,

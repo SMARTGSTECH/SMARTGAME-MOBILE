@@ -24,10 +24,10 @@ import 'package:smartbet/utils/base-url.dart';
 import 'package:smartbet/utils/env.dart';
 import 'package:smartbet/utils/helpers.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
-import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
+// import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'package:http/http.dart' as http;
-import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
-import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
+// import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
+// import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class UserWeb3Provider extends ChangeNotifier {
@@ -44,31 +44,31 @@ class UserWeb3Provider extends ChangeNotifier {
   String cryptoBNBUSDT = "396";
   double userConvertedStaked = 0.0;
   // late W3MService w3mService;
-  Web3App? _web3App;
-  late WalletConnectModalService service;
-  Future<void> initialize(context) async {
-    // try {
-    debugPrint('Project ID: ${DartDefines.projectId}');
-    service = WalletConnectModalService(
-      projectId: 'be0d3671eaede1506a668e53185c4d28',
-      metadata: const PairingMetadata(
-        name: 'BEI',
-        description: 'SmartBet',
-        url: 'https://walletconnect.com/',
-        icons: ['https://walletconnect.com/walletconnect-logo.png'],
-        redirect: Redirect(
-          native: 'flutterdapp://',
-          universal: 'https://www.walletconnect.com',
-        ),
-      ),
-    );
-    await service.init().whenComplete(() {
-      print("initlized");
+  // Web3App? _web3App;
+  // late WalletConnectModalService service;
+  // Future<void> initialize(context) async {
+  //   // try {
+  //   debugPrint('Project ID: ${DartDefines.projectId}');
+  //   service = WalletConnectModalService(
+  //     projectId: 'be0d3671eaede1506a668e53185c4d28',
+  //     metadata: const PairingMetadata(
+  //       name: 'BEI',
+  //       description: 'SmartBet',
+  //       url: 'https://walletconnect.com/',
+  //       icons: ['https://walletconnect.com/walletconnect-logo.png'],
+  //       redirect: Redirect(
+  //         native: 'flutterdapp://',
+  //         universal: 'https://www.walletconnect.com',
+  //       ),
+  //     ),
+  //   );
+  //   await service.init().whenComplete(() {
+  //     print("initlized");
 
-      print("open");
-    });
-    // notifyListeners();
-  }
+  //     print("open");
+  //   });
+  //   // notifyListeners();
+  // }
 
   connect() async {}
 
