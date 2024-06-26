@@ -8,6 +8,7 @@
 
 #include <audioplayers_linux/audioplayers_linux_plugin.h>
 #include <nb_utils/nb_utils_plugin.h>
+#include <webcrypto/webcrypto_plugin.h>
 
 void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) audioplayers_linux_registrar =
@@ -16,4 +17,7 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) nb_utils_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "nb_utils_plugin");
   nb_utils_plugin_register_with_registrar(nb_utils_registrar);
+  g_autoptr(FlPluginRegistrar) webcrypto_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "WebcryptoPlugin");
+  webcrypto_plugin_register_with_registrar(webcrypto_registrar);
 }

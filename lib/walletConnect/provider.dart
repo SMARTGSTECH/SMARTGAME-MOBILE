@@ -28,6 +28,7 @@ import 'package:smartbet/utils/helpers.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
 // import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'package:http/http.dart' as http;
+import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
 // import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';
@@ -48,6 +49,13 @@ class UserWeb3Provider extends ChangeNotifier {
   String? universalLink;
   late final TonConnect connector;
   Map<String, String>? walletConnectionSource;
+  Object? output;
+  final adapter = SolanaWalletAdapter(
+    const AppIdentity(),
+    // NOTE: CONNECT THE WALLET APPLICATION
+    //       TO THE SAME NETWORK.
+    cluster: Cluster.mainnet,
+  );
 
   Future<void> initTonwalletconnect() async {
     try {
@@ -59,9 +67,9 @@ class UserWeb3Provider extends ChangeNotifier {
         "universal_url": 'https://app.tonkeeper.com/ton-connect',
         "bridge_url": 'https://bridge.tonapi.io/bridge'
       };
-      final universalLink =
-          await connector.connect(walletConnectionSource as WalletApp);
+      final universalLink = await connector.connect(wallets.first);
       updateQRCode(universalLink);
+      connector.onStatusChange(statusChanged);
     } catch (e) {
       print(e);
     }
@@ -78,6 +86,10 @@ class UserWeb3Provider extends ChangeNotifier {
     // }
 
     // connector.onStatusChange(statusChanged);
+  }
+
+  void statusChanged(dynamic walletInfo) {
+    print('Wallet info: $walletInfo');
   }
 
   void updateQRCode(String newData) {

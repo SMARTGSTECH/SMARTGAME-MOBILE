@@ -91,6 +91,13 @@ class walletContainer extends StatelessWidget {
 
                     Column(
                       children: [
+                        const Icon(
+                          Icons.inbox,
+                          color: Colors.brown,
+                        ).onTap(() {
+                          provider.adapter.authorize().then(
+                              (value) => provider.output = value.toJson());
+                        }),
                         Icon(
                           Icons.abc_sharp,
                           color: ColorConfig.red,
@@ -103,11 +110,14 @@ class walletContainer extends StatelessWidget {
                         }),
                         if (provider.universalLink != null)
                           QrImageView(
+                            backgroundColor: Colors.white,
                             data: provider.universalLink!,
                             version: QrVersions.auto,
-                            size: 320,
+                            size: 120,
                             gapless: false,
-                          )
+                          ).onTap(() {
+                            print(provider.connector.wallet!.account);
+                          })
                         // WalletConnectModalConnect(
                         //   service: provider.service,
                         // ),
