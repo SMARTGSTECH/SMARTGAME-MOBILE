@@ -136,7 +136,17 @@ class walletContainer extends StatelessWidget {
                             gapless: false,
                           ).onTap(() {
                             print(provider.connector.wallet!.account);
-                          })
+                          }),
+                        Icon(
+                          Icons.earbuds,
+                          color: ColorConfig.red,
+                        ).onTap(() async {
+                          await provider.initFuntionWC();
+                          //   await provider.service.init();
+                          // await provider.service
+                          //     .open(context: context)
+                          //     .whenComplete(() {});
+                        }),
                         // WalletConnectModalConnect(
                         //   service: provider.service,
                         // ),

@@ -66,6 +66,8 @@ dependencies:
   darttonconnect: ^1.0.1
   qr_flutter: ^4.1.0
   solana_wallet_adapter: ^0.0.7
+
+  # wallet_connect_v2: ^1.0.9
   # walletconnect_flutter_v2: ^2.1.11
   # walletconnect_modal_flutter: ^2.1.14
   # web3modal_flutter: ^3.1.2

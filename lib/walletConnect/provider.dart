@@ -29,6 +29,8 @@ import 'package:smartbet/widget/alertSnackBar.dart';
 // import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'package:http/http.dart' as http;
 import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
+
+// import 'package:wallet_connect_v2/wallet_connect_v2.dart';
 // import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';
@@ -49,6 +51,7 @@ class UserWeb3Provider extends ChangeNotifier {
   String? universalLink;
   late final TonConnect connector;
   Map<String, String>? walletConnectionSource;
+  //final client = WalletConnectV2();
   Object? output;
   final adapter = SolanaWalletAdapter(
     const AppIdentity(name: "SmartBet"),
@@ -56,6 +59,20 @@ class UserWeb3Provider extends ChangeNotifier {
     //       TO THE SAME NETWORK.
     cluster: Cluster.mainnet,
   );
+
+  initFuntionWC() async {
+    // client
+    //     .init(
+    //         projectId: 'be0d3671eaede1506a668e53185c4d28',
+    //         appMetadata: AppMetadata(
+    //             name: 'Flutter Wallet',
+    //             url: 'https://avacus.cc',
+    //             description: 'Flutter Wallet by Avacus',
+    //             icons: ['https://avacus.cc/apple-icon-180x180.png'],
+    //             // ignore: avoid_print
+    //             redirect: 'wcexample'))
+    //     .then((value) => print('this has completed '));
+  }
 
   Future<void> initTonwalletconnect() async {
     try {
