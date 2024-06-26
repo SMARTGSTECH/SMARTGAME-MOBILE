@@ -95,12 +95,16 @@ class walletContainer extends StatelessWidget {
                           Icons.inbox,
                           color: Colors.green,
                         ).onTap(() {
+                          toast(
+                              provider.adapter.state!.connectedAccount!.label);
+                          toast(provider
+                              .adapter.state!.connectedAccount!.addressBase58);
                           print(provider
                               .adapter.state!.connectedAccount!.addressBase58);
 
                           print([
                             provider.adapter.state,
-                            provider.adapter.identity,
+                            provider.adapter.identity.name,
                             provider.adapter.isAuthorized
                           ]); // provider.adapter
                           //     .authorize()
