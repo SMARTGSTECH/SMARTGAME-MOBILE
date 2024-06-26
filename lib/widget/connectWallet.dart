@@ -93,10 +93,29 @@ class walletContainer extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.inbox,
+                          color: Colors.green,
+                        ).onTap(() {
+                          print(provider
+                              .adapter.state!.connectedAccount!.addressBase58);
+
+                          print([
+                            provider.adapter.state,
+                            provider.adapter.identity,
+                            provider.adapter.isAuthorized
+                          ]); // provider.adapter
+                          //     .authorize()
+                          //     .then((value) => provider.output = value.toJson())
+                          //     .catchError((error) => provider.output = error);
+                        }),
+                        const Icon(
+                          Icons.inbox,
                           color: Colors.brown,
                         ).onTap(() {
-                          provider.adapter.authorize().then(
-                              (value) => provider.output = value.toJson());
+                          //   provider.adapter.state!.connectedAccount;
+                          provider.adapter
+                              .authorize()
+                              .then((value) => provider.output = value.toJson())
+                              .catchError((error) => provider.output = error);
                         }),
                         Icon(
                           Icons.abc_sharp,

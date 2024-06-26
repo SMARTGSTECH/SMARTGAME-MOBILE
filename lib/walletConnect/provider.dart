@@ -51,7 +51,7 @@ class UserWeb3Provider extends ChangeNotifier {
   Map<String, String>? walletConnectionSource;
   Object? output;
   final adapter = SolanaWalletAdapter(
-    const AppIdentity(),
+    const AppIdentity(name: "SmartBet"),
     // NOTE: CONNECT THE WALLET APPLICATION
     //       TO THE SAME NETWORK.
     cluster: Cluster.mainnet,
