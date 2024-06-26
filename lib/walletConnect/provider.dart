@@ -30,7 +30,6 @@ import 'package:smartbet/widget/alertSnackBar.dart';
 import 'package:http/http.dart' as http;
 import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
 
-// import 'package:wallet_connect_v2/wallet_connect_v2.dart';
 // import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';

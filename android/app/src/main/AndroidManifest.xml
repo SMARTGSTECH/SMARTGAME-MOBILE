@@ -1,4 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+     <queries>
+    <!-- <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="metamask" />
+        </intent> -->
+    <package android:name="io.metamask"/>
+    <package android:name="com.wallet.crypto.trustapp"/>
+    <package android:name="io.gnosis.safe"/>
+    <package android:name="me.rainbow"/>
+        <!-- Add other wallet schemes names here -->
+    </queries> 
     <application
         android:enableOnBackInvokedCallback="true"
         android:label="smartbet"
@@ -41,20 +58,4 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    <queries>
-    <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="metamask" />
-        </intent>
-    <package android:name="io.metamask"/>
-    <package android:name="com.wallet.crypto.trustapp"/>
-    <package android:name="io.gnosis.safe"/>
-    <package android:name="me.rainbow"/>
-        <!-- Add other wallet schemes names here -->
-    </queries> 
 </manifest>

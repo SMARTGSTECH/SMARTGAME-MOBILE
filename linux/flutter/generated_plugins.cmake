@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_linux
   nb_utils
+  url_launcher_linux
   webcrypto
 )
 
