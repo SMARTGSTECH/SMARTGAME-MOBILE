@@ -177,6 +177,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  build_config:
+    dependency: transitive
+    description:
+      name: build_config
+      sha256: bf80fcfb46a29945b423bd9aad884590fb1dc69b330a4d4700cac476af1708d1
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   built_collection:
     dependency: transitive
     description:
@@ -217,6 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  checked_yaml:
+    dependency: transitive
+    description:
+      name: checked_yaml
+      sha256: feb6bed21949061731a7a75fc5d2aa727cf160b91af9a3e464c5e3a32e28b5ff
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   clock:
     dependency: transitive
     description:
@@ -624,6 +640,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  json_serializable:
+    dependency: transitive
+    description:
+      name: json_serializable
+      sha256: ea1432d167339ea9b5bb153f0571d0039607a873d6e04e0117af043f14a1fd4b
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.8.0"
   just_audio:
     dependency: "direct main"
     description:
@@ -744,6 +768,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  particle_auth_core:
+    dependency: transitive
+    description:
+      name: particle_auth_core
+      sha256: "89784abf2107c86e57a44f61edac572aa44cdfc127983fb7120b4e9269f17770"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
+  particle_base:
+    dependency: transitive
+    description:
+      name: particle_base
+      sha256: c9f9164d14c9fb79279ad40ce8c80f56ca11ab476df641b5acca8cb5ebf0351d
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
+  particle_connect:
+    dependency: "direct main"
+    description:
+      name: particle_connect
+      sha256: "51640334b1a9db15e75c0153ea6f8437c177345a534af77e4bcc5607d9a124fe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
   path:
     dependency: transitive
     description:
@@ -864,6 +912,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  pubspec_parse:
+    dependency: transitive
+    description:
+      name: pubspec_parse
+      sha256: c799b721d79eb6ee6fa56f00c04b472dcd44a30d258fac2174a6ec57302678f8
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
   qr:
     dependency: transitive
     description:
@@ -888,6 +944,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  retrofit:
+    dependency: transitive
+    description:
+      name: retrofit
+      sha256: "13a2865c0d97da580ea4e3c64d412d81f365fd5b26be2a18fca9582e021da37a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   rxdart:
     dependency: transitive
     description:
@@ -1053,6 +1117,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  source_helper:
+    dependency: transitive
+    description:
+      name: source_helper
+      sha256: "6adebc0006c37dd63fe05bca0a929b99f06402fc95aa35bf36d67f5c06de01fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.4"
   source_span:
     dependency: transitive
     description:

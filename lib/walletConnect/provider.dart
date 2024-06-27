@@ -20,6 +20,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_web3/flutter_web3.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:particle_connect/particle_connect.dart';
 import 'package:provider/provider.dart' as p;
 import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/utils/base-url.dart';
@@ -29,6 +30,8 @@ import 'package:smartbet/widget/alertSnackBar.dart';
 // import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'package:http/http.dart' as http;
 import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
+import 'package:particle_base/model/chain_info.dart';
+import 'package:particle_base/model/login_info.dart';
 
 // import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
@@ -59,7 +62,20 @@ class UserWeb3Provider extends ChangeNotifier {
     cluster: Cluster.mainnet,
   );
 
+  final dappInfo = DappMetaData(
+      "7e1d4fdc-aecb-4edc-8784-e73229bc2e23",
+      "Particle Connect",
+      "https://connect.particle.network/icons/512.png",
+      "https://connect.particle.network",
+      "Particle Connect Flutter Demo");
+
   initFuntionWC() async {
+    List<ChainInfo> chainInfos = <ChainInfo>[
+      ChainInfo.Ethereum,
+      ChainInfo.Polygon
+    ];
+    ParticleConnect.init(ChainInfo.Ethereum, dappInfo, Env.production);
+
     // client
     //     .init(
     //         projectId: 'be0d3671eaede1506a668e53185c4d28',

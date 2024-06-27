@@ -31,14 +31,16 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11
     }
-
+    dataBinding {
+      enabled = true
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -52,6 +54,10 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        manifestPlaceholders["PN_PROJECT_ID"] = "7e1d4fdc-aecb-4edc-8784-e73229bc2e23"
+        manifestPlaceholders["PN_PROJECT_CLIENT_KEY"] = "cm9lwiri89Urcc84pxJmuCxn92yGFlLzG8fy3bsm"
+        manifestPlaceholders["PN_APP_ID"] = "a76651b3-e442-4361-a8eb-b86fb1c628b8"
     }
 
     buildTypes {
@@ -68,5 +74,11 @@ flutter {
 }
 
 dependencies {
+    modules {
+        module("org.bouncycastle:bcprov-jdk15to18") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
+    }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+
