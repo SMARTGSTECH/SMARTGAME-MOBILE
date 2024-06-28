@@ -102,7 +102,10 @@ class walletContainer extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        coinCircleAvater(coinP: coinP),
+                        ...List.generate(
+                          3,
+                          (index) => coinCircleAvater(coinP: coinP),
+                        )
                       ],
                     )
                     // Column(
