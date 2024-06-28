@@ -104,7 +104,15 @@ class walletContainer extends StatelessWidget {
                       children: [
                         ...List.generate(
                           3,
-                          (index) => coinCircleAvater(coinP: coinP),
+                          (index) => coinCircleAvater(
+                            coinP: coinP,
+                            name: '',
+                            img: coinP.coinArray
+                                .where((element) =>
+                                    element.symbol.toLowerCase() == "eth")
+                                .first
+                                .imageUrl,
+                          ),
                         )
                       ],
                     )
@@ -384,21 +392,20 @@ class walletContainer extends StatelessWidget {
 class coinCircleAvater extends StatelessWidget {
   const coinCircleAvater({
     super.key,
-    required this.coinP,
+    required this.img,
+    required this.name,
+    required CoinCapProvider coinP,
   });
 
-  final CoinCapProvider coinP;
-
+  final String img;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CircleAvatar(
           backgroundColor: ColorConfig.scaffold,
-          backgroundImage: NetworkImage(coinP.coinArray
-              .where((element) => element.symbol.toLowerCase() == "eth")
-              .first
-              .imageUrl),
+          backgroundImage: NetworkImage(img),
           radius: 30.r,
         ),
         Text(

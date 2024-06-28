@@ -40,7 +40,11 @@ import 'package:particle_base/particle_base.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class UserWeb3Provider extends ChangeNotifier {
-  List test = ["one", "two", "three", "four", "five"];
+  List test = [
+    "eth",
+    "sol",
+    "ton",
+  ];
   dynamic? currentAddress;
   dynamic? usdBalance;
   dynamic? bnbBalance;
