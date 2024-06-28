@@ -11,6 +11,7 @@
 //   }
 
 import 'dart:convert';
+
 import 'dart:math';
 
 import 'package:darttonconnect/models/wallet_app.dart';
@@ -32,12 +33,14 @@ import 'package:http/http.dart' as http;
 import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
 import 'package:particle_base/model/chain_info.dart';
 import 'package:particle_base/model/login_info.dart';
+import 'package:particle_base/particle_base.dart';
 
 // import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class UserWeb3Provider extends ChangeNotifier {
+  List test = ["one", "two", "three", "four", "five"];
   dynamic? currentAddress;
   dynamic? usdBalance;
   dynamic? bnbBalance;
@@ -61,20 +64,26 @@ class UserWeb3Provider extends ChangeNotifier {
     //       TO THE SAME NETWORK.
     cluster: Cluster.mainnet,
   );
+  static const projectId =
+      "7e1d4fdc-aecb-4edc-8784-e73229bc2e23"; // your project id
+  static const clientK =
+      "cm9lwiri89Urcc84pxJmuCxn92yGFlLzG8fy3bsm"; // your client key
 
   final dappInfo = DappMetaData(
-      "7e1d4fdc-aecb-4edc-8784-e73229bc2e23",
+      "be0d3671eaede1506a668e53185c4d28",
       "Particle Connect",
       "https://connect.particle.network/icons/512.png",
       "https://connect.particle.network",
       "Particle Connect Flutter Demo");
 
-  initFuntionWC() async {
+  initParticle() async {
+    ParticleInfo.set(projectId, clientK);
     List<ChainInfo> chainInfos = <ChainInfo>[
       ChainInfo.Ethereum,
       ChainInfo.Polygon
     ];
     ParticleConnect.init(ChainInfo.Ethereum, dappInfo, Env.production);
+    ParticleConnect.setWalletConnectV2SupportChainInfos(chainInfos);
 
     // client
     //     .init(
@@ -87,6 +96,11 @@ class UserWeb3Provider extends ChangeNotifier {
     //             // ignore: avoid_print
     //             redirect: 'wcexample'))
     //     .then((value) => print('this has completed '));
+  }
+
+  connectPartilcle() async {
+    final result = await ParticleConnect.connect(WalletType.trust);
+    print(result);
   }
 
   Future<void> initTonwalletconnect() async {

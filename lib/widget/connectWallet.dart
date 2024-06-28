@@ -4,12 +4,14 @@ import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/utils/helpers.dart';
 import 'package:smartbet/walletConnect/provider.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
 import 'package:smartbet/widget/balalnceContainer.dart';
 import 'package:smartbet/widget/button.dart';
+import 'package:provider/provider.dart' as p;
 import 'package:smartbet/widget/walletTabContainer.dart';
 // import 'package:walletconnect_modal_flutter/widgets/walletconnect_modal_connect.dart';
 
@@ -25,6 +27,7 @@ class walletContainer extends StatelessWidget {
       builder: (BuildContext context, provider, _) {
         //  provider.initializeW3MService();
         //provider.initialize(context);
+        final coinP = p.Provider.of<CoinCapProvider>(context, listen: false);
         return Container(
           height: size ?? 240,
           width: size ?? 300,
@@ -87,83 +90,139 @@ class walletContainer extends StatelessWidget {
                     //     fontWeight: FontWeight.w500,
                     //   ),
                     // ),
-                    8.height,
+                    30.height,
 
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const Icon(
-                          Icons.inbox,
-                          color: Colors.green,
+                        CircleAvatar(
+                          backgroundColor: ColorConfig.scaffold,
+                          backgroundImage: NetworkImage(coinP.coinArray
+                              .where((element) =>
+                                  element.symbol.toLowerCase() == "eth")
+                              .first
+                              .imageUrl),
+                          radius: 30.r,
+                        ),
+                        CircleAvatar(
+                          backgroundColor: ColorConfig.scaffold,
+                          backgroundImage: NetworkImage(coinP.coinArray
+                              .where((element) =>
+                                  element.symbol.toLowerCase() == "sol")
+                              .first
+                              .imageUrl),
+                          radius: 30.r,
+                        ).paddingSymmetric(horizontal: 15.w),
+                        CircleAvatar(
+                          backgroundColor: ColorConfig.scaffold,
+                          backgroundImage: NetworkImage(coinP.coinArray
+                              .where((element) =>
+                                  element.symbol.toLowerCase() == "ton")
+                              .first
+                              .imageUrl),
+                          radius: 30.r,
                         ).onTap(() {
-                          toast(
-                              provider.adapter.state!.connectedAccount!.label);
-                          toast(provider
-                              .adapter.state!.connectedAccount!.addressBase58);
-                          print(provider
-                              .adapter.state!.connectedAccount!.addressBase58);
-
-                          print([
-                            provider.adapter.state,
-                            provider.adapter.identity.name,
-                            provider.adapter.isAuthorized
-                          ]); // provider.adapter
-                          //     .authorize()
-                          //     .then((value) => provider.output = value.toJson())
-                          //     .catchError((error) => provider.output = error);
-                        }),
-                        const Icon(
-                          Icons.inbox,
-                          color: Colors.brown,
-                        ).onTap(() {
-                          //   provider.adapter.state!.connectedAccount;
-                          provider.adapter
-                              .authorize()
-                              .then((value) => provider.output = value.toJson())
-                              .catchError((error) => provider.output = error);
-                        }),
-                        Icon(
-                          Icons.abc_sharp,
-                          color: ColorConfig.red,
-                        ).onTap(() async {
-                          await provider.initTonwalletconnect();
-                          //   await provider.service.init();
-                          // await provider.service
-                          //     .open(context: context)
-                          //     .whenComplete(() {});
-                        }),
-                        if (provider.universalLink != null)
-                          QrImageView(
-                            backgroundColor: Colors.white,
-                            data: provider.universalLink!,
-                            version: QrVersions.auto,
-                            size: 120,
-                            gapless: false,
-                          ).onTap(() {
-                            print(provider.connector.wallet!.account);
-                          }),
-                        Icon(
-                          Icons.earbuds,
-                          color: ColorConfig.red,
-                        ).onTap(() async {
-                          await provider.initFuntionWC();
-                          //   await provider.service.init();
-                          // await provider.service
-                          //     .open(context: context)
-                          //     .whenComplete(() {});
-                        }),
-                        // WalletConnectModalConnect(
-                        //   service: provider.service,
-                        // ),
-                        // Icon(
-                        //   Icons.h_mobiledata,
-                        //   color: ColorConfig.red,
-                        // ).onTap(() async {
-                        //   await provider.service
-                        //       .open(context: context)
-                        //       .whenComplete(() {});
-                        // }),
+                          // print(coinP.coinArray.where((element) =>
+                          //     element.symbol.toLowerCase() == "BNB"));
+                        })
                       ],
                     )
+                    // Column(
+                    //   children: [
+                    //     Icon(
+                    //       Icons.inbox,
+                    //       color: Colors.purple,
+                    //     ).onTap(() {
+                    //       print(provider.test);
+                    //       print([provider.test[provider.test.length - 1]]);
+                    //       print(provider.test.indexOf("two"));
+                    //     }),
+                    //     Icon(
+                    //       Icons.inbox,
+                    //       color: Colors.white,
+                    //     ).onTap(() {
+                    //       provider.connectPartilcle();
+                    //     }),
+                    //     Icon(
+                    //       Icons.inbox,
+                    //       color: Colors.yellow,
+                    //     ).onTap(() {
+                    //       provider.initParticle();
+                    //     }),
+                    //     const Icon(
+                    //       Icons.inbox,
+                    //       color: Colors.green,
+                    //     ).onTap(() {
+                    //       toast(
+                    //           provider.adapter.state!.connectedAccount!.label);
+                    //       toast(provider
+                    //           .adapter.state!.connectedAccount!.addressBase58);
+                    //       print(provider
+                    //           .adapter.state!.connectedAccount!.addressBase58);
+
+                    //       print([
+                    //         provider.adapter.state,
+                    //         provider.adapter.identity.name,
+                    //         provider.adapter.isAuthorized
+                    //       ]); // provider.adapter
+                    //       //     .authorize()
+                    //       //     .then((value) => provider.output = value.toJson())
+                    //       //     .catchError((error) => provider.output = error);
+                    //     }),
+                    //     const Icon(
+                    //       Icons.inbox,
+                    //       color: Colors.brown,
+                    //     ).onTap(() {
+                    //       //   provider.adapter.state!.connectedAccount;
+                    //       provider.adapter
+                    //           .authorize()
+                    //           .then((value) => provider.output = value.toJson())
+                    //           .catchError((error) => provider.output = error);
+                    //     }),
+                    //     Icon(
+                    //       Icons.abc_sharp,
+                    //       color: ColorConfig.red,
+                    //     ).onTap(() async {
+                    //       await provider.initTonwalletconnect();
+                    //       //   await provider.service.init();
+                    //       // await provider.service
+                    //       //     .open(context: context)
+                    //       //     .whenComplete(() {});
+                    //     }),
+                    //     if (provider.universalLink != null)
+                    //       QrImageView(
+                    //         backgroundColor: Colors.white,
+                    //         data: provider.universalLink!,
+                    //         version: QrVersions.auto,
+                    //         size: 120,
+                    //         gapless: false,
+                    //       ).onTap(() {
+                    //         print(provider.connector.wallet!.account);
+                    //       }),
+                    //     Icon(
+                    //       Icons.earbuds,
+                    //       color: ColorConfig.red,
+                    //     ).onTap(() async {
+                    //       await provider.initParticle();
+                    //       //   await provider.service.init();
+                    //       // await provider.service
+                    //       //     .open(context: context)
+                    //       //     .whenComplete(() {});
+                    //     }),
+                    //     // WalletConnectModalConnect(
+                    //     //   service: provider.service,
+                    //     // ),
+                    //     // Icon(
+                    //     //   Icons.h_mobiledata,
+                    //     //   color: ColorConfig.red,
+                    //     // ).onTap(() async {
+                    //     //   await provider.service
+                    //     //       .open(context: context)
+                    //     //       .whenComplete(() {});
+                    //     // }),
+                    //   ],
+                    // )
+
                     // Column(
                     //   children: !provider.w3mService.isConnected
                     //       ? [
