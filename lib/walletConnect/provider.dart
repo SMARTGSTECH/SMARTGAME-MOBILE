@@ -40,9 +40,14 @@ import 'package:particle_base/particle_base.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class UserWeb3Provider extends ChangeNotifier {
-  List test = [
+  List chainIMG = [
     "eth",
     "sol",
+    "ton",
+  ];
+  List chainNAME = [
+    "evm",
+    "solana",
     "ton",
   ];
   dynamic? currentAddress;

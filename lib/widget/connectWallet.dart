@@ -106,10 +106,11 @@ class walletContainer extends StatelessWidget {
                           3,
                           (index) => coinCircleAvater(
                             coinP: coinP,
-                            name: '',
+                            name: provider.chainNAME[index],
                             img: coinP.coinArray
                                 .where((element) =>
-                                    element.symbol.toLowerCase() == "eth")
+                                    element.symbol.toLowerCase() ==
+                                    provider.chainIMG[index])
                                 .first
                                 .imageUrl,
                           ),
@@ -409,13 +410,13 @@ class coinCircleAvater extends StatelessWidget {
           radius: 30.r,
         ),
         Text(
-          "EVM",
+          name.toUpperCase(),
           style: TextStyle(
               fontSize: 12.sp,
               // color: ColorConfig.iconColor,
               fontWeight: FontWeight.bold),
         ),
       ],
-    );
+    ).paddingSymmetric(horizontal: 7.w);
   }
 }
