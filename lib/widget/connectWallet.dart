@@ -90,41 +90,19 @@ class walletContainer extends StatelessWidget {
                     //     fontWeight: FontWeight.w500,
                     //   ),
                     // ),
-                    30.height,
-
+                    9.height,
+                    Text(
+                      "Connect Wallet",
+                      style: TextStyle(
+                          fontSize: 15.sp,
+                          // color: ColorConfig.iconColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    3.height,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        CircleAvatar(
-                          backgroundColor: ColorConfig.scaffold,
-                          backgroundImage: NetworkImage(coinP.coinArray
-                              .where((element) =>
-                                  element.symbol.toLowerCase() == "eth")
-                              .first
-                              .imageUrl),
-                          radius: 30.r,
-                        ),
-                        CircleAvatar(
-                          backgroundColor: ColorConfig.scaffold,
-                          backgroundImage: NetworkImage(coinP.coinArray
-                              .where((element) =>
-                                  element.symbol.toLowerCase() == "sol")
-                              .first
-                              .imageUrl),
-                          radius: 30.r,
-                        ).paddingSymmetric(horizontal: 15.w),
-                        CircleAvatar(
-                          backgroundColor: ColorConfig.scaffold,
-                          backgroundImage: NetworkImage(coinP.coinArray
-                              .where((element) =>
-                                  element.symbol.toLowerCase() == "ton")
-                              .first
-                              .imageUrl),
-                          radius: 30.r,
-                        ).onTap(() {
-                          // print(coinP.coinArray.where((element) =>
-                          //     element.symbol.toLowerCase() == "BNB"));
-                        })
+                        coinCircleAvater(coinP: coinP),
                       ],
                     )
                     // Column(
@@ -396,6 +374,38 @@ class walletContainer extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class coinCircleAvater extends StatelessWidget {
+  const coinCircleAvater({
+    super.key,
+    required this.coinP,
+  });
+
+  final CoinCapProvider coinP;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CircleAvatar(
+          backgroundColor: ColorConfig.scaffold,
+          backgroundImage: NetworkImage(coinP.coinArray
+              .where((element) => element.symbol.toLowerCase() == "eth")
+              .first
+              .imageUrl),
+          radius: 30.r,
+        ),
+        Text(
+          "EVM",
+          style: TextStyle(
+              fontSize: 12.sp,
+              // color: ColorConfig.iconColor,
+              fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 }
