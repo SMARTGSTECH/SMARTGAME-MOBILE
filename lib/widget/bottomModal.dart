@@ -41,19 +41,23 @@ walletcard(List array, type) {
     color: ColorConfig.appBar.withOpacity(0.5),
     elevation: 1,
     child: ListTile(
-      leading: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          backgroundImage: NetworkImage(array
-              .where((element) => element.symbol.toLowerCase() == type)
-              .first
-              .imageUrl
-              .toString())),
+      leading: Stack(
+        children: [
+          CircleAvatar(
+              backgroundColor: Colors.transparent,
+              backgroundImage: NetworkImage(array
+                  .where((element) => element.symbol.toLowerCase() == type)
+                  .first
+                  .imageUrl
+                  .toString())),
+        ],
+      ),
       title: Text("${"0x78E0f1CC471885947b13WYD".substring(0, 25)}...."),
       subtitle: Text(
         "${type.toUpperCase()}: \$20",
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      trailing: Icon(Icons.wallet, color: ColorConfig.iconColor),
+      trailing: Icon(Icons.power_settings_new_sharp, color: ColorConfig.red),
     ),
   );
 }
