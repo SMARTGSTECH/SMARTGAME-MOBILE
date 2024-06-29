@@ -20,37 +20,38 @@ class ReusableBottomModal extends StatelessWidget {
           height: 400.h,
           width: double.infinity,
           child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 13.toInt().w, vertical: 10.h),
-                  child: Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(coinP.coinArray
-                              .where((element) =>
-                                  element.symbol.toLowerCase() == "sol")
-                              .first
-                              .imageUrl
-                              .toString())),
-                      title: Text("0x78E0f1CC471885947b13WYD".substring(0, 25) +
-                          "...."),
-                      subtitle: Text(
-                        "SOL: \$20",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      trailing:
-                          Icon(Icons.wallet, color: ColorConfig.iconColor),
-                    ),
-                  ),
-                )
-              ],
-            ),
+            child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 13.toInt().w, vertical: 10.h),
+                child: Column(
+                  children: List.generate(
+                      3, (index) => walletcard(coinP.coinArray, 'sol')),
+                )),
           ),
         );
       },
     );
   }
+}
+
+walletcard(List array, type) {
+  return Card(
+    color: ColorConfig.appBar.withOpacity(0.5),
+    elevation: 1,
+    child: ListTile(
+      leading: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          backgroundImage: NetworkImage(array
+              .where((element) => element.symbol.toLowerCase() == type)
+              .first
+              .imageUrl
+              .toString())),
+      title: Text("${"0x78E0f1CC471885947b13WYD".substring(0, 25)}...."),
+      subtitle: const Text(
+        "SOL: \$20",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      trailing: Icon(Icons.wallet, color: ColorConfig.iconColor),
+    ),
+  );
 }
