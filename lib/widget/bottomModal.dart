@@ -17,7 +17,7 @@ class ReusableBottomModal extends StatelessWidget {
             // borderRadius: BorderRadius.circular(20.r),
             color: ColorConfig.scaffold,
           ),
-          height: 400.h,
+          height: 300.h,
           width: double.infinity,
           child: SingleChildScrollView(
             child: Padding(
@@ -49,8 +49,8 @@ walletcard(List array, type) {
               .imageUrl
               .toString())),
       title: Text("${"0x78E0f1CC471885947b13WYD".substring(0, 25)}...."),
-      subtitle: const Text(
-        "SOL: \$20",
+      subtitle: Text(
+        "${type.toUpperCase()}: \$20",
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       trailing: Icon(Icons.wallet, color: ColorConfig.iconColor),

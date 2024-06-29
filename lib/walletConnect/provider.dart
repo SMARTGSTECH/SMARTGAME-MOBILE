@@ -91,7 +91,7 @@ class UserWeb3Provider extends ChangeNotifier {
       ChainInfo.Ethereum,
       ChainInfo.Polygon
     ];
-    ParticleConnect.init(ChainInfo.Ethereum, dappInfo, Env.production);
+    ParticleConnect.init(ChainInfo.Base, dappInfo, Env.production);
     ParticleConnect.setWalletConnectV2SupportChainInfos(chainInfos);
 
     // client
