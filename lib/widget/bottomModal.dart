@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/walletConnect/provider.dart';
 
 class ReusableBottomModal extends StatelessWidget {
@@ -9,20 +10,15 @@ class ReusableBottomModal extends StatelessWidget {
     return Consumer<UserWeb3Provider>(
       builder: (BuildContext context, model, _) {
         return Container(
-          height: 900.h,
-          color: Colors.white,
-          child: Center(
+          decoration: BoxDecoration(
+            // borderRadius: BorderRadius.circular(20.r),
+            color: ColorConfig.scaffold,
+          ),
+          height: 400.h,
+          width: double.infinity,
+          child: SingleChildScrollView(
             child: Column(
-              // mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Reusable Bottom Sheet'),
-                ElevatedButton(
-                  child: Text('Close'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+              children: <Widget>[car],
             ),
           ),
         );

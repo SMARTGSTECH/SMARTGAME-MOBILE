@@ -51,6 +51,8 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
               ).paddingRight(23.w).onTap(() {
                 showModalBottomSheet(
                   context: context,
+                  enableDrag: false,
+                  isScrollControlled: true,
                   builder: (BuildContext context) {
                     return ReusableBottomModal();
                   },
