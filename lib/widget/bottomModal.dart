@@ -25,7 +25,7 @@ class ReusableBottomModal extends StatelessWidget {
                     horizontal: 13.toInt().w, vertical: 10.h),
                 child: Column(
                   children: List.generate(
-                      3, (index) => walletcard(coinP.coinArray, 'sol')),
+                      2, (index) => walletcard(coinP.coinArray, 'sol')),
                 )),
           ),
         );
