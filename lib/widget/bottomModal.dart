@@ -28,9 +28,12 @@ class ReusableBottomModal extends StatelessWidget {
                   child: Card(
                     child: ListTile(
                       leading: CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           backgroundImage: NetworkImage(coinP.coinArray
                               .where((element) =>
                                   element.symbol.toLowerCase() == "sol")
+                              .first
+                              .imageUrl
                               .toString())),
                       title: Text("0x78E0f1CC471885947b13WYD".substring(0, 25) +
                           "...."),
