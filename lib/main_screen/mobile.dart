@@ -49,14 +49,12 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
                 Icons.account_balance_wallet_rounded,
                 color: ColorConfig.iconColor,
               ).paddingRight(23.w).onTap(() {
-                void showReusableModalBottomSheet(BuildContext context) {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ReusableBottomModal();
-                    },
-                  );
-                }
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ReusableBottomModal();
+                  },
+                );
 
                 // showDialog(
                 //   context: context,
