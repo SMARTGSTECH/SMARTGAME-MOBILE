@@ -10,6 +10,7 @@ import 'package:smartbet/screens/livegame/mobile.dart';
 import 'package:smartbet/screens/home/mobile.dart';
 import 'package:smartbet/socket/socket_method.dart';
 import 'package:smartbet/utils/config/color.dart';
+import 'package:smartbet/widget/bottomModal.dart';
 import 'package:smartbet/widget/connectWallet.dart';
 import 'package:smartbet/widget/quadContainer.dart';
 
@@ -48,19 +49,28 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
                 Icons.account_balance_wallet_rounded,
                 color: ColorConfig.iconColor,
               ).paddingRight(23.w).onTap(() {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      shadowColor: ColorConfig.blue,
-                      // shape: CircleBorder(),
-                      backgroundColor: Colors.transparent,
-                      elevation: 10,
-                      child: walletContainer(),
-                    );
-                  },
-                );
+                void showReusableModalBottomSheet(BuildContext context) {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ReusableBottomModal();
+                    },
+                  );
+                }
+
+                // showDialog(
+                //   context: context,
+                //   barrierDismissible: false,
+                //   builder: (BuildContext context) {
+                //     return Dialog(
+                //       shadowColor: ColorConfig.blue,
+                //       // shape: CircleBorder(),
+                //       backgroundColor: Colors.transparent,
+                //       elevation: 10,
+                //       child: walletContainer(),
+                //     );
+                //   },
+                // );
               }),
             ],
             centerTitle: true,

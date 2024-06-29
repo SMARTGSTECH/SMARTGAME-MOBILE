@@ -113,7 +113,9 @@ class walletContainer extends StatelessWidget {
                                     provider.chainIMG[index])
                                 .first
                                 .imageUrl,
-                          ),
+                          ).onTap(() {
+                            print('ready');
+                          }),
                         )
                       ],
                     )
@@ -404,10 +406,16 @@ class coinCircleAvater extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          backgroundColor: ColorConfig.scaffold,
-          backgroundImage: NetworkImage(img),
-          radius: 30.r,
+        InkWell(
+          splashColor: ColorConfig.black.withOpacity(0.3),
+          onTap: () {
+            print("tap");
+          },
+          child: CircleAvatar(
+            backgroundColor: ColorConfig.scaffold,
+            backgroundImage: NetworkImage(img),
+            radius: 30.r,
+          ),
         ),
         Text(
           name.toUpperCase(),
@@ -415,8 +423,8 @@ class coinCircleAvater extends StatelessWidget {
               fontSize: 12.sp,
               // color: ColorConfig.iconColor,
               fontWeight: FontWeight.bold),
-        ),
+        ).paddingTop(4.h),
       ],
-    ).paddingSymmetric(horizontal: 7.w);
+    ).paddingSymmetric(horizontal: 7.w, vertical: 4.h);
   }
 }
