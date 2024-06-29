@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/walletConnect/provider.dart';
 
 class ReusableBottomModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final coinP = Provider.of<CoinCapProvider>(context, listen: false);
     return Consumer<UserWeb3Provider>(
       builder: (BuildContext context, model, _) {
         return Container(
@@ -25,7 +27,11 @@ class ReusableBottomModal extends StatelessWidget {
                       horizontal: 13.toInt().w, vertical: 10.h),
                   child: Card(
                     child: ListTile(
-                      leading: CircleAvatar(),
+                      leading: CircleAvatar(
+                          backgroundImage: NetworkImage(coinP.coinArray
+                              .where((element) =>
+                                  element.symbol.toLowerCase() == "sol")
+                              .toString())),
                       title: Text("0x78E0f1CC471885947b13WYD".substring(0, 25) +
                           "...."),
                       subtitle: Text(
