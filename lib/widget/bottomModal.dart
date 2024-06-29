@@ -24,18 +24,16 @@ class ReusableBottomModal extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       horizontal: 13.toInt().w, vertical: 10.h),
                   child: Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          CircleAvatar(),
-                          Container().expand(),
-                          Icon(
-                            Icons.wallet,
-                            color: ColorConfig.iconColor,
-                          )
-                        ],
+                    child: ListTile(
+                      leading: CircleAvatar(),
+                      title: Text("0x78E0f1CC471885947b13WYD".substring(0, 25) +
+                          "...."),
+                      subtitle: Text(
+                        "SOL: \$20",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
+                      trailing:
+                          Icon(Icons.wallet, color: ColorConfig.iconColor),
                     ),
                   ),
                 )
