@@ -58,12 +58,7 @@ class UserWeb3Provider extends ChangeNotifier {
   bool isLoading = false;
   bool startedTransaction = false;
 
-  Map evm = {
-    "isConnected": false,
-    "address": "",
-    "base": "",
-    "bnb": ""
-  };
+  Map evm = {"isConnected": false, "address": "", "base": "", "bnb": ""};
 
   Map sol = {
     "isConnected": false,
@@ -71,15 +66,15 @@ class UserWeb3Provider extends ChangeNotifier {
     "sol": "",
   };
 
-  Map ton = {
-    "isConnected": false,
-    "address": "",
-    "base": "",
-    "bnb": ""
-  };
+  Map ton = {"isConnected": false, "address": "", "base": "", "bnb": ""};
 
-  updateMap(Map instance){
-ton
+  updateMap(Map instance, String type) {
+    type == "evm"
+        ? evm = instance
+        : type == "sol"
+            ? sol = instance
+            : ton = instance;
+    notifyListeners();
   }
 
   dynamic weibalance;
