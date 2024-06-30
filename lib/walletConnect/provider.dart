@@ -68,6 +68,12 @@ class UserWeb3Provider extends ChangeNotifier {
 
   Map ton = {"isConnected": false, "address": "", "base": "", "bnb": ""};
 
+  get objKey {
+    Map<String, Map> walletInstanceMap = {"eth": evm, "sol": sol, "ton": ton};
+    notifyListeners();
+    return walletInstanceMap;
+  }
+
   updateMap(Map instance, String type) {
     type == "evm"
         ? evm = instance

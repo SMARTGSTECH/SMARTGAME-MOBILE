@@ -93,7 +93,12 @@ walletcard(List array, type, UserWeb3Provider walletnstance) {
               "${type.toUpperCase()}: \$20",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
             ),
-      trailing: Icon(Icons.power_settings_new_sharp, color: ColorConfig.red),
+      trailing: Icon(
+          walletnstance.objKey[type.toLowerCase()]
+              ? Icons.power_settings_new_sharp
+              : Icons.wallet,
+          color: ColorConfig.red),
     ),
   );
 }
+//      trailing: Icon(type.toLowerCase() == "eth" ? walletnstance.evm["isConnected"]? Icons.power_settings_new_sharp :Icons.power_settings_new_sharp , color: ColorConfig.red),
