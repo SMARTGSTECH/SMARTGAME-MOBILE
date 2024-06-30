@@ -58,6 +58,30 @@ class UserWeb3Provider extends ChangeNotifier {
   bool isLoading = false;
   bool startedTransaction = false;
 
+  Map evm = {
+    "isConnected": false,
+    "address": "",
+    "base": "",
+    "bnb": ""
+  };
+
+  Map sol = {
+    "isConnected": false,
+    "address": "",
+    "sol": "",
+  };
+
+  Map ton = {
+    "isConnected": false,
+    "address": "",
+    "base": "",
+    "bnb": ""
+  };
+
+  updateMap(Map instance){
+ton
+  }
+
   dynamic weibalance;
   List cryptoRate = [];
   String cryptoBNBUSDT = "396";
