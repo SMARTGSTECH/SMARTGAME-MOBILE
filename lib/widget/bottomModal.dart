@@ -17,13 +17,14 @@ class ReusableBottomModal extends StatelessWidget {
             // borderRadius: BorderRadius.circular(20.r),
             color: ColorConfig.scaffold,
           ),
-          height: 300.h,
+          height: 220.h,
           width: double.infinity,
           child: SingleChildScrollView(
             child: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: 13.toInt().w, vertical: 10.h),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                       model.chainIMG.length,
                       (index) =>
@@ -36,7 +37,7 @@ class ReusableBottomModal extends StatelessWidget {
   }
 }
 
-walletcard(List array, type) {
+walletcard(List array, type, Map walletnstance) {
   return Card(
     color: ColorConfig.appBar.withOpacity(0.5),
     elevation: 1,
@@ -50,13 +51,48 @@ walletcard(List array, type) {
                   .first
                   .imageUrl
                   .toString())),
+          type.toLowerCase() == "eth"
+              ? Container(
+                  width: 30.w,
+                  // color: Colors.red,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                            radius: 7.5.r,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage(
+                                'https://static.particle.network/token-list/base/native.png')),
+                        CircleAvatar(
+                            radius: 7.5.r,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage(
+                                'https://static.particle.network/token-list/bsc/native.png'))
+                      ]),
+                )
+              : Text("")
         ],
       ),
-      title: Text("${"0x78E0f1CC471885947b13WYD".substring(0, 25)}...."),
-      subtitle: Text(
-        "${type.toUpperCase()}: \$20",
-        style: TextStyle(fontWeight: FontWeight.bold),
+      title: Text(
+        "${"0x78E0f1CC471885947b13WYD".substring(0, 25)}....",
+        style: TextStyle(fontSize: 14.sp),
       ),
+      subtitle: type.toLowerCase() == "eth"
+          ? Row(children: [
+              Text(
+                "${type.toUpperCase()}: \$20",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+              ),
+              3.w.toInt().width,
+              Text(
+                "${type.toUpperCase()}: \$20",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+              )
+            ])
+          : Text(
+              "${type.toUpperCase()}: \$20",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+            ),
       trailing: Icon(Icons.power_settings_new_sharp, color: ColorConfig.red),
     ),
   );
