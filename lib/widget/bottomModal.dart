@@ -73,31 +73,51 @@ walletcard(List array, type, UserWeb3Provider walletnstance) {
               : Text("")
         ],
       ),
-      title: Text(
-        "${"0x78E0f1CC471885947b13WYD".substring(0, 25)}....",
-        style: TextStyle(fontSize: 14.sp),
-      ),
-      subtitle: type.toLowerCase() == "eth"
-          ? Row(children: [
-              Text(
-                "${type.toUpperCase()}: \$20",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
-              ),
-              3.w.toInt().width,
-              Text(
-                "${type.toUpperCase()}: \$20",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
-              )
-            ])
+      title: walletnstance.walletInstanceMap[type.toLowerCase()]!['isConnected']
+          ? Text(
+              "${"${walletnstance.walletInstanceMap[type.toLowerCase()]!['address']}".substring(0, 25)}....",
+              style: TextStyle(fontSize: 14.sp),
+            )
           : Text(
-              "${type.toUpperCase()}: \$20",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+              "Connect Wallet",
+              style: TextStyle(fontSize: 14.sp),
+            ),
+      subtitle: walletnstance
+              .walletInstanceMap[type.toLowerCase()]!['isConnected']
+          ? type.toLowerCase() == "eth"
+              ? Row(children: [
+                  Text(
+                    "${type.toUpperCase()}: \$20",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+                  ),
+                  3.w.toInt().width,
+                  Text(
+                    "${type.toUpperCase()}: \$20",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+                  )
+                ])
+              : Text(
+                  "${type.toUpperCase()}: \$20",
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+                )
+          : Text(
+              "${type.toUpperCase()}: \$N/A",
+              style: TextStyle(fontSize: 14.sp),
             ),
       trailing: Icon(
-          walletnstance.objKey[type.toLowerCase()]
-              ? Icons.power_settings_new_sharp
-              : Icons.wallet,
-          color: ColorConfig.red),
+              walletnstance
+                      .walletInstanceMap[type.toLowerCase()]!['isConnected']
+                  ? Icons.power_settings_new_sharp
+                  : Icons.wallet,
+              color: walletnstance
+                      .walletInstanceMap[type.toLowerCase()]!['isConnected']
+                  ? ColorConfig.red
+                  : ColorConfig.iconColor)
+          .onTap(
+              walletnstance.walletInstanceMap[type.toLowerCase()]!['method']),
     ),
   );
 }

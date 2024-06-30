@@ -40,6 +40,11 @@ import 'package:particle_base/particle_base.dart';
 // import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class UserWeb3Provider extends ChangeNotifier {
+  UserWeb3Provider() {
+    initObjKey();
+    initTonwalletconnect();
+    initParticle();
+  }
   List chainIMG = [
     "eth",
     "sol",
@@ -57,29 +62,49 @@ class UserWeb3Provider extends ChangeNotifier {
   bool connected = false;
   bool isLoading = false;
   bool startedTransaction = false;
+  late Map<String, Map> walletInstanceMap;
 
-  Map evm = {"isConnected": false, "address": "", "base": "", "bnb": ""};
+  Map evm = {
+    "isConnected": false,
+    "address": "",
+    "base": "",
+    "bnb": "",
+    'method': () => {print('HELLO'), print("object")}
+  };
 
   Map sol = {
     "isConnected": false,
     "address": "",
     "sol": "",
+    'method': () => {print('HELLO2'), print("object")}
   };
 
-  Map ton = {"isConnected": false, "address": "", "base": "", "bnb": ""};
+  Map ton = {
+    "isConnected": false,
+    "address": "",
+    "base": "",
+    "bnb": "",
+    'method': () => {print('HELL1O'), print("object")}
+  };
 
-  get objKey {
-    Map<String, Map> walletInstanceMap = {"eth": evm, "sol": sol, "ton": ton};
+  initObjKey() {
+    walletInstanceMap = {"eth": evm, "sol": sol, "ton": ton};
+    print("initilialize object keys");
     notifyListeners();
-    return walletInstanceMap;
   }
 
   updateMap(Map instance, String type) {
-    type == "evm"
+    type == "eth"
         ? evm = instance
         : type == "sol"
             ? sol = instance
             : ton = instance;
+    print(' updated  ${type} to $instance');
+    walletInstanceMap[type] = type == "eth"
+        ? evm
+        : type == "sol"
+            ? sol
+            : ton;
     notifyListeners();
   }
 
@@ -98,6 +123,7 @@ class UserWeb3Provider extends ChangeNotifier {
     //       TO THE SAME NETWORK.
     cluster: Cluster.mainnet,
   );
+
   static const projectId =
       "7e1d4fdc-aecb-4edc-8784-e73229bc2e23"; // your project id
   static const clientK =
