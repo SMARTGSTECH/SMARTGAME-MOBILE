@@ -27,8 +27,8 @@ class ReusableBottomModal extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                       model.chainIMG.length,
-                      (index) =>
-                          walletcard(coinP.coinArray, model.chainIMG[index])),
+                      (index) => walletcard(
+                          coinP.coinArray, model.chainIMG[index], model)),
                 )),
           ),
         );
@@ -37,7 +37,7 @@ class ReusableBottomModal extends StatelessWidget {
   }
 }
 
-walletcard(List array, type, Map walletnstance) {
+walletcard(List array, type, UserWeb3Provider walletnstance) {
   return Card(
     color: ColorConfig.appBar.withOpacity(0.5),
     elevation: 1,
