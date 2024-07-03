@@ -120,7 +120,10 @@ walletcard(List array, type, UserWeb3Provider walletnstance, contect) {
                   : ColorConfig.iconColor)
           .onTap(() {
         type.toLowerCase() == "eth"
-            ? walletnstance.connectPartilcle()
+            ? walletnstance
+                    .walletInstanceMap[type.toLowerCase()]!['isConnected']
+                ? walletnstance.disconnecWallet()
+                : walletnstance.connectPartilcle()
             : type.toLowerCase() == "sol"
                 ? walletnstance.adapter
                     .authorize()

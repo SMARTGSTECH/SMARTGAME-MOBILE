@@ -160,7 +160,20 @@ class UserWeb3Provider extends ChangeNotifier {
 
   connectPartilcle() async {
     final result = await ParticleConnect.connect(WalletType.trust);
-    print(result);
+    print(result.walletType);
+
+    updateMap({
+      "isConnected": true,
+      "address": result.publicAddress,
+      "base": "",
+      "bnb": "",
+      'method': () => {print('HELLO'), print("object")}
+    }, "eth");
+  }
+
+  disconnectparticle() async {
+    print('disconnected');
+    await ParticleConnect.disconnect(WalletType.trust, evm['address']);
   }
 
   Future<void> initTonwalletconnect() async {
