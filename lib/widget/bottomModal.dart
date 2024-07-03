@@ -122,7 +122,7 @@ walletcard(List array, type, UserWeb3Provider walletnstance, contect) {
         type.toLowerCase() == "eth"
             ? walletnstance
                     .walletInstanceMap[type.toLowerCase()]!['isConnected']
-                ? walletnstance.disconnecWallet()
+                ? walletnstance.disconnectparticle()
                 : walletnstance.connectPartilcle()
             : type.toLowerCase() == "sol"
                 ? walletnstance.adapter

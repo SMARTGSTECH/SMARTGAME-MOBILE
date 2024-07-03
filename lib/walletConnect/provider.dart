@@ -172,8 +172,8 @@ class UserWeb3Provider extends ChangeNotifier {
   }
 
   disconnectparticle() async {
-    print('disconnected');
-    await ParticleConnect.disconnect(WalletType.trust, evm['address']);
+   
+    await ParticleConnect.disconnect(WalletType.trust, evm['address']).whenComplete(() =>  print('disconnected'););
   }
 
   Future<void> initTonwalletconnect() async {
