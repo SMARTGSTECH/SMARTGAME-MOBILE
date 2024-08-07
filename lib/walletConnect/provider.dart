@@ -14,14 +14,14 @@ import 'dart:convert';
 
 import 'dart:math';
 
-import 'package:darttonconnect/models/wallet_app.dart';
-import 'package:darttonconnect/ton_connect.dart';
+// import 'package:darttonconnect/models/wallet_app.dart';
+// import 'package:darttonconnect/ton_connect.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_web3/flutter_web3.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:particle_connect/particle_connect.dart';
+// import 'package:particle_connect/particle_connect.dart';
 import 'package:provider/provider.dart' as p;
 import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/utils/base-url.dart';
@@ -30,10 +30,10 @@ import 'package:smartbet/utils/helpers.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
 // import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'package:http/http.dart' as http;
-import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
-import 'package:particle_base/model/chain_info.dart';
-import 'package:particle_base/model/login_info.dart';
-import 'package:particle_base/particle_base.dart';
+// import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
+// import 'package:particle_base/model/chain_info.dart';
+// import 'package:particle_base/model/login_info.dart';
+// import 'package:particle_base/particle_base.dart';
 
 // import 'package:walletconnect_modal_flutter/services/walletconnect_modal/walletconnect_modal_service.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
@@ -113,37 +113,37 @@ class UserWeb3Provider extends ChangeNotifier {
   String cryptoBNBUSDT = "396";
   double userConvertedStaked = 0.0;
   String? universalLink;
-  late final TonConnect connector;
-  Map<String, String>? walletConnectionSource;
-  //final client = WalletConnectV2();
-  Object? output;
-  final adapter = SolanaWalletAdapter(
-    const AppIdentity(name: "SmartBet"),
-    // NOTE: CONNECT THE WALLET APPLICATION
-    //       TO THE SAME NETWORK.
-    cluster: Cluster.mainnet,
-  );
+  // late final TonConnect connector;
+  // Map<String, String>? walletConnectionSource;
+  // //final client = WalletConnectV2();
+  // Object? output;
+  // final adapter = SolanaWalletAdapter(
+  //   const AppIdentity(name: "SmartBet"),
+  //   // NOTE: CONNECT THE WALLET APPLICATION
+  //   //       TO THE SAME NETWORK.
+  //   cluster: Cluster.mainnet,
+  // );
 
   static const projectId =
       "7e1d4fdc-aecb-4edc-8784-e73229bc2e23"; // your project id
   static const clientK =
       "cm9lwiri89Urcc84pxJmuCxn92yGFlLzG8fy3bsm"; // your client key
 
-  final dappInfo = DappMetaData(
-      "be0d3671eaede1506a668e53185c4d28",
-      "Particle Connect",
-      "https://connect.particle.network/icons/512.png",
-      "https://connect.particle.network",
-      "Particle Connect Flutter Demo");
+  // final dappInfo = DappMetaData(
+  //     "be0d3671eaede1506a668e53185c4d28",
+  //     "Particle Connect",
+  //     "https://connect.particle.network/icons/512.png",
+  //     "https://connect.particle.network",
+  //     "Particle Connect Flutter Demo");
 
   initParticle() async {
-    ParticleInfo.set(projectId, clientK);
-    List<ChainInfo> chainInfos = <ChainInfo>[
-      ChainInfo.Ethereum,
-      ChainInfo.Polygon
-    ];
-    ParticleConnect.init(ChainInfo.BNBChain, dappInfo, Env.production);
-    ParticleConnect.setWalletConnectV2SupportChainInfos(chainInfos);
+    // ParticleInfo.set(projectId, clientK);
+    // List<ChainInfo> chainInfos = <ChainInfo>[
+    //   ChainInfo.Ethereum,
+    //   ChainInfo.Polygon
+    // ];
+    // ParticleConnect.init(ChainInfo.BNBChain, dappInfo, Env.production);
+    // ParticleConnect.setWalletConnectV2SupportChainInfos(chainInfos);
 
     // client
     //     .init(
@@ -159,39 +159,46 @@ class UserWeb3Provider extends ChangeNotifier {
   }
 
   connectPartilcle() async {
-    final result = await ParticleConnect.connect(WalletType.trust);
-    print(result.walletType);
+    // final result = await ParticleConnect.connect(WalletType.trust);
+    // print(await ParticleConnect.getAccounts(WalletType.trust));
 
-    updateMap({
-      "isConnected": true,
-      "address": result.publicAddress,
-      "base": "",
-      "bnb": "",
-      'method': () => {print('HELLO'), print("object")}
-    }, "eth");
+    // updateMap({
+    //   "isConnected": true,
+    //   "address": result.publicAddress,
+    //   "base": "",
+    //   "bnb": "",
+    //   'method': () => {print('HELLO'), print("object")}
+    // }, "eth");
   }
 
   disconnectparticle() async {
-   
-    await ParticleConnect.disconnect(WalletType.trust, evm['address']).whenComplete(() =>  print('disconnected'););
+    // await ParticleConnect.disconnect(WalletType.trust, evm['address'])
+    //     .whenComplete(() => print('disconnected'));
+    // updateMap({
+    //   "isConnected": false,
+    //   "address": "",
+    //   "base": "",
+    //   "bnb": "",
+    //   'method': () => {print('HELLO'), print("object")}
+    // }, "eth");
   }
 
   Future<void> initTonwalletconnect() async {
-    try {
-      connector = TonConnect(
-          'https://gist.githubusercontent.com/romanovichim/e81d599a6f3798bb9f74ab1970a8b376/raw/43e00b0abc824ef272ac6d0f8083d21456602adf/gistfiletest.txt');
-      final List<WalletApp> wallets = await connector.getWallets();
-      print('Wallets: $wallets');
-      walletConnectionSource = {
-        "universal_url": 'https://app.tonkeeper.com/ton-connect',
-        "bridge_url": 'https://bridge.tonapi.io/bridge'
-      };
-      final universalLink = await connector.connect(wallets.first);
-      updateQRCode(universalLink);
-      connector.onStatusChange(statusChanged);
-    } catch (e) {
-      print(e);
-    }
+    // try {
+    //   connector = TonConnect(
+    //       'https://gist.githubusercontent.com/romanovichim/e81d599a6f3798bb9f74ab1970a8b376/raw/43e00b0abc824ef272ac6d0f8083d21456602adf/gistfiletest.txt');
+    //   final List<WalletApp> wallets = await connector.getWallets();
+    //   print('Wallets: $wallets');
+    //   walletConnectionSource = {
+    //     "universal_url": 'https://app.tonkeeper.com/ton-connect',
+    //     "bridge_url": 'https://bridge.tonapi.io/bridge'
+    //   };
+    //   final universalLink = await connector.connect(wallets.first);
+    //   updateQRCode(universalLink);
+    //   connector.onStatusChange(statusChanged);
+    // } catch (e) {
+    //   print(e);
+    // }
     // print(connector.provider!.connect({
     //   "url": "https://github.com/romanovichim/dartTonconnect",
     //   "name": "DartTonConnect",

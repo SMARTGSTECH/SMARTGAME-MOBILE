@@ -23,7 +23,7 @@ class walletContainer extends StatelessWidget {
   final double? size;
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserWeb3Provider>(
+    return Consumer(
       builder: (BuildContext context, provider, _) {
         //  provider.initializeW3MService();
         //provider.initialize(context);
@@ -46,36 +46,36 @@ class walletContainer extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        if (provider.connected)
-                          Icon(Icons.refresh).onTap(() {
-                            provider.setLoader(true);
-                            // provider.refreshWallet((success, address, chain,
-                            //     convertedbalance, weiBalance) {
-                            //   print([
-                            //     success,
-                            //     address,
-                            //     chain,
-                            //     convertedbalance,
-                            //     weiBalance
-                            //   ]);
-                            //   print(weiBalance.runtimeType);
-                            //   if (true) {
-                            //     print(convertedbalance);
-                            //     provider.setConnection(true, convertedbalance);
+                        //    if (provider.connected)
+                        Icon(Icons.refresh).onTap(() {
+                          //     provider.setLoader(true);
+                          // provider.refreshWallet((success, address, chain,
+                          //     convertedbalance, weiBalance) {
+                          //   print([
+                          //     success,
+                          //     address,
+                          //     chain,
+                          //     convertedbalance,
+                          //     weiBalance
+                          //   ]);
+                          //   print(weiBalance.runtimeType);
+                          //   if (true) {
+                          //     print(convertedbalance);
+                          //     provider.setConnection(true, convertedbalance);
 
-                            //     CustomSnackBar(
-                            //         context: context,
-                            //         message: "Refreshed",
-                            //         leftColor: Colors.green,
-                            //         icon: Icons.wallet,
-                            //         width: 145);
-                            //     // provider.switchNetwork(97);
-                            //   }
-                            // }, context);
-                          }),
+                          //     CustomSnackBar(
+                          //         context: context,
+                          //         message: "Refreshed",
+                          //         leftColor: Colors.green,
+                          //         icon: Icons.wallet,
+                          //         width: 145);
+                          //     // provider.switchNetwork(97);
+                          //   }
+                          // }, context);
+                        }),
                         Container().expand(),
                         Icon(Icons.cancel).onTap(() {
-                          provider.setLoader(false);
+                          // provider.setLoader(false);
                           finish(context);
                         }),
                       ],
@@ -99,26 +99,26 @@ class walletContainer extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     3.height,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ...List.generate(
-                          3,
-                          (index) => coinCircleAvater(
-                            coinP: coinP,
-                            name: provider.chainNAME[index],
-                            img: coinP.coinArray
-                                .where((element) =>
-                                    element.symbol.toLowerCase() ==
-                                    provider.chainIMG[index])
-                                .first
-                                .imageUrl,
-                          ).onTap(() {
-                            print('ready');
-                          }),
-                        )
-                      ],
-                    )
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: [
+                    //     ...List.generate(
+                    //       3,
+                    //       (index) => coinCircleAvater(
+                    //         coinP: coinP,
+                    //         name: provider.chainNAME[index],
+                    //         img: coinP.coinArray
+                    //             .where((element) =>
+                    //                 element.symbol.toLowerCase() ==
+                    //                 provider.chainIMG[index])
+                    //             .first
+                    //             .imageUrl,
+                    //       ).onTap(() {
+                    //         print('ready');
+                    //       }),
+                    //     )
+                    //   ],
+                    // )
                     // Column(
                     //   children: [
                     //     Icon(

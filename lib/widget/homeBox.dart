@@ -103,9 +103,9 @@ class HomeContainerBox extends StatelessWidget {
                 Consumer<MainScreenProvider>(
                   builder: (BuildContext context, model, _) {
                     return CustomAppButton(
-                      text: 'Play Now',
+                      text: 'Play Nkkow',
                       onPressed: () {
-                        model?.setPageIndex(index);
+                        model.setPageIndex(index);
                       },
                       color: ColorConfig.yellow,
                       textColor: Colors.white,

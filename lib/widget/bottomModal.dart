@@ -119,42 +119,59 @@ walletcard(List array, type, UserWeb3Provider walletnstance, contect) {
                   ? ColorConfig.red
                   : ColorConfig.iconColor)
           .onTap(() {
-        type.toLowerCase() == "eth"
-            ? walletnstance
-                    .walletInstanceMap[type.toLowerCase()]!['isConnected']
-                ? walletnstance.disconnectparticle()
-                : walletnstance.connectPartilcle()
-            : type.toLowerCase() == "sol"
-                ? walletnstance.adapter
-                    .authorize()
-                    .then((value) => walletnstance.output = value.toJson())
-                    .catchError((error) => walletnstance.output = error)
-                : showDialog(
-                    context: contect,
-                    barrierDismissible: true,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        //  shadowColor: ColorConfig.blue,
-                        // shape: CircleBorder(),
-                        backgroundColor: Colors.transparent,
-                        elevation: 10,
-                        child: Container(
-                          color: ColorConfig.white,
-                          child: QrImageView(
-                            backgroundColor: Colors.transparent,
-                            data: walletnstance.universalLink!,
-                            version: QrVersions.auto,
-                            //size: 120,
-                            gapless: false,
-                          ).onTap(() {
-                            print(walletnstance.connector.wallet!.account);
-                          }),
-                          height: 240.w,
-                          width: 240.w,
-                        ).cornerRadiusWithClipRRect(10.r),
-                      );
-                    },
-                  );
+        // type.toLowerCase() == "eth"
+        //     ? walletnstance
+        //             .walletInstanceMap[type.toLowerCase()]!['isConnected']
+        //         ? walletnstance.disconnectparticle()
+        //         : walletnstance.connectPartilcle()
+        //     : type.toLowerCase() == "sol"
+        //         ? walletnstance
+        //                 .walletInstanceMap[type.toLowerCase()]!['isConnected']
+        //             ? walletnstance.adapter
+        //                 .deauthorize()
+        //                 .then((value) => walletnstance.updateMap({
+        //                       "isConnected": false,
+        //                       "address": '',
+        //                       "sol": "",
+        //                       'method': () => {print('HELLO2'), print("object")}
+        //                     }, "sol"))
+        //             : walletnstance.adapter
+        //                 .authorize()
+        //                 .then((value) => walletnstance.updateMap({
+        //                       "isConnected": true,
+        //                       "address": walletnstance
+        //                           .adapter.connectedAccount!.addressBase58
+        //                           .toString(),
+        //                       "sol": "",
+        //                       'method': () => {print('HELLO2'), print("object")}
+        //                     }, "sol"))
+        //                 .catchError((error) => walletnstance.output = error)
+        // : showDialog(
+        //     context: contect,
+        //     barrierDismissible: true,
+        //     builder: (BuildContext context) {
+        //       return Dialog(
+        //         //  shadowColor: ColorConfig.blue,
+        //         // shape: CircleBorder(),
+        //         backgroundColor: Colors.transparent,
+        //         elevation: 10,
+        //         child: Container(
+        //           color: ColorConfig.white,
+        //           child: QrImageView(
+        //             backgroundColor: Colors.transparent,
+        //             data: walletnstance.universalLink!,
+        //             version: QrVersions.auto,
+        //             //size: 120,
+        //             gapless: false,
+        //           ).onTap(() {
+        //             print(walletnstance.connector.wallet!.account);
+        //           }),
+        //           height: 240.w,
+        //           width: 240.w,
+        //         ).cornerRadiusWithClipRRect(10.r),
+        //       );
+        //     },
+        //   );
         // walletnstance
         //     .
         //     // walletnstance.updateMap(
