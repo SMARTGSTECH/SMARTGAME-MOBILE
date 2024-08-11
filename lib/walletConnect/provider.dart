@@ -55,9 +55,9 @@ class UserWeb3Provider extends ChangeNotifier {
     "solana",
     "ton",
   ];
-  dynamic? currentAddress;
-  dynamic? usdBalance;
-  dynamic? bnbBalance;
+  dynamic currentAddress;
+  dynamic usdBalance;
+  dynamic bnbBalance;
   int? currentChain;
   bool connected = false;
   bool isLoading = false;
@@ -99,7 +99,7 @@ class UserWeb3Provider extends ChangeNotifier {
         : type == "sol"
             ? sol = instance
             : ton = instance;
-    print(' updated  ${type} to $instance');
+    print(' updated  $type to $instance');
     walletInstanceMap[type] = type == "eth"
         ? evm
         : type == "sol"
@@ -271,19 +271,19 @@ class UserWeb3Provider extends ChangeNotifier {
         coinP.coinArray.where((element) => element.name == "BNB").first.price;
     userConvertedStaked = double.parse(result.toStringAsFixed(7));
 
-    print(userConvertedStaked);
-    print(
-        "usfing the rate of ${coinP.coinArray.where((element) => element.name == "BNB").first.price}");
+    //print(userConvertedStaked);
+    // print(
+    //     "usfing the rate of ${coinP.coinArray.where((element) => element.name == "BNB").first.price}");
     notifyListeners();
   }
 
   void setCryptoRate(rate) {
     // cryptoRate = rate;
-    print("Rate has been set");
+    //print("Rate has been set");
     List getRatePair =
         cryptoRate.where((element) => element['symbol'] == "BNBUSDT").toList();
     cryptoBNBUSDT = rate;
-    print("this is the rate  $cryptoBNBUSDT");
+    // print("this is the rate  $cryptoBNBUSDT");
     notifyListeners();
   }
 
@@ -318,9 +318,9 @@ class UserWeb3Provider extends ChangeNotifier {
       "side": side[0].toLowerCase().toString(),
       "type": type.toString(),
     };
-    print('this is the new object ${object}');
+    //print('this is the new object ${object}');
     var status = stakeGame(object, context);
-    print(status);
+    // print(status);
   }
 
   // initTransaction(amount, context, prediction, type) async {
@@ -406,7 +406,7 @@ class UserWeb3Provider extends ChangeNotifier {
 
     final dio = Dio();
 
-    var _url = "https://api1.binance.com/api/v3/ticker/price";
+    var url = "https://api1.binance.com/api/v3/ticker/price";
     //print(responses.data);
     print("this rate is coming from coin remitter");
     print(
@@ -418,7 +418,7 @@ class UserWeb3Provider extends ChangeNotifier {
 
   stakeGame(Map object, context) async {
     Map data = object;
-    print("this is the map data:---- $data");
+    // print("this is the map data:---- $data");
     try {
       final response = await http.post(
         Uri.parse(Apis.stake_url),

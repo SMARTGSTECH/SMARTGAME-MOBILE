@@ -39,8 +39,8 @@ class CoinCapProvider extends ChangeNotifier {
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final Map data = json.decode(response.body)['data'];
-        print(data);
-        print("This is the data gotten from the api");
+        // print(data);
+        // print("This is the data gotten from the api");
         Provider.of<SocketProvider>(context, listen: false)
             .setInitGameVale(data);
         return data;

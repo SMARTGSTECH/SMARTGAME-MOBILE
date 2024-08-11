@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
@@ -67,4 +68,27 @@ String getPrice(String pair) {
   return getRatePair.length != 0
       ? double.parse(getRatePair[0]['price']).toStringAsFixed(2)
       : " 0";
+}
+
+
+String truncate(String text, {required int length}) {
+    String omission = '...';
+    if (length >= text.length) {
+      return text;
+    }
+    return text.replaceRange(length, text.length, omission);
+  }
+
+  class CryptoAmountFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final validInputPattern = RegExp(r'^\d*\.?\d*$');
+    if (validInputPattern.hasMatch(newValue.text)) {
+      return newValue;
+    }
+    return oldValue;
+  }
 }

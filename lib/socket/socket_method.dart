@@ -28,8 +28,8 @@ class SocketMethods {
   void initialVal(BuildContext context) {
     _socket.on(eventListeners["init_value"], (data) {
       Map initals = data["initals"];
-      print("This is the data gotten from the socket");
-      print(initals);
+      // print("This is the data gotten from the socket");
+      // print(initals);
       final socketInstance =
           Provider.of<SocketProvider>(context, listen: false);
       socketInstance.setInitGameVale(initals);

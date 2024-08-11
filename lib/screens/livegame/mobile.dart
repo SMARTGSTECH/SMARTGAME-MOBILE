@@ -74,8 +74,9 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                               mainAxisSpacing: 10.0,
                               itemBuilder: (context, index) {
                                 final coinP = Provider.of<CoinCapProvider>(
-                                    context,
-                                    listen: false);
+                                  context,
+                                  listen: false,
+                                );
                                 // print(coinP.coinArray
                                 //     .where((element) =>
                                 //         element.symbol.toLowerCase() == "ton")
