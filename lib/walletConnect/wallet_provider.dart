@@ -20,25 +20,18 @@ import 'package:web3dart/web3dart.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:solana_web3/solana_web3.dart' as web3;
 import 'package:solana_web3/programs.dart' show SystemProgram;
-import 'package:solana_web3/src/encodings/lamports.dart';
-import 'package:solana_web3/src/rpc/models/blockhash_with_expiry_block_height.dart';
 
 class Web3Provider with ChangeNotifier {
-  bool _keyBoardActive = false;
-  late StreamSubscription<bool> keyboardSubscription;
-  TokenFactory tokenFactory = TokenFactory();
-  List _generatedMnemonics = [];
-  String enteredMnemonics = "";
-  String _ethBalance = "0.0000";
-  String _bnbBalance = "0.0000";
-  String _usdtBalance = "0.0000";
-  final String _solBalance = "0.0000";
-  List get userMnemonics => _generatedMnemonics;
-  bool get isKeyBoardActive => _keyBoardActive;
-  String get userEthBalance => _ethBalance;
-  String get userBnbBalance => _bnbBalance;
-  String get userUsdtBalance => _usdtBalance;
-  String get userSolBalance => _solBalance;
+  // bool _keyBoardActive = false;
+  // late StreamSubscription<bool> keyboardSubscription;
+  // TokenFactory tokenFactory = TokenFactory();
+  // List _generatedMnemonics = [];
+  // String enteredMnemonics = "";
+  // String _ethBalance = "0.0000";
+  // String _bnbBalance = "0.0000";
+  // String _usdtBalance = "0.0000";
+  // final String _solBalance = "0.0000";
+  // List get userMnemonics => _generatedMnemonics;
 
   TextEditingController one = TextEditingController();
   TextEditingController two = TextEditingController();
@@ -53,6 +46,28 @@ class Web3Provider with ChangeNotifier {
   TextEditingController eleven = TextEditingController();
   TextEditingController twelve = TextEditingController();
 
+  //final TextEditingController mnemonicControllers = List.generate(12, (_) => TextEditingController());
+
+  bool _keyBoardActive = false;
+  late StreamSubscription<bool> keyboardSubscription;
+
+  List<String> _generatedMnemonics = [];
+  String enteredMnemonics = "";
+  String _ethBalance = "0.0000";
+  String _bnbBalance = "0.0000";
+  String _usdtBalance = "0.0000";
+  String _solBalance = "0.0000";
+
+  BuildContext? _context;
+
+  TokenFactory tokenFactory = TokenFactory();
+
+  // Web3Provider({
+  // })  :
+  //       _keyboardVisibilityController = keyboardVisibilityController {
+  //   _initializeKeyboardVisibility();
+  //   log("Web3Provider initialized");
+  // }
   Web3Provider() {
     log("Web3Provider initialized");
     var keyboardVisibilityController = KeyboardVisibilityController();
@@ -64,91 +79,61 @@ class Web3Provider with ChangeNotifier {
       log('Keyboard visibility update. Is visible: $visible');
       //notifyListeners();
     });
+
+    _initializeKeyboardVisibility();
   }
 
-  BuildContext? _context;
   BuildContext get mainContext => _context!;
+
+  List<String> get userMnemonics => _generatedMnemonics;
+  bool get isKeyBoardActive => _keyBoardActive;
+  String get userEthBalance => _ethBalance;
+  String get userBnbBalance => _bnbBalance;
+  String get userUsdtBalance => _usdtBalance;
+  String get userSolBalance => _solBalance;
 
   void setContext(BuildContext context) {
     _context = context;
   }
 
-  createMultiWalletSystem(BuildContext modalContext) async {
+  void _initializeKeyboardVisibility() {
+    var keyboardVisibilityController = KeyboardVisibilityController();
+
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      _keyBoardActive = visible;
+      log('Keyboard visibility update. Is visible: $visible');
+    });
+  }
+
+  Future<void> createMultiWalletSystem(BuildContext modalContext) async {
     try {
       HDWallet newWalletInstance = HDWallet();
       String mnemonics = newWalletInstance.mnemonic();
       await Storage.saveData(WALLET_MNEMONICS, mnemonics);
-      _generatedMnemonics = List.from(mnemonics.split(' '));
-      String solWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSolana);
-      String usdtWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain);
-      String bnbbscWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain);
+      _generatedMnemonics = mnemonics.split(' ').toList();
 
-      String ethbaseWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeEthereum);
-      log('----- solana address: $solWalletAddress');
-      log('----- usdt(BSC) address: $usdtWalletAddress');
-      log('----- BNB(BSC) address: $bnbbscWalletAddress');
-      log('----- ETH(BASE) address: $ethbaseWalletAddress');
+      logWalletAddresses(newWalletInstance);
       notifyListeners();
-      if (_context != null) {
-        Navigator.pop(modalContext);
-        modalSetup(
-          _context,
-          modalPercentageHeight: 0.55,
-          createPage: const SaveMnemonics(),
-          showBarrierColor: true,
-        );
-      }
+
+      _showModalIfNeeded(_context, modalContext, const SaveMnemonics());
     } catch (e) {
-      //show toast
-      log(e.toString());
+      log('Error in creating wallet: $e');
     }
   }
 
-  importWallet(BuildContext modalContext) async {
+  Future<void> importWallet(BuildContext modalContext) async {
     try {
       HDWallet newWalletInstance =
           HDWallet.createWithMnemonic(enteredMnemonics);
-      String solWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSolana);
-      String usdtWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain);
-      String bnbbscWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain);
-
-      String ethbaseWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeEthereum);
-      log('----- solana address: $solWalletAddress');
-      log('----- usdt(BSC) address: $usdtWalletAddress');
-      log('----- BNB(BSC) address: $bnbbscWalletAddress');
-      log('----- ETH(BASE) address: $ethbaseWalletAddress');
-      final ETHPk =
-          newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeEthereum);
-      log("ETHPk.data:${ETHPk.data()}");
-      log('-1：${PrivateKey.isValid(ETHPk.data(), -1)}、none：${PrivateKey.isValid(ETHPk.data(), TWCurve.TWCurveNone)}、ed25519：${PrivateKey.isValid(ETHPk.data(), TWCurve.TWCurveED25519)}、secp256k1：${PrivateKey.isValid(ETHPk.data(), TWCurve.TWCurveSECP256k1)}、ed25519Blake2bNano：${PrivateKey.isValid(ETHPk.data(), TWCurve.TWCurveED25519Blake2bNano)}、curve25519：${PrivateKey.isValid(ETHPk.data(), TWCurve.TWCurveCurve25519)}、nist256p1:${PrivateKey.isValid(ETHPk.data(), TWCurve.TWCurveNIST256p1)}、ed25519Extended:${PrivateKey.isValid(ETHPk.data(), TWCurve.TWCurveED25519Extended)}');
-      final BITPk =
-          newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeBitcoin);
-      log("BITPk.data:${BITPk.data()}");
-      log('10000000000000000：${PrivateKey.isValid(ETHPk.data(), 10000000000000000)}、none：${PrivateKey.isValid(BITPk.data(), TWCurve.TWCurveNone)}、ed25519：${PrivateKey.isValid(BITPk.data(), TWCurve.TWCurveED25519)}、secp256k1：${PrivateKey.isValid(BITPk.data(), TWCurve.TWCurveSECP256k1)}、ed25519Blake2bNano：${PrivateKey.isValid(BITPk.data(), TWCurve.TWCurveED25519Blake2bNano)}、curve25519：${PrivateKey.isValid(BITPk.data(), TWCurve.TWCurveCurve25519)}、nist256p1:${PrivateKey.isValid(BITPk.data(), TWCurve.TWCurveNIST256p1)}、ed25519Extended:${PrivateKey.isValid(BITPk.data(), TWCurve.TWCurveED25519Extended)}');
+      logWalletAddresses(newWalletInstance);
 
       await Storage.saveData(WALLET_MNEMONICS, enteredMnemonics);
       notifyListeners();
 
-      if (_context != null) {
-        Navigator.pop(modalContext);
-        modalSetup(mainContext,
-            modalPercentageHeight: 0.6,
-            createPage: const UserWallet(),
-            showBarrierColor: true);
-      }
+      _showModalIfNeeded(_context, modalContext, const UserWallet());
     } catch (e) {
-      //show toast
-      log(e.toString());
-      String error = e.toString().split(":").last;
-      log(error);
+      log('Error in importing wallet: $e');
     }
   }
 
@@ -156,138 +141,82 @@ class Web3Provider with ChangeNotifier {
     try {
       String mnemonics = await Storage.readData(WALLET_MNEMONICS);
       HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonics);
-      String solWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSolana);
-      String usdtWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain);
-      String bnbbscWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain);
+      logWalletAddresses(newWalletInstance);
 
-      String ethbaseWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeEthereum);
-      log('----- solana address: $solWalletAddress');
-      log('----- usdt(BSC) address: $usdtWalletAddress');
-      log('----- BNB(BSC) address: $bnbbscWalletAddress');
-      log('----- ETH(BASE) address: $ethbaseWalletAddress');
-      Map<String, dynamic> addresses = {
-        "eth": ethbaseWalletAddress,
-        "bnb": bnbbscWalletAddress,
-        "usdt": usdtWalletAddress,
-        "sol": solWalletAddress
-      };
+      Map<String, dynamic> addresses =
+          _extractWalletAddresses(newWalletInstance);
       notifyListeners();
       getBalances(addresses);
       return addresses;
     } catch (e) {
-      //show toast
-      log(e.toString());
+      log('Error in loading wallet: $e');
       rethrow;
     }
   }
 
-  getBalances(Map<String, dynamic> addresses) {
+  void getBalances(Map<String, dynamic> addresses) {
     getUSDTBSCBalance(addresses["usdt"]);
     getBNBNativeBSCBalance(addresses["bnb"]);
     getETHBaseBalance(addresses["eth"]);
     getSolanaBalance(addresses["sol"]);
   }
 
-  getBNBNativeBSCBalance(address) async {
-    try {
-      Web3Client? client;
-      client =
-          await tokenFactory.initWebClient('https://bsc-dataseed.binance.org/');
-      // String address = "oXhdhd";
-      final EtherAmount balanceAmount =
-          await client.getBalance(EthereumAddress.fromHex(address));
-      double balance = balanceAmount.getValueInUnit(EtherUnit.ether);
-      log('BNB Balance: $balance');
-      _bnbBalance = balance.toString();
-      notifyListeners();
-    } catch (e) {
-      log(e.toString());
-    }
+  Future<void> getBNBNativeBSCBalance(String address) async {
+    await _getBalance(
+      address: address,
+      networkUrl: 'https://bsc-dataseed.binance.org/',
+      onBalanceRetrieved: (balance) {
+        _bnbBalance = balance;
+        notifyListeners();
+      },
+    );
   }
 
-  getUSDTBSCBalance(walletAddress) async {
-    try {
-      String contractAddress = "0x55d398326f99059fF775485246999027B3197955";
-      int decimal = 18;
-      log("Getting USDT balance for $walletAddress");
-      Web3Client? webClient =
-          await tokenFactory.initWebClient('https://bsc-dataseed.binance.org/');
-      final String abi = await rootBundle.loadString(bscTokenAbi);
-      final contract = await tokenFactory.intContract(abi, contractAddress, '');
-      final balanceFunction = contract.function("balanceOf");
-      final balance = await webClient
-          .call(contract: contract, function: balanceFunction, params: [
-        EthereumAddress.fromHex("0x644AFdB7f5663E63a26d164503fbDA61ed7E29B4")
-      ]);
-      BigInt amount = balance.first;
-      log('You have $amount USDT from $balance');
-      double totalBalance =
-          double.parse(amount.toString()) / math.pow(10, decimal);
-      log('Total balance: $totalBalance');
-      _usdtBalance = totalBalance.toStringAsFixed(8);
-      notifyListeners();
-    } catch (e) {
-      log(e.toString());
-    }
+  Future<void> getUSDTBSCBalance(String walletAddress) async {
+    await _getTokenBalance(
+      walletAddress: walletAddress,
+      contractAddress: "0x55d398326f99059fF775485246999027B3197955",
+      networkUrl: 'https://bsc-dataseed.binance.org/',
+      decimal: 18,
+      onBalanceRetrieved: (balance) {
+        _usdtBalance = balance;
+        notifyListeners();
+      },
+    );
   }
 
-  getETHBaseBalance(walletAddress) async {
-    try {
-      String contractAddress = "0x07150e919B4De5fD6a63DE1F9384828396f25fDC";
-      int decimal = 18;
-      log("Getting ETH balance for $walletAddress");
-      Web3Client? webClient =
-          await tokenFactory.initWebClient('https://mainnet.base.org/');
-      final String abi = await rootBundle.loadString(baseTokenAbi);
-      final contract =
-          await tokenFactory.intContract(abi, contractAddress, "ETH");
-      final balanceFunction = contract.function("balanceOf");
-      final balance = await webClient.call(
-          contract: contract,
-          function: balanceFunction,
-          params: [EthereumAddress.fromHex(walletAddress)]);
-      BigInt amount = balance.first;
-      log('You have $amount USDT');
-      double totalBalance =
-          double.parse(amount.toString()) / math.pow(10, decimal);
-      log('Total balance: $totalBalance');
-      _ethBalance = totalBalance.toString();
-      notifyListeners();
-    } catch (e) {
-      log(e.toString());
-    }
+  Future<void> getETHBaseBalance(String address) async {
+    await _getBalance(
+      address: address,
+      networkUrl: 'https://base.llamarpc.com',
+      onBalanceRetrieved: (balance) {
+        _ethBalance = balance;
+        notifyListeners();
+      },
+    );
   }
 
-  getSolanaBalance(walletAddress) async {
+  Future<void> getSolanaBalance(String walletAddress) async {
     try {
       log("Getting SOL balance for $walletAddress");
       final cluster = web3.Cluster.mainnet;
       final connection = web3.Connection(cluster);
+
       final mnemonic = await Storage.readData(WALLET_MNEMONICS);
       HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
-      String solWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSolana);
-      log("Getting SOL wallet addr: $solWalletAddress");
+
       final SOLPkBuffer =
           newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSolana);
-      log("SOLPkBuffer.data:${SOLPkBuffer.data()}");
       final web3.Keypair wallet = web3.Keypair.fromSeedSync(SOLPkBuffer.data());
-      // connection.w
 
       final balance = await connection.getBalance(wallet.pubkey);
 
-      log('You have $balance SOL');
-      _ethBalance = balance.toString();
-      retrieveSolanaWallet();
+      log('SOL Balance: $balance');
+      _solBalance = balance.toString();
+     // retrieveSolanaWallet();
       notifyListeners();
     } catch (e) {
-      log("-----------------222-----------------");
-      log(e.toString());
-      log("-----------------2-----------------");
+      log('Error in getting SOL balance: $e');
     }
   }
 
@@ -313,121 +242,67 @@ class Web3Provider with ChangeNotifier {
     }
   }
 
-  sendCrypto({
+  Future<void> sendCrypto({
     required String to,
     required String symbol,
     required String amount,
-  }) {
+  }) async {
+    final parsedAmount = double.parse(amount);
     if (symbol == "USDT") {
-      sendUsdt(amount: double.parse(amount), to: to);
+      await sendUsdt(amount: parsedAmount, to: to);
     } else if (symbol.contains('BNB')) {
-      // sendBnb(amount: double.parse(amount), to: to);
+      await sendBnb(amount: parsedAmount, to: to);
     } else if (symbol == "ETH") {
-      sendEthBase(amount: double.parse(amount), to: to);
+      await sendEthBase(amount: parsedAmount, to: to);
     } else if (symbol == "SOL") {
-      sendSol(amount: double.parse(amount), to: to);
+      await sendSol(amount: parsedAmount, to: to);
     }
   }
 
-  sendUsdt({required double amount, required String to}) async {
-    String contractAddress = "0x55d398326f99059fF775485246999027B3197955";
-    int decimal = 18;
-    log("Sending USDT");
-    Web3Client? webClient =
-        await tokenFactory.initWebClient('https://bsc-dataseed.binance.org/');
-    final String abi = await rootBundle.loadString(bscTokenAbi);
-    final contract = await tokenFactory.intContract(abi, contractAddress, '');
-
-    final mnemonic = await Storage.readData(WALLET_MNEMONICS);
-    HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
-
-    final key =
-        newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSmartChain);
-    log("key${key.data()}");
-    var privateKey = bytesToHex(key.data(), include0x: true);
-    log("private key: $privateKey");
-    final credentials = await tokenFactory.getCredentials(privateKey);
-    final sendFunction = contract.function('transfer');
-    EtherAmount gasPrice = await webClient.getGasPrice();
-    // BigInt gas = await webClient.estimateGas(
-    //   sender: EthereumAddress.fromHex(from),
-    //   to: EthereumAddress.fromHex(to),
-    //   //data: data,
-    // );
-    int totalAmount = ((amount) * math.pow(10, decimal)).toInt();
-
-    Transaction transaction = Transaction.callContract(
-      contract: contract,
-      function: sendFunction,
-      from: credentials.address,
-      gasPrice: gasPrice,
-      //maxGas: fee.maxGas,
-      parameters: [EthereumAddress.fromHex(to), BigInt.from(totalAmount)],
-    );
-    String txid = await sendTransaction(
-      transaction: transaction,
-      credentials: credentials,
-      webClient: webClient,
+  Future<void> sendBnb({required double amount, required String to}) async {
+    await _sendTransaction(
+      amount: amount,
+      to: to,
+      networkUrl: 'https://bsc-dataseed.binance.org/',
       chainId: 56,
     );
-    print("transacation id $txid");
   }
 
-  sendEthBase({required double amount, required String to}) async {
-    String contractAddress = "0x07150e919B4De5fD6a63DE1F9384828396f25fDC";
-    int decimal = 18;
-    log("Sending USDT");
-    Web3Client? webClient =
-        await tokenFactory.initWebClient('https://mainnet.base.org/');
-    final String abi = await rootBundle.loadString(baseTokenAbi);
-    final contract = await tokenFactory.intContract(abi, contractAddress, '');
-
-    final mnemonic = await Storage.readData(WALLET_MNEMONICS);
-    HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
-
-    final key =
-        newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSmartChain);
-    log("key${key.data()}");
-    var privateKey = bytesToHex(key.data(), include0x: true);
-    log("private key: $privateKey");
-    final credentials = await tokenFactory.getCredentials(privateKey);
-    final sendFunction = contract.function('transfer');
-    EtherAmount gasPrice = await webClient.getGasPrice();
-
-    int totalAmount = ((amount) * math.pow(10, decimal)).toInt();
-
-    Transaction transaction = Transaction.callContract(
-      contract: contract,
-      function: sendFunction,
-      from: credentials.address,
-      gasPrice: gasPrice,
-      //maxGas: fee.maxGas,
-      parameters: [EthereumAddress.fromHex(to), BigInt.from(totalAmount)],
+  Future<void> sendUsdt({required double amount, required String to}) async {
+    await _sendTokenTransaction(
+      amount: amount,
+      to: to,
+      contractAddress: "0x55d398326f99059fF775485246999027B3197955",
+      networkUrl: 'https://bsc-dataseed.binance.org/',
+      chainId: 56,
+      decimal: 18,
     );
-    String txid = await sendTransaction(
-      transaction: transaction,
-      credentials: credentials,
-      webClient: webClient,
+  }
+
+  Future<void> sendEthBase({required double amount, required String to}) async {
+    await _sendTransaction(
+      amount: amount,
+      to: to,
+      networkUrl: 'https://mainnet.base.org/',
       chainId: 8453,
     );
-    print("transacation id $txid");
   }
 
-  sendSol({required double amount, required String to}) async {
-    final cluster = web3.Cluster.mainnet;
-    final connection = web3.Connection(cluster);
-    final mnemonic = await Storage.readData(WALLET_MNEMONICS);
-    HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
-    String solWalletAddress =
-        newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSolana);
-    final SOLPkBuffer =
-        newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSolana);
-    final web3.Keypair wallet = web3.Keypair.fromSeedSync(SOLPkBuffer.data());
+  Future<void> sendSol({required double amount, required String to}) async {
+    try {
+      final cluster = web3.Cluster.mainnet;
+      final connection = web3.Connection(cluster);
 
-    final web3.BlockhashWithExpiryBlockHeight blockhash =
-        await connection.getLatestBlockhash();
+      final mnemonic = await Storage.readData(WALLET_MNEMONICS);
+      HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
+      final SOLPkBuffer =
+          newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSolana);
+      final web3.Keypair wallet = web3.Keypair.fromSeedSync(SOLPkBuffer.data());
 
-    final transaction = web3.Transaction.v0(
+      final web3.BlockhashWithExpiryBlockHeight blockhash =
+          await connection.getLatestBlockhash();
+
+      final transaction = web3.Transaction.v0(
         payer: wallet.pubkey,
         recentBlockhash: blockhash.blockhash,
         instructions: [
@@ -436,23 +311,24 @@ class Web3Provider with ChangeNotifier {
             toPubkey: web3.Pubkey.fromBase58(to),
             lamports: web3.solToLamports(amount),
           ),
-        ]);
-    transaction.sign([wallet]);
-    String txid = await connection.sendAndConfirmTransaction(
-      transaction,
-    );
-
-    print("transacation id $txid");
+        ],
+      );
+      transaction.sign([wallet]);
+      String txid = await connection.sendAndConfirmTransaction(transaction);
+      log("Transaction ID: $txid");
+    } catch (e) {
+      log('Error in sending SOL: $e');
+    }
   }
 
-  Future<String> sendTransaction(
-      {required Transaction transaction,
-      required Credentials credentials,
-      required Web3Client webClient,
-      required int chainId}) async {
+  Future<String> sendTransaction({
+    required Transaction transaction,
+    required Credentials credentials,
+    required Web3Client webClient,
+    required int chainId,
+  }) async {
     try {
       log("Sending transaction");
-
       Uint8List signedTransaction = await webClient.signTransaction(
         credentials,
         transaction,
@@ -460,25 +336,168 @@ class Web3Provider with ChangeNotifier {
         fetchChainIdFromNetworkId: false,
       );
       String txId = await webClient.sendRawTransaction(signedTransaction);
-      log("TxId: $txId");
+      log("Transaction ID: $txId");
       return txId;
     } catch (e) {
-      log(e.toString());
+      log('Error in sending transaction: $e');
       throw Exception("An error occurred while sending transaction");
     }
   }
 
-// final sendFunction = contract.function('transfer');
-// int amount * 10^(decimals)
-// Transaction transaction = Transaction.callContract(
-//     contract: contract,
-//     function: sendFunction,
-//     from: credentials.address,
-//     gasPrice: EtherAmount.inWei(fee.gasPrice),
-//     maxGas: fee.maxGas,
-//     parameters: [
-//       EthereumAddress.fromHex(widget.sendPayload.recipient_address!),
-//       BigInt.from(totalAmount)
-//     ]
-// );
+  Future<void> _getBalance({
+    required String address,
+    required String networkUrl,
+    required Function(String) onBalanceRetrieved,
+  }) async {
+    try {
+      final client = await tokenFactory.initWebClient(networkUrl);
+      final EtherAmount balanceAmount =
+          await client.getBalance(EthereumAddress.fromHex(address));
+      double balance = balanceAmount.getValueInUnit(EtherUnit.ether);
+      //  log('Balance: $balance');
+      log('Native Balance with network url $networkUrl is: $balance');
+      onBalanceRetrieved(balance.toString());
+    } catch (e) {
+      log('Error in getting balance: $e');
+    }
+  }
+
+  Future<void> _getTokenBalance({
+    required String walletAddress,
+    required String contractAddress,
+    required String networkUrl,
+    required int decimal,
+    required Function(String) onBalanceRetrieved,
+  }) async {
+    try {
+      final client = await tokenFactory.initWebClient(networkUrl);
+      final String abi = await rootBundle.loadString(bscTokenAbi);
+      final contract = await tokenFactory.intContract(abi, contractAddress, '');
+      final balanceFunction = contract.function("balanceOf");
+      final balance = await client.call(
+        contract: contract,
+        function: balanceFunction,
+        params: [EthereumAddress.fromHex(walletAddress)],
+      );
+      BigInt amount = balance.first;
+      // log("Raw Token Balance with network url $networkUrl is: $amount");
+      double totalBalance =
+          double.parse(amount.toString()) / math.pow(10, decimal);
+      log('Token Balance with network url $networkUrl is: $totalBalance');
+      onBalanceRetrieved(totalBalance.toStringAsFixed(8));
+    } catch (e) {
+      log('Error in getting token balance with network url $networkUrl: $e');
+    }
+  }
+
+  Future<void> _sendTransaction({
+    required double amount,
+    required String to,
+    required String networkUrl,
+    required int chainId,
+  }) async {
+    try {
+      final client = await tokenFactory.initWebClient(networkUrl);
+      final mnemonic = await Storage.readData(WALLET_MNEMONICS);
+      HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
+
+      final key =
+          newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSmartChain);
+      var privateKey = bytesToHex(key.data(), include0x: true);
+      final credentials = await tokenFactory.getCredentials(privateKey);
+
+      final amountInWei = BigInt.from(amount * 1e18);
+      final senderAddress = credentials.address;
+
+      // Create the transaction for sending native BNB
+      final transaction = Transaction(
+        from: senderAddress,
+        to: EthereumAddress.fromHex(to),
+        value: EtherAmount.inWei(amountInWei),
+        gasPrice: await client.getGasPrice(),
+        maxGas: 21000, // Standard gas limit for a simple transfer
+      );
+
+      String txid = await sendTransaction(
+        transaction: transaction,
+        credentials: credentials,
+        webClient: client,
+        chainId: chainId,
+      );
+
+      log("Transaction ID: $txid");
+    } catch (e) {
+      log('Error in sending token transaction: $e');
+    }
+  }
+
+  Future<void> _sendTokenTransaction({
+    required double amount,
+    required String to,
+    required String contractAddress,
+    required String networkUrl,
+    required int chainId,
+    required int decimal,
+  }) async {
+    try {
+      final client = await tokenFactory.initWebClient(networkUrl);
+      final String abi = await rootBundle.loadString(bscTokenAbi);
+      final contract = await tokenFactory.intContract(abi, contractAddress, '');
+
+      final mnemonic = await Storage.readData(WALLET_MNEMONICS);
+      HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
+      final key =
+          newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSmartChain);
+      var privateKey = bytesToHex(key.data(), include0x: true);
+      final credentials = await tokenFactory.getCredentials(privateKey);
+
+      final sendFunction = contract.function('transfer');
+      EtherAmount gasPrice = await client.getGasPrice();
+      int totalAmount = ((amount) * math.pow(10, decimal)).toInt();
+
+      Transaction transaction = Transaction.callContract(
+        contract: contract,
+        function: sendFunction,
+        from: credentials.address,
+        gasPrice: gasPrice,
+        parameters: [EthereumAddress.fromHex(to), BigInt.from(totalAmount)],
+      );
+      String txid = await sendTransaction(
+        transaction: transaction,
+        credentials: credentials,
+        webClient: client,
+        chainId: chainId,
+      );
+      log("Transaction ID: $txid");
+    } catch (e) {
+      log('Error in sending token transaction: $e');
+    }
+  }
+
+  Map<String, dynamic> _extractWalletAddresses(HDWallet wallet) {
+    return {
+      "eth": wallet.getAddressForCoin(TWCoinType.TWCoinTypeEthereum),
+      "bnb": wallet.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain),
+      "usdt": wallet.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain),
+      "sol": wallet.getAddressForCoin(TWCoinType.TWCoinTypeSolana)
+    };
+  }
+
+  void logWalletAddresses(HDWallet wallet) {
+    log('----- Solana address: ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeSolana)}');
+    log('----- USDT(BSC) address: ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain)}');
+    log('----- BNB(BSC) address: ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain)}');
+    log('----- ETH(BASE) address: ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeEthereum)}');
+  }
+
+  void _showModalIfNeeded(
+      BuildContext? context, BuildContext modalContext, Widget page) {
+    if (context != null) {
+      Navigator.pop(modalContext);
+      modalSetup(context,
+          modalPercentageHeight: 0.55,
+          createPage: page,
+          showBarrierColor: true);
+    }
+  }
 }

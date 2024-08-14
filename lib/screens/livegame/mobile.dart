@@ -26,8 +26,8 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
       builder: (BuildContext context, model, _) {
         return SingleChildScrollView(
           physics: model.selectedTab == 0
-              ? NeverScrollableScrollPhysics()
-              : BouncingScrollPhysics(),
+              ? const NeverScrollableScrollPhysics()
+              : const BouncingScrollPhysics(),
           child: Column(
             children: [
               Padding(
@@ -35,7 +35,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsetsDirectional.all(4),
+                      padding: const EdgeInsetsDirectional.all(4),
                       height: 40.h,
                       width: 340.w,
                       decoration: BoxDecoration(
@@ -131,7 +131,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                               },
                             )
                           : model.activeLiveGame == []
-                              ? Center(child: Text("No game active"))
+                              ? const Center(child: Text("No game active"))
                               : CustomGridView(
                                   itemCount: model.selectedTab == 0
                                       ? 4
