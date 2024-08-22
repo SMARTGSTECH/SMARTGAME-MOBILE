@@ -6,6 +6,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:smartbet/constants/assets_path.dart';
 import 'package:smartbet/constants/strings.dart';
 import 'package:smartbet/screens/wallet_modals/save_mnemonics.dart';
@@ -13,6 +14,7 @@ import 'package:smartbet/screens/wallet_modals/wallet.dart';
 import 'package:smartbet/services/storage.dart';
 import 'package:smartbet/services/token_factory.dart';
 import 'package:smartbet/shared/modal_sheet.dart';
+import 'package:tonutils/tonutils.dart' as ton;
 import 'package:trust_wallet_core_lib/trust_wallet_core_ffi.dart';
 import 'package:trust_wallet_core_lib/trust_wallet_core_lib.dart';
 import 'package:web3dart/crypto.dart';
@@ -22,17 +24,6 @@ import 'package:solana_web3/solana_web3.dart' as web3;
 import 'package:solana_web3/programs.dart' show SystemProgram;
 
 class Web3Provider with ChangeNotifier {
-  // bool _keyBoardActive = false;
-  // late StreamSubscription<bool> keyboardSubscription;
-  // TokenFactory tokenFactory = TokenFactory();
-  // List _generatedMnemonics = [];
-  // String enteredMnemonics = "";
-  // String _ethBalance = "0.0000";
-  // String _bnbBalance = "0.0000";
-  // String _usdtBalance = "0.0000";
-  // final String _solBalance = "0.0000";
-  // List get userMnemonics => _generatedMnemonics;
-
   TextEditingController one = TextEditingController();
   TextEditingController two = TextEditingController();
   TextEditingController three = TextEditingController();
@@ -46,8 +37,6 @@ class Web3Provider with ChangeNotifier {
   TextEditingController eleven = TextEditingController();
   TextEditingController twelve = TextEditingController();
 
-  //final TextEditingController mnemonicControllers = List.generate(12, (_) => TextEditingController());
-
   bool _keyBoardActive = false;
   late StreamSubscription<bool> keyboardSubscription;
 
@@ -57,30 +46,26 @@ class Web3Provider with ChangeNotifier {
   String _bnbBalance = "0.0000";
   String _usdtBalance = "0.0000";
   String _solBalance = "0.0000";
+  String _tonBalance = "0.0000";
 
   BuildContext? _context;
 
   TokenFactory tokenFactory = TokenFactory();
+  final tonClient = ton.TonJsonRpc('https://toncenter.com/api/v2/jsonRPC');
+  late ton.KeyPair keyPair;
 
-  // Web3Provider({
-  // })  :
-  //       _keyboardVisibilityController = keyboardVisibilityController {
-  //   _initializeKeyboardVisibility();
-  //   log("Web3Provider initialized");
-  // }
   Web3Provider() {
     log("Web3Provider initialized");
     var keyboardVisibilityController = KeyboardVisibilityController();
 
-    // Subscribe
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) {
       _keyBoardActive = visible;
       log('Keyboard visibility update. Is visible: $visible');
-      //notifyListeners();
     });
 
     _initializeKeyboardVisibility();
+    setupTonKeypair();
   }
 
   BuildContext get mainContext => _context!;
@@ -91,6 +76,7 @@ class Web3Provider with ChangeNotifier {
   String get userBnbBalance => _bnbBalance;
   String get userUsdtBalance => _usdtBalance;
   String get userSolBalance => _solBalance;
+  String get userTonBalance => _tonBalance;
 
   void setContext(BuildContext context) {
     _context = context;
@@ -114,11 +100,79 @@ class Web3Provider with ChangeNotifier {
       _generatedMnemonics = mnemonics.split(' ').toList();
 
       logWalletAddresses(newWalletInstance);
+      toast(
+        "Wallet created successfully. Please wait while we load your wallet",
+      );
+      await setupTonKeypair();
+
       notifyListeners();
 
       _showModalIfNeeded(_context, modalContext, const SaveMnemonics());
     } catch (e) {
       log('Error in creating wallet: $e');
+    }
+  }
+
+  setupTonKeypair() async {
+    final mnemonic = await Storage.readData(WALLET_MNEMONICS) ?? '';
+    if (mnemonic.isEmpty) {
+      return;
+    }
+    var mnemonics = mnemonic.split(' ');
+    log("mnemonics: $mnemonics");
+
+    log("-----------------setting up TON keypair-----------------");
+    keyPair = ton.Mnemonic.toKeyPair(mnemonics);
+    log("-----------------------setting up TON keypair: completed--------------------------");
+  }
+
+  setupTONWallet(Map<String, dynamic> addresses) async {
+    try {
+      var wallet = ton.WalletContractV4R2.create(publicKey: keyPair.publicKey);
+      log("public key: ${keyPair.publicKey}");
+      var openedContract = tonClient.open(wallet);
+      ton.InternalAddress walletAddress = wallet.address;
+
+      log("Wallet Address: ${walletAddress.toString()}");
+      addresses['ton'] = walletAddress.toString();
+
+      BigInt balance = await openedContract.getBalance();
+      double totalBalance = balance.toDouble() / math.pow(10, 9);
+      log("TON Balance: $totalBalance");
+
+      _tonBalance = totalBalance.toString();
+      notifyListeners();
+
+      //return walletAddress.toString();
+    } catch (e) {
+      log('Error in setting up TON wallet: $e');
+    }
+  }
+
+  Future<void> sendTon({required double amount, required String to}) async {
+    try {
+      var wallet = ton.WalletContractV4R2.create(publicKey: keyPair.publicKey);
+      var openedContract = tonClient.open(wallet);
+
+      var seqno = await openedContract.getSeqno();
+      var transfer = openedContract.createTransfer(
+        seqno: seqno,
+        privateKey: keyPair.privateKey,
+        messages: [
+          ton.internal(
+            to: ton.SiaString(to),
+            value: ton.SbiString(amount.toString()),
+          )
+        ],
+      );
+      final tx = ton.loadTransaction(transfer.beginParse());
+      // log('tx: ${tx.}');
+      ton.storeTransaction(tx);
+      log('TON transfer: ${transfer.toString()}');
+
+      notifyListeners();
+    } catch (e) {
+      log('Error in sending TON: $e');
     }
   }
 
@@ -129,6 +183,21 @@ class Web3Provider with ChangeNotifier {
       logWalletAddresses(newWalletInstance);
 
       await Storage.saveData(WALLET_MNEMONICS, enteredMnemonics);
+      toast(
+          "Wallet imported successfully. Please wait while we load your wallet");
+      one.clear();
+      two.clear();
+      three.clear();
+      four.clear();
+      five.clear();
+      six.clear();
+      seven.clear();
+      eight.clear();
+      nine.clear();
+      ten.clear();
+      eleven.clear();
+      twelve.clear();
+      await setupTonKeypair();
       notifyListeners();
 
       _showModalIfNeeded(_context, modalContext, const UserWallet());
@@ -140,7 +209,9 @@ class Web3Provider with ChangeNotifier {
   Future<Map<String, dynamic>> loadWallet() async {
     try {
       String mnemonics = await Storage.readData(WALLET_MNEMONICS);
+      log('memnonics: $mnemonics');
       HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonics);
+
       logWalletAddresses(newWalletInstance);
 
       Map<String, dynamic> addresses =
@@ -154,11 +225,14 @@ class Web3Provider with ChangeNotifier {
     }
   }
 
-  void getBalances(Map<String, dynamic> addresses) {
+  void getBalances(Map<String, dynamic> addresses) async {
     getUSDTBSCBalance(addresses["usdt"]);
     getBNBNativeBSCBalance(addresses["bnb"]);
     getETHBaseBalance(addresses["eth"]);
     getSolanaBalance(addresses["sol"]);
+    // Setup TON wallet and get the address
+    //Setup TON wallet and get the address and get balance
+    setupTONWallet(addresses);
   }
 
   Future<void> getBNBNativeBSCBalance(String address) async {
@@ -213,32 +287,9 @@ class Web3Provider with ChangeNotifier {
 
       log('SOL Balance: $balance');
       _solBalance = balance.toString();
-     // retrieveSolanaWallet();
       notifyListeners();
     } catch (e) {
       log('Error in getting SOL balance: $e');
-    }
-  }
-
-  retrieveSolanaWallet() async {
-    try {
-      final mnemonic = await Storage.readData(WALLET_MNEMONICS);
-      HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonic);
-      String solWalletAddress =
-          newWalletInstance.getAddressForCoin(TWCoinType.TWCoinTypeSolana);
-      log("Getting SOL wallet addr: $solWalletAddress");
-
-      final SOLPkBuffer =
-          newWalletInstance.getKeyForCoin(TWCoinType.TWCoinTypeSolana);
-      log("SOLPkBuffer.data:${SOLPkBuffer.data()}");
-      final web3.Keypair wallet = web3.Keypair.fromSeedSync(SOLPkBuffer.data());
-      log('Account is ${wallet.pubkey}');
-
-      // final wallet = web3.
-    } catch (e) {
-      log("-----------------11111-----------------");
-      log(e.toString());
-      log("-----------------11111-----------------");
     }
   }
 
@@ -256,6 +307,8 @@ class Web3Provider with ChangeNotifier {
       await sendEthBase(amount: parsedAmount, to: to);
     } else if (symbol == "SOL") {
       await sendSol(amount: parsedAmount, to: to);
+    } else if (symbol == "TON") {
+      await sendTon(amount: parsedAmount, to: to);
     }
   }
 
@@ -353,10 +406,9 @@ class Web3Provider with ChangeNotifier {
       final client = await tokenFactory.initWebClient(networkUrl);
       final EtherAmount balanceAmount =
           await client.getBalance(EthereumAddress.fromHex(address));
-      double balance = balanceAmount.getValueInUnit(EtherUnit.ether);
-      //  log('Balance: $balance');
-      log('Native Balance with network url $networkUrl is: $balance');
-      onBalanceRetrieved(balance.toString());
+      log('Native Balance with network url $networkUrl is: $balanceAmount');
+      onBalanceRetrieved(
+          balanceAmount.getValueInUnit(EtherUnit.ether).toString());
     } catch (e) {
       log('Error in getting balance: $e');
     }
@@ -380,7 +432,6 @@ class Web3Provider with ChangeNotifier {
         params: [EthereumAddress.fromHex(walletAddress)],
       );
       BigInt amount = balance.first;
-      // log("Raw Token Balance with network url $networkUrl is: $amount");
       double totalBalance =
           double.parse(amount.toString()) / math.pow(10, decimal);
       log('Token Balance with network url $networkUrl is: $totalBalance');
@@ -499,5 +550,11 @@ class Web3Provider with ChangeNotifier {
           createPage: page,
           showBarrierColor: true);
     }
+  }
+
+  void removeWallet() {
+    Storage.removeData(WALLET_MNEMONICS);
+    _generatedMnemonics = [];
+    notifyListeners();
   }
 }

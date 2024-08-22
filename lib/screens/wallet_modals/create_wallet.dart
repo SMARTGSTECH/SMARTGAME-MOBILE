@@ -26,6 +26,7 @@ class _CreateWalletState extends State<CreateWallet> {
   Widget build(BuildContext context) {
     Web3Provider web3provider =
         Provider.of<Web3Provider>(context, listen: false);
+    // web3provider.setupTONWallet();
     return Scaffold(
       //  backgroundColor: kBackgroundColor,
       body: SafeArea(

@@ -4,32 +4,44 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/constants/strings.dart';
 import 'package:smartbet/screens/wallet_modals/wallet.dart';
+import 'package:smartbet/services/storage.dart';
 import 'package:smartbet/shared/modal_sheet.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/walletConnect/wallet_provider.dart';
 
-class SaveMnemonics extends StatefulWidget {
-  const SaveMnemonics({super.key});
+class ViewPhrases extends StatefulWidget {
+  const ViewPhrases({super.key});
 
   @override
-  State<SaveMnemonics> createState() => _SaveMnemonicsState();
+  State<ViewPhrases> createState() => _ViewPhrasesState();
 }
 
-class _SaveMnemonicsState extends State<SaveMnemonics> {
+class _ViewPhrasesState extends State<ViewPhrases> {
   late Web3Provider web3provider;
+  List<String> userMnemonics = [];
   @override
   void initState() {
     web3provider = Provider.of<Web3Provider>(context, listen: false);
+    getMnemonics();
     super.initState();
   }
 
   copyMnemonics() async {
     // convert list to string spaced by a space
-    String mnemonics = web3provider.userMnemonics.join(' ');
+    String mnemonics = userMnemonics.join(' ');
     log(mnemonics);
     await Clipboard.setData(ClipboardData(text: mnemonics));
     toast('Mnemonics copied to clipboard');
+  }
+
+  getMnemonics() async {
+    String mnemonic = await Storage.readData(WALLET_MNEMONICS);
+
+    userMnemonics = mnemonic.split(' ');
+    log("user mnemonics: $userMnemonics");
+    setState(() {});
   }
 
   @override
@@ -101,9 +113,7 @@ class _SaveMnemonicsState extends State<SaveMnemonics> {
                     runSpacing: 17,
                     spacing: 10,
                     runAlignment: WrapAlignment.center,
-                    children: [
-                      ...web3provider.userMnemonics.map((e) => item(e)).toList()
-                    ],
+                    children: [...userMnemonics.map((e) => item(e)).toList()],
                   ),
                 ),
                 const Spacer(),
@@ -124,7 +134,7 @@ class _SaveMnemonicsState extends State<SaveMnemonics> {
                     ),
                     child: const Center(
                       child: Text(
-                        'Proceed to wallet',
+                        'Back to Wallet',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

@@ -5,6 +5,7 @@ final String bnblogo = _getImagePath("svg/bnb_logo.svg");
 final String ethlogo = _getImagePath("svg/eth_logo.svg");
 final String usdtlogo = _getImagePath("svg/usdt_logo.svg");
 final String sollogo = _getImagePath("svg/sol_logo.svg");
+final String tonlogo = _getImagePath("svg/ton_logo.svg");
 
 
 

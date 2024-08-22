@@ -72,7 +72,7 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
                 if (data.isNotEmpty) {
                   modalSetup(
                     context,
-                    modalPercentageHeight: 0.6,
+                    modalPercentageHeight: 0.9,
                     createPage: const UserWallet(),
                     showBarrierColor: true,
                   );

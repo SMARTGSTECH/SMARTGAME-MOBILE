@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:smartbet/constants/assets_path.dart';
 import 'package:smartbet/screens/wallet_modals/send_crypto.dart';
+import 'package:smartbet/screens/wallet_modals/view_phrases.dart';
 import 'package:smartbet/shared/modal_sheet.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/utils/helpers.dart';
@@ -24,6 +25,7 @@ class _UserWalletState extends State<UserWallet> {
   Map<String, dynamic> addresses = {};
   getUserWallet() async {
     addresses = await web3provider.loadWallet();
+    // web3provider.getBalances(addresses);
     setState(() {});
   }
 
@@ -36,6 +38,7 @@ class _UserWalletState extends State<UserWallet> {
 
   @override
   Widget build(BuildContext context) {
+    // web3provider.setupTONWallet();
     return Scaffold(
       // backgroundColor: kBackgroundColor,
       body: SafeArea(
@@ -99,6 +102,72 @@ class _UserWalletState extends State<UserWallet> {
                   assetSymbol: "SOL",
                   balance: web3provider.userSolBalance,
                 ),
+                item(
+                  assetLogo: tonlogo,
+                  assetAddress: addresses["ton"] ?? '',
+                  assetSymbol: "TON",
+                  balance: web3provider.userTonBalance,
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    modalSetup(web3provider.mainContext,
+                        modalPercentageHeight: 0.6,
+                        createPage: const ViewPhrases(),
+                        showBarrierColor: true);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      color: ColorConfig.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'View Phrases',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                10.h.toInt().height,
+                GestureDetector(
+                  onTap: () {
+                    web3provider.removeWallet();
+                    Navigator.pop(context);
+                    toast("Wallet removed successfully");
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEB658D),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Remove Wallet',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // item(
+                //   assetLogo: tonlogo,
+                //   assetAddress: addresses["ton"] ?? '',
+                //   assetSymbol: "SOL",
+                //   balance: web3provider.userSolBalance,
+                // ),
               ],
             );
           }),

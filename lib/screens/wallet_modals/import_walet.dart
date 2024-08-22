@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +49,48 @@ class _ImportWalletState extends State<ImportWallet> {
     }
   }
 
+  Future<void> pasteTextIntoFields() async {
+    List<TextEditingController> controllers = [
+      web3provider.one,
+      web3provider.two,
+      web3provider.three,
+      web3provider.four,
+      web3provider.five,
+      web3provider.six,
+      web3provider.seven,
+      web3provider.eight,
+      web3provider.nine,
+      web3provider.ten,
+      web3provider.eleven,
+      web3provider.twelve,
+    ];
+
+    // Get the data from the clipboard
+    ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+    if (data?.text != null) {
+      // Split the clipboard text on spaces
+      log('data: ${data!.text}');
+      List<String> splitText = data.text!.split(' ');
+      if (splitText.length != 12) {
+        toast("Invalid Mnemonic Phrase");
+        return;
+      }
+
+      // Loop over the text fields and assign each one a piece of the split text
+      for (int i = 0; i < controllers.length; i++) {
+        if (i < splitText.length) {
+          controllers[i].text =
+              splitText[i].toString().replaceAll(',', '').trim();
+        } else {
+          // If there is no more text to paste, break the loop
+          break;
+        }
+      }
+      checkFieldsValidity();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,11 +129,36 @@ class _ImportWalletState extends State<ImportWallet> {
                       )
                     ],
                   ),
-                  const Text(
-                    'Enter your 12-word mnemonic phrase to import your wallet.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
+                  // const Text(
+                  //   'Enter your 12-word mnemonic phrase to import your wallet.',
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //     color: Colors.grey,
+                  //   ),
+                  // ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text:
+                              'Enter your 12-word mnemonic phrase to import your wallet or ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Paste from clipboard',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              pasteTextIntoFields();
+                            },
+                        ),
+                      ],
                     ),
                   ),
                   20.h.toInt().height,
