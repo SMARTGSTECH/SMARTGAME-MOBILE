@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:smartbet/constants/assets_path.dart';
+import 'package:smartbet/screens/wallet_modals/histories.dart';
 import 'package:smartbet/screens/wallet_modals/send_crypto.dart';
 import 'package:smartbet/screens/wallet_modals/view_phrases.dart';
 import 'package:smartbet/shared/modal_sheet.dart';
@@ -45,130 +46,164 @@ class _UserWalletState extends State<UserWallet> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: LayoutBuilder(builder: (context, constraints) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: constraints.maxHeight * 0.03),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Wallet',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.close),
-                    )
-                  ],
-                ),
-                3.h.toInt().height,
-                const Text(
-                  'This is your wallet. You can view your balance, receive tokens and perform actions.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
-                20.h.toInt().height,
-                item(
-                  assetLogo: ethlogo,
-                  assetAddress: addresses["eth"] ?? '',
-                  assetSymbol: "ETH(Base)",
-                  balance: web3provider.userEthBalance,
-                ),
-                item(
-                  assetLogo: bnblogo,
-                  assetAddress: addresses["bnb"] ?? '',
-                  assetSymbol: "BNB(BSC)",
-                  chainLogo: bnblogo,
-                  balance: web3provider.userBnbBalance,
-                ),
-                item(
-                  assetLogo: usdtlogo,
-                  assetAddress: addresses["usdt"] ?? '',
-                  assetSymbol: "USDT",
-                  chainLogo: bnblogo,
-                  balance: web3provider.userUsdtBalance,
-                ),
-                item(
-                  assetLogo: sollogo,
-                  assetAddress: addresses["sol"] ?? '',
-                  assetSymbol: "SOL",
-                  balance: web3provider.userSolBalance,
-                ),
-                item(
-                  assetLogo: tonlogo,
-                  assetAddress: addresses["ton"] ?? '',
-                  assetSymbol: "TON",
-                  balance: web3provider.userTonBalance,
-                ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    modalSetup(web3provider.mainContext,
-                        modalPercentageHeight: 0.6,
-                        createPage: const ViewPhrases(),
-                        showBarrierColor: true);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 40.h,
-                    decoration: BoxDecoration(
-                      color: ColorConfig.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'View Phrases',
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: constraints.maxHeight * 0.03),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Wallet',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.close),
+                      )
+                    ],
+                  ),
+                  3.h.toInt().height,
+                  const Text(
+                    'This is your wallet. You can view your balance, receive tokens and perform actions.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  20.h.toInt().height,
+                   ///TODO: when the balance is being fetched, show a loading spinner of some sort
+                  item(
+                    assetLogo: ethlogo,
+                    assetAddress: addresses["eth"] ?? '',
+                    assetSymbol: "ETH(Base)",
+                    balance: web3provider.userEthBalance,
+                  ),
+                  item(
+                    assetLogo: bnblogo,
+                    assetAddress: addresses["bnb"] ?? '',
+                    assetSymbol: "BNB(BSC)",
+                    chainLogo: bnblogo,
+                    balance: web3provider.userBnbBalance,
+                  ),
+                  item(
+                    assetLogo: usdtlogo,
+                    assetAddress: addresses["usdt"] ?? '',
+                    assetSymbol: "USDT",
+                    chainLogo: bnblogo,
+                    balance: web3provider.userUsdtBalance,
+                  ),
+                  item(
+                    assetLogo: sollogo,
+                    assetAddress: addresses["sol"] ?? '',
+                    assetSymbol: "SOL",
+                    balance: web3provider.userSolBalance,
+                  ),
+                  item(
+                    assetLogo: tonlogo,
+                    assetAddress: addresses["ton"] ?? '',
+                    assetSymbol: "TON",
+                    balance: web3provider.userTonBalance,
+                  ),
+                  20.h.toInt().height,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      modalSetup(web3provider.mainContext,
+                          modalPercentageHeight: 0.6,
+                          createPage: WalletHistories(
+                            addresses: addresses,
+                          ),
+                          showBarrierColor: true);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                        color: ColorConfig.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'View History',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                10.h.toInt().height,
-                GestureDetector(
-                  onTap: () {
-                    web3provider.removeWallet();
-                    Navigator.pop(context);
-                    toast("Wallet removed successfully");
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 40.h,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEB658D),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Remove Wallet',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                  10.h.toInt().height,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      modalSetup(web3provider.mainContext,
+                          modalPercentageHeight: 0.6,
+                          createPage: const ViewPhrases(),
+                          showBarrierColor: true);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                        color: ColorConfig.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'View Phrases',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                // item(
-                //   assetLogo: tonlogo,
-                //   assetAddress: addresses["ton"] ?? '',
-                //   assetSymbol: "SOL",
-                //   balance: web3provider.userSolBalance,
-                // ),
-              ],
+                  10.h.toInt().height,
+                  GestureDetector(
+                    onTap: () {
+                      web3provider.removeWallet();
+                      Navigator.pop(context);
+                      toast("Wallet removed successfully");
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEB658D),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Remove Wallet',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // item(
+                  //   assetLogo: tonlogo,
+                  //   assetAddress: addresses["ton"] ?? '',
+                  //   assetSymbol: "SOL",
+                  //   balance: web3provider.userSolBalance,
+                  // ),
+                ],
+              ),
             );
           }),
         ),
@@ -266,7 +301,7 @@ class _UserWalletState extends State<UserWallet> {
               Navigator.pop(context);
               modalSetup(
                 web3provider.mainContext,
-                modalPercentageHeight: 0.5,
+                modalPercentageHeight: 0.7,
                 createPage: SendCrypto(
                   assetLogo: assetLogo,
                   assetSymbol: assetSymbol,

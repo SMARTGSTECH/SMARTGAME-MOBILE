@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/screens/wallet_modals/wallet.dart';
+import 'package:smartbet/shared/modal_sheet.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/utils/helpers.dart';
 import 'package:smartbet/walletConnect/wallet_provider.dart';
@@ -215,6 +217,36 @@ class _SendCryptoState extends State<SendCrypto> {
                     ),
                   ),
                 ),
+                //const Spacer(),
+                10.h.toInt().height,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    modalSetup(web3provider.mainContext,
+                        modalPercentageHeight: 0.9,
+                        createPage: const UserWallet(),
+                        showBarrierColor: true);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      color: ColorConfig.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Back to Wallet',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                10.h.toInt().height,
               ],
             );
           }),

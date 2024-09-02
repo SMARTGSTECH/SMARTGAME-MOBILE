@@ -2,13 +2,16 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:smartbet/constants/assets_path.dart';
 import 'package:smartbet/constants/strings.dart';
+import 'package:smartbet/model/tx_history.dart';
 import 'package:smartbet/screens/wallet_modals/save_mnemonics.dart';
 import 'package:smartbet/screens/wallet_modals/wallet.dart';
 import 'package:smartbet/services/storage.dart';
@@ -22,6 +25,10 @@ import 'package:web3dart/web3dart.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:solana_web3/solana_web3.dart' as web3;
 import 'package:solana_web3/programs.dart' show SystemProgram;
+import 'package:bip39/bip39.dart' as bip39;
+import 'package:bip32/bip32.dart' as bip32;
+import 'package:crypto/crypto.dart';
+import 'package:http/http.dart' as http;
 
 class Web3Provider with ChangeNotifier {
   TextEditingController one = TextEditingController();
@@ -48,11 +55,15 @@ class Web3Provider with ChangeNotifier {
   String _solBalance = "0.0000";
   String _tonBalance = "0.0000";
 
+  List<TxResult> txResult = <TxResult>[];
+
   BuildContext? _context;
 
   TokenFactory tokenFactory = TokenFactory();
   final tonClient = ton.TonJsonRpc('https://toncenter.com/api/v2/jsonRPC');
   late ton.KeyPair keyPair;
+
+  static const String baseUrl = 'https://deep-index.moralis.io/api/v2.2/';
 
   Web3Provider() {
     log("Web3Provider initialized");
@@ -72,6 +83,8 @@ class Web3Provider with ChangeNotifier {
 
   List<String> get userMnemonics => _generatedMnemonics;
   bool get isKeyBoardActive => _keyBoardActive;
+
+  ///TODO: Make sure this variables are reactive on the UI
   String get userEthBalance => _ethBalance;
   String get userBnbBalance => _bnbBalance;
   String get userUsdtBalance => _usdtBalance;
@@ -118,13 +131,47 @@ class Web3Provider with ChangeNotifier {
     if (mnemonic.isEmpty) {
       return;
     }
-    var mnemonics = mnemonic.split(' ');
+    List<String> mnemonics = mnemonic.split(' ');
+    // log("mnemonics is a List<String>: ${mnemonics is List<String>}"); // Should log true
     log("mnemonics: $mnemonics");
 
     log("-----------------setting up TON keypair-----------------");
-    keyPair = ton.Mnemonic.toKeyPair(mnemonics);
+    final seed = bip39.mnemonicToSeed(mnemonic);
+    final wallet = bip32.BIP32.fromSeed(seed);
+    final pathWallet = wallet.derivePath('''m/44'/607'/0'/0/0''');
+    //Uint8List privateKey = pathWallet.privateKey!;
+    Uint8List privateKey32 = pathWallet.privateKey!;
+
+    // Create a 64-byte private key by hashing the private key and appending
+    Uint8List privateKey64 =
+        Uint8List.fromList(privateKey32 + sha256.convert(privateKey32).bytes);
+
+    keyPair = ton.KeyPair.fromPrivateKey(privateKey64);
+    log("public key: ${keyPair.publicKey}"); //[117, 116, 147, 124, 55, 179, 151, 224, 146, 51, 205, 145, 218, 150, 155, 29, 43, 227, 224, 80, 154, 176, 44, 147, 184, 97, 111, 91, 231, 254, 243, 133]
+    log("private key: ${keyPair.privateKey}");
+
+    // keyPair = ton.Mnemonic.toKeyPair(mnemonics);
+    // final keyPairData = await _generateKeyPairInIsolate(mnemonics);
+
+    // keyPair =
+    //     await compute<List<String>, ton.KeyPair>(generateKeyPair, mnemonics);
+
     log("-----------------------setting up TON keypair: completed--------------------------");
+    // keyPair = ton.KeyPair.fromPrivateKey(keyPairData['privateKey']);
+    log("public key: ${keyPair.publicKey}");
   }
+
+  // _initialize() async {
+  //   var mnemonic = await st.Storage.readData(WALLET_MNEMONICS);
+  //   final seed = bip39.mnemonicToSeed(mnemonic);
+  //   final wallet = bip32.BIP32.fromSeed(seed);
+  //   final pathWallet = wallet.derivePath('''m/44'/60'/0'/0/0''');
+  //   privateKey = HEX.encode(pathWallet.privateKey!);
+  //   final private = EthPrivateKey.fromHex(privateKey);
+  //   var address = (private.address).hexEip55;
+  //   log(address);
+  //   log(privateKey);
+  // }
 
   setupTONWallet(Map<String, dynamic> addresses) async {
     try {
@@ -169,6 +216,7 @@ class Web3Provider with ChangeNotifier {
       // log('tx: ${tx.}');
       ton.storeTransaction(tx);
       log('TON transfer: ${transfer.toString()}');
+      ///TODO: Notify the user of the completed transaction
 
       notifyListeners();
     } catch (e) {
@@ -197,7 +245,7 @@ class Web3Provider with ChangeNotifier {
       ten.clear();
       eleven.clear();
       twelve.clear();
-      await setupTonKeypair();
+      setupTonKeypair();
       notifyListeners();
 
       _showModalIfNeeded(_context, modalContext, const UserWallet());
@@ -477,6 +525,7 @@ class Web3Provider with ChangeNotifier {
       );
 
       log("Transaction ID: $txid");
+      ///TODO: Notify the user of the completed transaction
     } catch (e) {
       log('Error in sending token transaction: $e');
     }
@@ -520,6 +569,7 @@ class Web3Provider with ChangeNotifier {
         chainId: chainId,
       );
       log("Transaction ID: $txid");
+      ///TODO: Notify the user of the completed transaction
     } catch (e) {
       log('Error in sending token transaction: $e');
     }
@@ -534,6 +584,80 @@ class Web3Provider with ChangeNotifier {
     };
   }
 
+  // Fetch and merge all transfers
+  Future<List<TxResult>> fetchAllTransfers(Map ethAddress) async {
+    final bnbTransfers = await fetchBnbTransfers(ethAddress['eth']);
+    final usdtTransfers = await fetchUsdtTransfers(ethAddress['eth']);
+    final ethTransfers = await fetchEthTransfers(ethAddress['eth']);
+
+    // Merge all transfers into one list
+    final allTransfers = [...bnbTransfers, ...usdtTransfers, ...ethTransfers];
+
+    // Sort the list by timestamp (or block_number)
+    allTransfers.sort((a, b) => b.blockTimestamp!.compareTo(a.blockTimestamp!));
+    // txResult = allTransfers.map((e) => TxResult.fromJson(e)).toList();
+
+    return allTransfers;
+  }
+
+  // Fetch BNB (BSC) Transfers
+  Future<List<TxResult>> fetchBnbTransfers(address) async {
+    final url = Uri.parse('$baseUrl$address?chain=bsc&order=DESC');
+    return await _fetchTransfers(url, true);
+  }
+
+  // Fetch USDT (BSC) Transfers
+  Future<List<TxResult>> fetchUsdtTransfers(address) async {
+    final url = Uri.parse(
+        '$baseUrl$address/erc20/transfers?chain=bsc&contract_addresses%5B0%5D=0x55d398326f99059fF775485246999027B3197955&order=DESC');
+    return await _fetchTransfers(url, false);
+  }
+
+  // Fetch ETH (Base) Transfers
+  Future<List<TxResult>> fetchEthTransfers(address) async {
+    final url =
+        Uri.parse('$baseUrl$address/erc20/transfers?chain=base&order=DESC');
+    return await _fetchTransfers(url, false);
+  }
+
+  Future<List<TxResult>> _fetchTransfers(Uri url, bool isNativeAsset) async {
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': 'application/json',
+        'X-API-Key':
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImM1ZGM1MjJlLTFhOTUtNGZkZS04ZTBlLTUyMzFjZTkwMzI2ZSIsIm9yZ0lkIjoiNDA2MTU4IiwidXNlcklkIjoiNDE3MzU0IiwidHlwZUlkIjoiZTFiOWU3ZTAtMGM3Ny00ZDhhLTg4YjEtODc5MDVmYTc2MzIxIiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3MjQ4MDE2OTcsImV4cCI6NDg4MDU2MTY5N30.smuUuJZT3kplNipuQXZCpN9RdsrCiGFAva6jaoGMt3s",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      log(data['result']);
+      if (isNativeAsset) {
+        List<TxResult> transfers = List.from(data['result'])
+            .map((e) => TxResult.fromJson({
+                  "token_name": "BNB",
+                  "token_symbol": "BNB",
+                  "value": e['value'],
+                  "transaction_hash": e['hash'],
+                  "block_timestamp": e['block_timestamp'],
+                  "from_address": e['from_address'],
+                  "to_address": e['to_address'],
+                }))
+            .toList();
+
+        return transfers;
+      } else {
+        List<TxResult> transfers =
+            List.from(data['result']).map((e) => TxResult.fromJson(e)).toList();
+        return transfers;
+      }
+    } else {
+      log('Failed to fetch transfers from $url: ${response.statusCode}');
+      return [];
+    }
+  }
+
   void logWalletAddresses(HDWallet wallet) {
     log('----- Solana address: ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeSolana)}');
     log('----- USDT(BSC) address: ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeSmartChain)}');
@@ -546,9 +670,7 @@ class Web3Provider with ChangeNotifier {
     if (context != null) {
       Navigator.pop(modalContext);
       modalSetup(context,
-          modalPercentageHeight: 0.55,
-          createPage: page,
-          showBarrierColor: true);
+          modalPercentageHeight: 0.9, createPage: page, showBarrierColor: true);
     }
   }
 

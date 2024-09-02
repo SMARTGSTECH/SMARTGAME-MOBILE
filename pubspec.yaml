@@ -32,9 +32,12 @@ dependencies:
   another_flushbar: ^1.12.29
   audioplayers: ^5.0.0
   avatar_glow: ^2.0.2
+  bip32: ^2.0.0
+  bip39: ^1.0.6
   blockchain_utils: ^3.3.0
   carousel_slider: ^4.2.1
   contained_tab_bar_view: ^0.8.0
+  crypto: null
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
   dio: ^5.4.1
@@ -62,6 +65,7 @@ dependencies:
   ton_dart: ^0.0.4
   tonutils: ^0.5.6
   trust_wallet_core_lib: ^0.0.7+3.0.4
+  url_launcher: ^6.3.0
   url_strategy: ^0.2.0
   web3dart: ^2.7.3
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +23,9 @@ class _SaveMnemonicsState extends State<SaveMnemonics> {
   @override
   void initState() {
     web3provider = Provider.of<Web3Provider>(context, listen: false);
+    // Timer(const Duration(seconds: 2), () {
+    //   web3provider.setupTonKeypair();
+    // });
     super.initState();
   }
 
