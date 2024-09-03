@@ -7,6 +7,14 @@ class SmartTradeProvider extends ChangeNotifier {
 
   int selectedOptionIndex = 100;
   String selectedOption = '';
+  String selectedOptionToBeSent = '';
+  String selectedOptionToDisplay = '';
+
+  setOption(String value, String value2) {
+    selectedOptionToBeSent = value;
+    selectedOptionToDisplay = value2;
+    print('set option\n${selectedOptionToBeSent}');
+  }
 
   toggleOptionIndex(int index) {
     selectedOptionIndex = index == selectedOptionIndex ? 100 : index;

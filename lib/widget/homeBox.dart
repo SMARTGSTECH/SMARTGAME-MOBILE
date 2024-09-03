@@ -103,7 +103,7 @@ class HomeContainerBox extends StatelessWidget {
                 Consumer<MainScreenProvider>(
                   builder: (BuildContext context, model, _) {
                     return CustomAppButton(
-                      text: 'Play Nkkow',
+                      text: 'Play Now',
                       onPressed: () {
                         model.setPageIndex(index);
                       },
@@ -112,7 +112,7 @@ class HomeContainerBox extends StatelessWidget {
                       borderRadius: 5.r,
                       height: 20.h,
                       width: 70.w,
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 12.0),
                     );
                   },

@@ -1,8 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <application
-        android:fullBackupContent="@xml/pn_backup_rules"
-        tools:replace="android:fullBackupContent"
         android:enableOnBackInvokedCallback="true"
         android:label="smartbet"
         android:name="${applicationName}"

@@ -106,8 +106,10 @@ class CustomAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: text.toLowerCase() == "play" ? 22.h : height,
-      width: text.toLowerCase() == "play" ? 60.w : width,
+      height: 22.h,
+      width: 80.w,
+      // height: text.toLowerCase() == "play" ? 22.h : height,
+      // width: text.toLowerCase() == "play" ? 80.w : width,
       child: Material(
         elevation: elevation,
         borderRadius: BorderRadius.circular(borderRadius),

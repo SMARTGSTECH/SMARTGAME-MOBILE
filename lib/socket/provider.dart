@@ -66,6 +66,36 @@ class SocketProvider extends ChangeNotifier {
     ];
   }
 
+  gameSocketOptionForBackend(sym) {
+    // print(object)
+    // print(smartTradeOptionValue[sym].runtimeType);
+
+    double val = sym == "BTC"
+        ? 20.25
+        : sym == "SOL"
+            ? 0.2
+            : sym == "BNB"
+                ? 2.2
+                : 2.8;
+
+    print(val);
+    double symbolValue = double.parse(smartTradeOptionValue[sym].toString());
+    double option1 = double.parse((symbolValue + val).toStringAsFixed(2));
+    // print(double.parse((smartTradeOptionValue[sym] + 0.2).toString()));
+
+    double option3 = double.parse((symbolValue - 0.01).toStringAsFixed(2));
+
+    double option4 = double.parse((symbolValue - val).toStringAsFixed(2));
+//'\$${option1} \u2014 ∞',
+
+    return [
+      '${option1} > ${(option1 * 1000)}',
+      '${symbolValue.toStringAsFixed(2)} \u2014 $option1',
+      '$option4 \u2014 $option3',
+      '$option4 < 0'
+    ];
+  }
+
   Map get getsmartTradeOptionValue {
     // notifyListeners();
     return smartTradeOptionValue;

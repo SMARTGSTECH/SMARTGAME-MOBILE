@@ -161,7 +161,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                         //       fontSize: 12.sp,
                         //       color: ColorConfig.iconColor,
                         //       fontWeight: FontWeight.bold),
-                        // ),
+                        // ),e
                         Text(
                           "History",
                           style: TextStyle(
@@ -171,24 +171,25 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                         )
                       ],
                     ),
-                    Consumer<SocketProvider>(
-                        builder: (BuildContext context, provider, _) {
-                      return Container(
-                        decoration: BoxDecoration(color: ColorConfig.appBar),
-                        child: Center(
-                          child: Text(
-                            "${provider.counter}:00",
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                color: ColorConfig.iconColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )
-                          .withWidth(60.w)
-                          .withHeight(30.h)
-                          .cornerRadiusWithClipRRect(5.r);
-                    }),
+                    // Consumer<SocketProvider>(
+                    //     builder: (BuildContext context, provider, _) {
+                    //   log(provider);
+                    //   return Container(
+                    //     decoration: BoxDecoration(color: ColorConfig.appBar),
+                    //     child: Center(
+                    //       child: Text(
+                    //         "${provider.counter}:00",
+                    //         style: TextStyle(
+                    //             fontSize: 16.sp,
+                    //             color: ColorConfig.iconColor,
+                    //             fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //   )
+                    //       .withWidth(60.w)
+                    //       .withHeight(30.h)
+                    //       .cornerRadiusWithClipRRect(5.r);
+                    // }),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -204,7 +205,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                             ),
                           ),
                         ).onTap(() {
-                          CoinHistoryMobile(
+                          const CoinHistoryMobile(
                             isStake: true,
                           ).launch(context);
                         }),
@@ -233,6 +234,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                 Consumer<SocketProvider>(
                     builder: (BuildContext context, provider, _) {
                   var formatter = NumberFormat('#,###');
+                  print(widget);
                   return gameCard(
                       count: 30.toString(),
                       img: widget.img,
@@ -300,6 +302,8 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         String indexname = socketTradeProvider
                             .gameSocketOption(widget.symbol)[index];
+                        String selectedOption = socketTradeProvider
+                            .gameSocketOptionForBackend(widget.symbol)[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomAppButton(
@@ -309,8 +313,10 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                             ///  shimmer: true,
                             onPressed: () {
+                              print(selectedOption);
                               print(indexname);
-
+                              smartTradeProvider.setOption(
+                                  selectedOption, indexname);
                               smartTradeProvider.toggleOptionIndex(
                                   socketTradeProvider
                                       .gameSocketOption(widget.symbol)
@@ -368,27 +374,27 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                 Consumer<SocketProvider>(
                     builder: (BuildContext context, model, _) {
-                  if (model.counter <= 10) {
-                    return CustomAppButton(
-                      color: Colors.grey,
-                      textColor: Colors.black,
-                      borderRadius: 4.r,
-                      height: 22.h,
-                      width: 55.w,
-                      size: 14,
+                  // if (model.counter <= 10) {
+                  //   return CustomAppButton(
+                  //     color: Colors.grey,
+                  //     textColor: Colors.black,
+                  //     borderRadius: 4.r,
+                  //     height: 22.h,
+                  //     width: 55.w,
+                  //     size: 14,
 
-                      ///    shimmer: true,
-                      onPressed: () {
-                        CustomSnackBar(
-                            context: context,
-                            message: "Game Session Ended!",
-                            width: 220);
-                      },
+                  //     ///    shimmer: true,
+                  //     onPressed: () {
+                  //       CustomSnackBar(
+                  //           context: context,
+                  //           message: "Game Session Ended!",
+                  //           width: 220);
+                  //     },
 
-                      ///  color: Colors.grey,
-                      text: 'Play',
-                    );
-                  }
+                  //     ///  color: Colors.grey,
+                  //     text: 'Play',
+                  //   );
+                  // }
                   return CustomAppButton(
                     text: 'Play',
                     color: ColorConfig.yellow,
@@ -400,7 +406,10 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                     onPressed: () {
                       final gameState = Provider.of<SmartTradeProvider>(context,
                           listen: false);
-
+                      final gameStateSocket =
+                          Provider.of<SocketProvider>(context, listen: false);
+                      // String selectedOption = gameStateSocket
+                      //     .gameSocketOptionForBackend(widget.symbol)[index];
                       if (gameState.selectedOptionIndex != 100) {
                         showDialog(
                           useRootNavigator: false,
@@ -412,13 +421,9 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               backgroundColor: Colors.transparent,
                               elevation: 10,
                               child: StakeContainer(
-                                fruit: false,
-                                car: false,
-                                coin: true,
-                                dice: false,
-                                maxAmount: 0.000048,
-                                minAmount: 0.00005,
-                              ),
+                                  isEvent: true,
+                                  prediction:
+                                      gameState.selectedOptionToDisplay),
                             );
                           },
                         );

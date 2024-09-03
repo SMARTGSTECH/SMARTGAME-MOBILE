@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:smartbet/main_screen/mobile.dart';
 import 'package:smartbet/main_screen/provider.dart';
 import 'package:smartbet/screens/car/mobile.dart';
+import 'package:smartbet/screens/passcode/pass_code_view_model.dart';
+import 'package:smartbet/screens/passcode/passcode_view.dart';
 import 'package:smartbet/utils/config/size.dart';
 import 'package:smartbet/utils/config/theme.dart';
 
@@ -34,7 +36,7 @@ class ISMobile extends StatelessWidget {
           // ScreenUtil.defaultSize.;
           debugShowCheckedModeBanner: false,
           theme: ThemeClass.mainTheme,
-          home: MainScreenMobile(),
+          home: true ? PinEntryScreen() : MainScreenMobile(),
           routes: {
             '/carMobile': (context) =>
                 CarMobileScreen(), // Route for the second screen

@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +27,14 @@ class LiveEventMobileScreen extends StatefulWidget {
       required this.symbol,
       required this.img,
       required this.option,
-      required this.info});
+      required this.info,
+      required this.dates});
 
   final String symbol;
   final String img;
   final List option;
   final String info;
+  final List dates;
 
   @override
   State<LiveEventMobileScreen> createState() => _LiveEventMobileScreenState();
@@ -176,24 +179,70 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                         )
                       ],
                     ),
-                    Consumer<SocketProvider>(
-                        builder: (BuildContext context, provider, _) {
-                      return Container(
-                        decoration: BoxDecoration(color: ColorConfig.appBar),
-                        child: Center(
-                          child: Text(
-                            "${provider.counter}:00",
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                color: ColorConfig.iconColor,
-                                fontWeight: FontWeight.bold),
-                          ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Starts:',
+                              style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: ColorConfig.white,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "${DateFormat('dd MM yyyy hh:mm a').format(DateTime.parse(widget.dates[0]).toLocal())} ",
+                              style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: ColorConfig.iconColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
                         ),
-                      )
-                          .withWidth(60.w)
-                          .withHeight(30.h)
-                          .cornerRadiusWithClipRRect(5.r);
-                    }),
+                        Row(
+                          children: [
+                            Text(
+                              'Expires:',
+                              style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: ColorConfig.white,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              " ${DateFormat('dd MM yyyy hh:mm a').format(DateTime.parse(widget.dates[1]).toLocal())} ",
+                              style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: ColorConfig.iconColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Consumer<SocketProvider>(
+                    //     builder: (BuildContext context, provider, _) {
+                    //   return Container(
+                    //     decoration: BoxDecoration(color: ColorConfig.appBar),
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Center(
+                    //         child: Text(
+                    //           "${widget.dates}",
+                    //           style: TextStyle(
+                    //               fontSize: 16.sp,
+                    //               color: ColorConfig.iconColor,
+                    //               fontWeight: FontWeight.bold),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   )
+                    //       .withWidth(60.w)
+                    //       .withHeight(30.h)
+                    //       .cornerRadiusWithClipRRect(5.r);
+                    // }),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -259,59 +308,102 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                   //   ? provider.gameOption.length * 30.h
                   //   :
 
-                  return Container(
-                    // color: ColorConfig.blue,
-                    width: 250.w,
-                    height: widget.option.length * 48.h,
-                    child: CustomGridView(
-                      gridCount: true,
-                      useAspectRatio: true,
-                      itemCount: widget.option.length,
-                      crossAxisCount: 1,
-                      crossAxisSpacing: 10.0,
-                      mainAxisSpacing: 1.h,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomAppButton(
-                            text: widget.option[index],
-                            usePadding: true,
+                  return Column(
+                    children: [
+                      Container(
+                        // color: ColorConfig.blue,
+                        width: 250.w,
+                        height: widget.option.length * 48.h,
+                        child: CustomGridView(
+                          gridCount: true,
+                          useAspectRatio: true,
+                          itemCount: widget.option.length,
+                          crossAxisCount: 1,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 1.h,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomAppButton(
+                                text: widget.option[index],
+                                usePadding: true,
 
-                            ///  shimmer: true,
-                            onPressed: () {
-                              provider.toggleOption(widget.option[index]);
-                              provider.toggleOptionIndex(
-                                  widget.option.indexOf(widget.option[index]));
-                              // print([
-                              //   provider.gameOption[index],
-                              //   provider.gameOption.indexOf(
-                              //     provider.selectedOption,
-                              //   ),
-                              //   provider.gameOption
-                              //           .indexOf(provider.gameOption[index]) ==
-                              //       provider.selectedOptionIndex
-                              // ]);
-                              // provider.setCurrentTab(
-                              //   tail: !provider.tail,
-                              //   head: false,
-                              // );
-                              // Add your onPressed logic here
-                            },
-                            color: provider.gameOption
-                                        .indexOf(provider.gameOption[index]) ==
-                                    provider.selectedOptionIndex
-                                ? ColorConfig.yellow
-                                : ColorConfig.tabincurrentindex,
-                            textColor: Colors.white,
-                            borderRadius: 4.r,
-                            height: 0,
-                            width: 0,
-                            size: 14,
-                            //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                          ),
-                        );
-                      },
-                    ),
+                                ///  shimmer: true,
+                                onPressed: () {
+                                  provider.toggleOption(widget.option[index]);
+                                  provider.toggleOptionIndex(widget.option
+                                      .indexOf(widget.option[index]));
+                                  // print([
+                                  //   provider.gameOption[index],
+                                  //   provider.gameOption.indexOf(
+                                  //     provider.selectedOption,
+                                  //   ),
+                                  //   provider.gameOption
+                                  //           .indexOf(provider.gameOption[index]) ==
+                                  //       provider.selectedOptionIndex
+                                  // ]);
+                                  // provider.setCurrentTab(
+                                  //   tail: !provider.tail,
+                                  //   head: false,
+                                  // );
+                                  // Add your onPressed logic here
+                                },
+                                color: provider.gameOption.indexOf(
+                                            provider.gameOption[index]) ==
+                                        provider.selectedOptionIndex
+                                    ? ColorConfig.yellow
+                                    : ColorConfig.tabincurrentindex,
+                                textColor: Colors.white,
+                                borderRadius: 4.r,
+                                height: 0,
+                                width: 0,
+                                size: 14,
+                                //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      25.h.toInt().height,
+                      CustomAppButton(
+                        text: 'Play',
+                        color: ColorConfig.yellow,
+                        textColor: Colors.white,
+                        borderRadius: 4.r,
+                        height: 22.h,
+                        width: 60.w,
+                        size: 14,
+                        onPressed: () {
+                          final gameState = Provider.of<CoinStateProvider>(
+                              context,
+                              listen: false);
+                          print(provider.selectedOption);
+                          if (provider.selectedOptionIndex != 100) {
+                            showDialog(
+                              useRootNavigator: false,
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  // shape: CircleBordxer(),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 10,
+                                  child: StakeContainer(
+                                    isEvent: true,
+                                    prediction: provider.selectedOption,
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            CustomSnackBar(
+                                context: context,
+                                message: "Please Select A Side",
+                                width: 220);
+                          }
+                        },
+                      )
+                    ],
                   );
                 }).paddingTop(13.h),
                 //  15.h.toInt().height,
@@ -323,71 +415,66 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                 //     color: ColorConfig.iconColor,
                 //   ),
 
-                Consumer<SocketProvider>(
-                    builder: (BuildContext context, model, _) {
-                  if (model.counter <= 10) {
-                    return CustomAppButton(
-                      color: Colors.grey,
-                      textColor: Colors.black,
-                      borderRadius: 4.r,
-                      height: 22.h,
-                      width: 60.w,
-                      size: 14,
+                // Consumer<SocketProvider>(
+                //     builder: (BuildContext context, model, _) {
+                //   // if (model.counter <= 10) {
+                //   //   return CustomAppButton(
+                //   //     color: Colors.grey,
+                //   //     textColor: Colors.black,
+                //   //     borderRadius: 4.r,
+                //   //     height: 22.h,
+                //   //     width: 60.w,
+                //   //     size: 14,
 
-                      ///    shimmer: true,
-                      onPressed: () {
-                        CustomSnackBar(
-                            context: context,
-                            message: "Game Session Ended!",
-                            width: 220);
-                      },
+                //   //     ///    shimmer: true,
+                //   //     onPressed: () {
+                //   //       CustomSnackBar(
+                //   //           context: context,
+                //   //           message: "Game Session Ended!",
+                //   //           width: 220);
+                //   //     },
 
-                      ///  color: Colors.grey,
-                      text: 'Play',
-                    );
-                  }
-                  return CustomAppButton(
-                    text: 'Play',
-                    color: ColorConfig.yellow,
-                    textColor: Colors.white,
-                    borderRadius: 4.r,
-                    height: 22.h,
-                    width: 60.w,
-                    size: 14,
-                    onPressed: () {
-                      final gameState = Provider.of<CoinStateProvider>(context,
-                          listen: false);
+                //   //     ///  color: Colors.grey,
+                //   //     text: 'Play',
+                //   //   );
+                //   // }
+                //   return CustomAppButton(
+                //     text: 'Play',
+                //     color: ColorConfig.yellow,
+                //     textColor: Colors.white,
+                //     borderRadius: 4.r,
+                //     height: 22.h,
+                //     width: 60.w,
+                //     size: 14,
+                //     onPressed: () {
+                //       final gameState = Provider.of<CoinStateProvider>(context,
+                //           listen: false);
 
-                      if (gameState.head || gameState.tail) {
-                        showDialog(
-                          useRootNavigator: false,
-                          barrierDismissible: true,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Dialog(
-                              // shape: CircleBorder(),
-                              backgroundColor: Colors.transparent,
-                              elevation: 10,
-                              child: StakeContainer(
-                                fruit: false,
-                                car: false,
-                                coin: true,
-                                dice: false,
-                                maxAmount: 0.000048,
-                                minAmount: 0.00005,
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        CustomSnackBar(
-                            context: context,
-                            message: "Please Select A Side",
-                            width: 220);
-                      }
-                    },
-                  );
-                }),
+                //       if (true) {
+                //         showDialog(
+                //           useRootNavigator: false,
+                //           barrierDismissible: true,
+                //           context: context,
+                //           builder: (BuildContext context) {
+                //             return Dialog(
+                //               // shape: CircleBorder(),
+                //               backgroundColor: Colors.transparent,
+                //               elevation: 10,
+                //               child: StakeContainer(
+                //                 isEvent: true,
+                //               ),
+                //             );
+                //           },
+                //         );
+                //       } else {
+                //         CustomSnackBar(
+                //             context: context,
+                //             message: "Please Select A Side",
+                //             width: 220);
+                //       }
+                //     },
+                //   );
+                // }),
                 // ),
                 25.h.toInt().height,
                 //10.h.toInt().height,
