@@ -23,7 +23,8 @@ class LiveEventPredictionProvider extends ChangeNotifier {
 
   toggleOptionIndex(int index) {
     selectedOptionIndex = index == selectedOptionIndex ? 100 : index;
-    print(selectedOptionIndex);
+    // selectedOption = '';
+    print([selectedOptionIndex, selectedOption]);
     notifyListeners();
   }
 

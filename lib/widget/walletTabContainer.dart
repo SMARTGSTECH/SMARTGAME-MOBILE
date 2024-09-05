@@ -24,7 +24,7 @@ class walletTabContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height ?? 45,
+      height: 45.h,
       width: SizeConfig.screenWidth! <= 450 ? 300.w : 400,
       decoration: BoxDecoration(
         color: Color.fromARGB(255, 19, 27, 93).withOpacity(0.4),

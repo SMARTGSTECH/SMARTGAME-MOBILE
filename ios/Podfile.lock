@@ -7,8 +7,6 @@ PODS:
     - Flutter
     - ReachabilitySwift
   - Flutter (1.0.0)
-  - flutter_keyboard_visibility (0.0.1):
-    - Flutter
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -34,19 +32,20 @@ PODS:
     - TrustWalletCore/Types
   - TrustWalletCore/Types (4.0.46):
     - SwiftProtobuf
+  - Toast (4.1.0)
 
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
-  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - nb_utils (from `.symlinks/plugins/nb_utils/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - trust_wallet_core_lib (from `.symlinks/plugins/trust_wallet_core_lib/ios`)
+
 
 SPEC REPOS:
   trunk:
@@ -64,8 +63,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity_plus/ios"
   Flutter:
     :path: Flutter
-  flutter_keyboard_visibility:
-    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   just_audio:
@@ -79,12 +76,12 @@ EXTERNAL SOURCES:
   trust_wallet_core_lib:
     :path: ".symlinks/plugins/trust_wallet_core_lib/ios"
 
+
 SPEC CHECKSUMS:
   audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   fluttertoast: 9f2f8e81bb5ce18facb9748d7855bf5a756fe3db
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   nb_utils: ada4338858d8827ec92fdab2a545206b4ba4cfb1
@@ -95,6 +92,7 @@ SPEC CHECKSUMS:
   Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   trust_wallet_core_lib: 1d25320104cd3a7fee634d5f57596200da2b5d7c
   TrustWalletCore: 42561b330e0b423b8fb4ff757da2614ad367e957
+  Toast: ec33c32b8688982cecc6348adeae667c1b9938da
 
 PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
 

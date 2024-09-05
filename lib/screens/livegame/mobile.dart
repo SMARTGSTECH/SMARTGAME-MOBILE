@@ -127,6 +127,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                     //         pageRouteAnimation: PageRouteAnimation.Fade);
                                   },
                                   count: index.toString(),
+                                  date: '',
                                 );
                               },
                             )
@@ -140,6 +141,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                   crossAxisSpacing: 10.0,
                                   mainAxisSpacing: 10.0,
                                   itemBuilder: (context, index) {
+                                    print(model.activeLiveGame);
                                     final coinP = Provider.of<CoinCapProvider>(
                                         context,
                                         listen: false);
@@ -189,6 +191,12 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                           img: model.activeLiveGame[index]
                                               ['image'],
                                           option: options,
+                                          dates: [
+                                            model.activeLiveGame[index]
+                                                ['createdAt'],
+                                            model.activeLiveGame[index]
+                                                ['expires_at']
+                                          ],
                                           // img: coinP.coinArray
                                           //     .where((element) =>
                                           //         element.symbol
@@ -204,6 +212,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                                         //         pageRouteAnimation: PageRouteAnimation.Fade);
                                       },
                                       count: '03',
+                                      date: '',
                                     );
                                   },
                                 ),

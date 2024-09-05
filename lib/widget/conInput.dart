@@ -23,44 +23,47 @@ class conInput extends StatelessWidget {
   Widget build(BuildContext context) {
     predictionContoller.text = predition!;
     print("this is for production : $predition");
-    return Container(
-      height: ht ?? 45,
-      width: SizeConfig.screenWidth! <= 450 ? 300.w : 400,
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, 19, 27, 93).withOpacity(0.4),
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Row(children: [
-        9.width,
-        Icon(
-          Icons.gamepad_sharp,
-          color: ColorConfig.iconColor,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 7.w),
+      child: Container(
+        height: 45.h,
+        width: SizeConfig.screenWidth! <= 450 ? 300.w : 400,
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 19, 27, 93).withOpacity(0.4),
+          borderRadius: BorderRadius.circular(12.r),
         ),
-        9.width,
-        Text(
-          'Predicted: $predition' ?? 'Predicted: 3',
-          style: TextStyle(
-            //  fontFamily: AppFont.euclidCircularARegular,
-            fontSize: 14.sp,
-            color: const Color(0xFF9FA4BC),
+        child: Row(children: [
+          9.width,
+          Icon(
+            Icons.gamepad_sharp,
+            color: ColorConfig.iconColor,
           ),
-        ),
-        0.width.expand(),
-        !colorImg!
-            ? Image.asset(
-                img ?? "assets/images/d2.png",
-                //   color: imgcolor,
-                width: 45,
-                height: 45,
-              )
-            : Image.asset(
-                img ?? "assets/images/d2.png",
-                color: color ?? Colors.teal,
-                width: 45,
-                height: 45,
-              ),
-        6.width,
-      ]),
+          9.width,
+          Text(
+            'Predicted: $predition' ?? 'Predicted: 3',
+            style: TextStyle(
+              //  fontFamily: AppFont.euclidCircularARegular,
+              fontSize: 14.sp,
+              color: const Color(0xFF9FA4BC),
+            ),
+          ),
+          0.width.expand(),
+          !colorImg!
+              ? Image.asset(
+                  img ?? "assets/images/d2.png",
+                  //   color: imgcolor,
+                  width: 45,
+                  height: 45,
+                )
+              : Image.asset(
+                  img ?? "assets/images/d2.png",
+                  color: color ?? Colors.teal,
+                  width: 45,
+                  height: 45,
+                ),
+          6.width,
+        ]),
+      ),
     );
   }
 }

@@ -63,12 +63,12 @@ walletcard(List array, type, UserWeb3Provider walletnstance, contect) {
                         CircleAvatar(
                             radius: 7.5.r,
                             backgroundColor: Colors.transparent,
-                            backgroundImage: NetworkImage(
+                            backgroundImage: const NetworkImage(
                                 'https://static.particle.network/token-list/base/native.png')),
                         CircleAvatar(
                             radius: 7.5.r,
                             backgroundColor: Colors.transparent,
-                            backgroundImage: NetworkImage(
+                            backgroundImage: const NetworkImage(
                                 'https://static.particle.network/token-list/bsc/native.png'))
                       ]),
                 )

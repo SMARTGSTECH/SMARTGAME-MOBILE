@@ -5,18 +5,20 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smartbet/utils/config/color.dart';
 
 class ExpandedWidget extends StatelessWidget {
-  const ExpandedWidget(
+  ExpandedWidget(
       {super.key,
       required this.img,
       required this.text,
       required this.onTapFuntion,
       this.symbol = '',
-      required this.count});
+      required this.count,
+      required this.date});
 
   final String img;
   final String text;
   final String symbol;
   final String count;
+  final String date;
   final VoidCallback onTapFuntion;
 
   @override
@@ -55,9 +57,9 @@ class ExpandedWidget extends StatelessWidget {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                   //opacity: 0.5,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.contain,
                                   image: NetworkImage(img)),
-                              color: Colors.transparent,
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(10.r),
                             ),
                             width: double.infinity,
