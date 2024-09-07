@@ -27,6 +27,7 @@ import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/utils/base-url.dart';
 import 'package:smartbet/utils/env.dart';
 import 'package:smartbet/utils/helpers.dart';
+import 'package:smartbet/walletConnect/wallet_provider.dart';
 import 'package:smartbet/widget/alertSnackBar.dart';
 // import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'package:http/http.dart' as http;
@@ -55,6 +56,7 @@ class UserWeb3Provider extends ChangeNotifier {
     "solana",
     "ton",
   ];
+
   dynamic currentAddress;
   dynamic usdBalance;
   dynamic bnbBalance;
@@ -86,6 +88,14 @@ class UserWeb3Provider extends ChangeNotifier {
     "bnb": "",
     'method': () => {print('HELL1O'), print("object")}
   };
+
+  returnAddress(BuildContext context) {
+    final wallets =
+        p.Provider.of<Web3Provider>(context, listen: true).useraddresses;
+
+    log('this is the value of wallet:${wallets}');
+    return wallets;
+  }
 
   initObjKey() {
     walletInstanceMap = {"eth": evm, "sol": sol, "ton": ton};
@@ -264,12 +274,23 @@ class UserWeb3Provider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setcryptoBNBUSDT(value, context) {
-    final coinP = p.Provider.of<CoinCapProvider>(context, listen: false);
-    //print(varuntimeType);
-    double result = userConvertedStaked = double.parse(value ?? 0) /
-        coinP.coinArray.where((element) => element.name == "BNB").first.price;
-    userConvertedStaked = double.parse(result.toStringAsFixed(7));
+  setcryptoRate(value, context, String coin) {
+    print([value, coin]);
+    if (coin.contains('USDT')) {
+      userConvertedStaked = double.parse(value);
+    } else {
+      final coinP = p.Provider.of<CoinCapProvider>(context, listen: false);
+      //print(varuntimeType);
+      // print(List.generate(coinP.coinArray.length,
+      //     (index) => print(coinP.coinArray[index].symbol)));
+      double result = userConvertedStaked = double.parse(value ?? 0) /
+          coinP.coinArray
+              .where((element) =>
+                  element.symbol.toUpperCase() == coin.toUpperCase())
+              .first
+              .price;
+      userConvertedStaked = double.parse(result.toStringAsFixed(7));
+    }
 
     //print(userConvertedStaked);
     // print(
@@ -322,83 +343,6 @@ class UserWeb3Provider extends ChangeNotifier {
     var status = stakeGame(object, context);
     // print(status);
   }
-
-  // initTransaction(amount, context, prediction, type) async {
-  //   print(amount);
-  //   final amountWei = (amount + 0.00004) * pow(10, 18);
-  //   // Send 1000000000 wei to `0xcorge`
-  //   try {
-  //     final tx = await provider!.getSigner().sendTransaction(
-  //           TransactionRequest(
-  //             to: currentChain == 97
-  //                 ? '0x0477186e7b6342e229fF58a2c0Eaa5eC1eDf7004'
-  //                 : "0xeB683179cAB619B9FdF07C71B919D2AfD118CDE2",
-  //             value: BigInt.from(amountWei),
-  //           ),
-  //         );
-
-  //     tx.wait().whenComplete(() => doAfterConfirmation(
-  //         context, currentAddress ?? "0x", amount, prediction, type));
-  //   } on EthereumUserRejected {
-  //     setTransactionLoader(false);
-  //     CustomSnackBar(
-  //         context: context, message: "Request Rejected By User", width: 235);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
-  // refreshWallet(Function callback, context) async {
-  //   weibalance = await provider!.getSigner().getBalance();
-  //   print("before convertion");
-
-  //   print(weibalance.runtimeType);
-  //   weibalance = weibalance / BigInt.from(pow(10, 18));
-  //   print("-------------");
-  //   print(weibalance);
-  //   print(weibalance.runtimeType);
-  //   final convertedWei =
-  //       await weiToUsd(await provider!.getSigner().getBalance());
-  //   callback(true, currentAddress, currentChain, convertedWei, weibalance);
-  //   notifyListeners();
-  // }
-
-  // connectExtentionProvider(Function callback, context) async {
-  //   if (!connected) {
-  //     if (ethereum == null) {
-  //       CustomSnackBar(
-  //           context: context, message: "No Web3 Supported", width: 235);
-  //       return;
-  //     }
-
-  //     try {
-  //       var account = await ethereum!.requestAccount();
-  //       weibalance = await provider!.getSigner().getBalance();
-  //       print("object");
-  //       weibalance = weibalance / BigInt.from(pow(10, 18));
-  //       final convertedWei =
-  //           await weiToUsd(await provider!.getSigner().getBalance());
-  //       currentAddress = account[0];
-  //       currentChain = await ethereum!.getChainId();
-  //       // initTransaction(0.03843984939849348, context);
-  //       print("object");
-  //       callback(true, currentAddress, currentChain, convertedWei, weibalance);
-  //       //
-  //       print("object");
-  //       callback(true, currentAddress, currentChain, 418, weibalance);
-  //       print("object");
-  //       notifyListeners();
-  //     } on EthereumUserRejected {
-  //       setLoader(false);
-  //       CustomSnackBar(
-  //           context: context, message: "Request Rejected By User", width: 235);
-  //     } catch (e) {
-  //       print(e);
-  //     }
-
-  //     // },
-  //   }
-  // }
 
   fetchRate(context) async {
     final coinP = p.Provider.of<CoinCapProvider>(context, listen: false);

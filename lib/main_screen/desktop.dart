@@ -135,7 +135,7 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
       // iconMenuAppBar: Icon(Icons.menu),
       tittleAppBar: Center(
         child: Text(
-          "SmartBet",
+          "SmartGame",
           style: TextStyle(
             color: ColorConfig.iconColor,
             fontSize: 20.sp,

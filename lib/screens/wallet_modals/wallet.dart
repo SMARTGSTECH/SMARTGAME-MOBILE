@@ -79,7 +79,8 @@ class _UserWalletState extends State<UserWallet> {
                     ),
                   ),
                   20.h.toInt().height,
-                   ///TODO: when the balance is being fetched, show a loading spinner of some sort
+
+                  ///TODO: when the balance is being fetched, show a loading spinner of some sort
                   item(
                     assetLogo: ethlogo,
                     assetAddress: addresses["eth"] ?? '',

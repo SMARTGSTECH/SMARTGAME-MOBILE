@@ -25,6 +25,8 @@ import 'package:smartbet/widget/comingSoon.dart';
 import 'package:smartbet/widget/conInput.dart';
 import 'package:smartbet/widget/walletTabContainer.dart';
 
+import '../walletConnect/wallet_provider.dart';
+
 class StakeContainer extends StatelessWidget {
   StakeContainer(
       {super.key,
@@ -58,11 +60,12 @@ class StakeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userWallet = Provider.of<UserWeb3Provider>(context, listen: false);
-    final coinP = Provider.of<CoinCapProvider>(context, listen: false);
+    // final userWallet = Provider.of<UserWeb3Provider>(context, listen: false);
+    // final coinP = Provider.of<CoinCapProvider>(context, listen: false);
+    // Provider.of<Web3Provider>(context, listen: false).loadWallet();
     //userWallet.fetchRate(context);
-    print(
-        coinP.coinArray.where((element) => element.name == "BNB").first.price);
+    // print(
+    //     coinP.coinArray.where((element) => element.name == "BNB").first.price);
     return SingleChildScrollView(
       child: Stack(children: [
         Container(
@@ -109,1158 +112,90 @@ class StakeContainer extends StatelessWidget {
                   unselectedLabelColor: ColorConfig.tabincurrentindex,
                 ),
                 tabs: [
-                  Text('USDT', style: TextStyle(fontSize: 12.sp)),
-                  Text('   ETH\n(BASE)', style: TextStyle(fontSize: 12.sp)),
-                  Text(
-                    'SOL',
-                    style: TextStyle(fontSize: 12.sp),
-                  ),
-                  Text(
-                    'TON',
-                    style: TextStyle(fontSize: 12.sp),
-                  ),
+                  Text('USDT\n BSC', style: TextStyle(fontSize: 12.sp)),
+                  isEvent!
+                      ? Text('   ETH\n(BASE)\n USDT',
+                          style: TextStyle(fontSize: 12.sp))
+                      : Text('   ETH\n(BASE)',
+                          style: TextStyle(fontSize: 12.sp)),
+                  isEvent!
+                      ? Text('   SOL\n USDC', style: TextStyle(fontSize: 12.sp))
+                      : Text(
+                          'SOL',
+                          style: TextStyle(fontSize: 12.sp),
+                        ),
+                  isEvent!
+                      ? Text('  TON\n USDT', style: TextStyle(fontSize: 12.sp))
+                      : Text(
+                          'TON',
+                          style: TextStyle(fontSize: 12.sp),
+                        ),
                   Text('BETK', style: TextStyle(fontSize: 12.sp)),
                 ],
                 views: [
                   /* -------------------------------------------------------------------------- */
                   /*                               Tab1                               */
                   /* -------------------------------------------------------------------------- */
-                  Consumer5<CarStateProvider, DiceStateProvider,
-                      FruitStateProvider, CoinStateProvider, UserWeb3Provider>(
-                    builder: (context, carProvider, diceProvider, fruitProvider,
-                        coinProvider, userWalletProvider, _) {
-                      print("raise");
-                      return Container(
-                        child: SingleChildScrollView(
-                          child: userWalletProvider.startedTransaction
-                              ? Column(
-                                  children: [
-                                    40.height,
-                                    Lottie.asset(
-                                      "assets/images/BEItrx.json",
-                                      height: 160,
-                                      width: 160,
-                                    ),
-                                    40.height,
-                                    Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Text(
-                                          'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
-                                          style: TextStyle(
-                                            fontSize: 15.sp,
-                                            color: ColorConfig.iconColor,
-                                          ),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ],
-                                )
-                              : Column(children: [
-                                  20.height,
-                                  !userWalletProvider.cryptoRate.isNotEmpty
-                                      ? Text(
-                                          "${0} USDT",
-                                          // "${userWallet.userConvertedStaked} USDT",
-                                          style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: ColorConfig.yellow,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : Lottie.asset(
-                                          "assets/images/beiLoader.json",
-                                          height: 50,
-                                          width: 50,
-                                        ),
-                                  20.height,
-                                  inputContainer(
-                                    minAmount: minAmount,
-                                    maxAmount: maxAmount,
-                                  ),
-                                  6.height,
-                                  isEvent!
-                                      ? conInput(
-                                          img: "assets/images/tesla.png",
-                                          color: Colors.transparent,
-                                          colorImg: true,
-                                          predition: prediction,
-                                        )
-                                      : car
-                                          ? conInput(
-                                              img: "assets/images/tesla.png",
-                                              color: carProvider.blue
-                                                  ? ColorConfig.blueCar
-                                                      .withOpacity(0.8)
-                                                  : carProvider.red
-                                                      ? ColorConfig.redCar
-                                                          .withOpacity(0.9)
-                                                      : carProvider.yellow
-                                                          ? ColorConfig
-                                                              .yellowCar
-                                                          : ColorConfig.greenCar
-                                                              .withOpacity(0.8),
-                                              colorImg: true,
-                                              predition: carProvider.blue
-                                                  ? "Blue"
-                                                  : carProvider.green
-                                                      ? "Green"
-                                                      : carProvider.yellow
-                                                          ? "Yellow"
-                                                          : "Red",
-                                            )
-                                          : dice
-                                              ? conInput(
-                                                  img: diceProvider.one
-                                                      ? "assets/images/1.png"
-                                                      : diceProvider.two
-                                                          ? "assets/images/2.png"
-                                                          : diceProvider.three
-                                                              ? "assets/images/3.png"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "assets/images/4.png"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "assets/images/5.png"
-                                                                      : "assets/images/6.png",
-                                                  predition: diceProvider.one
-                                                      ? "1"
-                                                      : diceProvider.two
-                                                          ? "2"
-                                                          : diceProvider.three
-                                                              ? "3"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "4"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "5"
-                                                                      : "6",
-                                                )
-                                              : fruit
-                                                  ? conInput(
-                                                      colorImg: true,
-                                                      predition: fruitProvider
-                                                              .banana
-                                                          ? "Bananna"
-                                                          : fruitProvider.orange
-                                                              ? "Orange"
-                                                              : fruitProvider
-                                                                      .pineapple
-                                                                  ? "Pineapple"
-                                                                  : "StrawBerry",
-                                                      color: fruitProvider
-                                                              .pineapple
-                                                          ? Color(0xfffbd604)
-                                                          : fruitProvider.orange
-                                                              ? Colors
-                                                                  .transparent
-                                                              : Colors
-                                                                  .transparent,
-                                                      img: fruitProvider
-                                                              .pineapple
-                                                          ? "assets/images/pine.png"
-                                                          : fruitProvider.orange
-                                                              ? "assets/images/orange.png"
-                                                              : fruitProvider
-                                                                      .banana
-                                                                  ? "assets/images/banana.png"
-                                                                  : "assets/images/straw.png")
-                                                  : coin
-                                                      ? conInput(
-                                                          predition:
-                                                              coinProvider.head
-                                                                  ? "Head"
-                                                                  : "Tail",
-                                                          img: coinProvider.head
-                                                              ? "assets/images/H.png"
-                                                              : "assets/images/T.png")
-                                                      : Container(),
-
-                                  //Consumer5<>(child: conInput()),
-                                  20.height,
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 7.w),
-                                    child: walletTabContainer(
-                                      inputcontroller: dice
-                                          ? diceGameController
-                                          : coin
-                                              ? coinGameController
-                                              : fruit
-                                                  ? fruitGamecontroller
-                                                  : carGameController,
-                                      wallet: userWalletProvider.currentAddress,
-                                      isConnected: userWalletProvider.connected,
-                                    ),
-                                  ),
-                                  30.height,
-                                  userWallet.connected
-                                      ? CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .toDouble(),
-                                              userWalletProvider
-                                                  .weibalance.runtimeType,
-                                              userWalletProvider.weibalance,
-                                              // userWalletProvider.weibalance /
-                                              //     BigInt.from(pow(10, 18))
-                                            ]);
-                                            if (userWalletProvider
-                                                    .userConvertedStaked ==
-                                                0) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message: "Enter Stake Amount",
-                                                  width: 195);
-                                              return;
-                                            }
-                                            if (!userWalletProvider.connected) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Please Connect Wallet",
-                                                  width: 219);
-
-                                              return;
-                                            }
-                                            if ((userWalletProvider
-                                                        .userConvertedStaked
-                                                        .toDouble() +
-                                                    0.0004) >
-                                                userWalletProvider.weibalance) {
-                                              print((userWalletProvider
-                                                          .userConvertedStaked
-                                                          .toDouble() +
-                                                      0.0004) >
-                                                  userWalletProvider
-                                                      .weibalance);
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Sorry, Insufficient Funds",
-                                                  width: 219);
-
-                                              return;
-                                            }
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .runtimeType
-                                            ]);
-                                            // userWalletProvider.initTransaction(
-                                            //     userWalletProvider
-                                            //         .userConvertedStaked,
-                                            //     context,
-                                            //     predictionContoller.text
-                                            //         .toLowerCase(),
-                                            //     //this is the bend for prediction
-                                            //     car
-                                            //         ? "race"
-                                            //         : dice
-                                            //             ? "dice"
-                                            //             : coin
-                                            //                 ? "coin"
-                                            //                 : "fruit");
-                                            userWalletProvider
-                                                .setTransactionLoader(true);
-                                            //  print(provider)
-                                            // _showAlertContainer(
-                                            //   context: context,
-                                            // );
-                                            // Add your onPressed logic here
-
-                                            // Navigator.of(context).pop();
-                                          },
-                                          color: ColorConfig.yellow,
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          )
-                                      : CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            CustomSnackBar(
-                                                context: context,
-                                                message:
-                                                    "Please Connect Wallet",
-                                                width: 219);
-                                          },
-                                          color: ColorConfig.yellow
-                                              .withOpacity(0.2),
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          ),
-                                  // Prices_tab(),
-                                ]),
-                        ),
-                      );
-                    },
-                  ),
-                  Consumer5<CarStateProvider, DiceStateProvider,
-                      FruitStateProvider, CoinStateProvider, UserWeb3Provider>(
-                    builder: (context, carProvider, diceProvider, fruitProvider,
-                        coinProvider, userWalletProvider, _) {
-                      print("raise");
-                      return Container(
-                        child: SingleChildScrollView(
-                          child: userWalletProvider.startedTransaction
-                              ? Column(
-                                  children: [
-                                    40.height,
-                                    Lottie.asset(
-                                      "assets/images/BEItrx.json",
-                                      height: 160,
-                                      width: 160,
-                                    ),
-                                    40.height,
-                                    Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Text(
-                                          'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
-                                          style: TextStyle(
-                                            fontSize: 15.sp,
-                                            color: ColorConfig.iconColor,
-                                          ),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ],
-                                )
-                              : Column(children: [
-                                  20.height,
-                                  !userWalletProvider.cryptoRate.isNotEmpty
-                                      ? Text(
-                                          "${0} ETH",
-                                          // "${userWallet.userConvertedStaked} USDT",
-                                          style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: ColorConfig.yellow,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : Lottie.asset(
-                                          "assets/images/beiLoader.json",
-                                          height: 50,
-                                          width: 50,
-                                        ),
-                                  20.height,
-                                  inputContainer(
-                                    minAmount: minAmount,
-                                    maxAmount: maxAmount,
-                                  ),
-                                  6.height,
-                                  isEvent!
-                                      ? conInput(
-                                          img: "assets/images/tesla.png",
-                                          color: Colors.transparent,
-                                          colorImg: true,
-                                          predition: prediction,
-                                        )
-                                      : car
-                                          ? conInput(
-                                              img: "assets/images/tesla.png",
-                                              color: carProvider.blue
-                                                  ? ColorConfig.blueCar
-                                                      .withOpacity(0.8)
-                                                  : carProvider.red
-                                                      ? ColorConfig.redCar
-                                                          .withOpacity(0.9)
-                                                      : carProvider.yellow
-                                                          ? ColorConfig
-                                                              .yellowCar
-                                                          : ColorConfig.greenCar
-                                                              .withOpacity(0.8),
-                                              colorImg: true,
-                                              predition: carProvider.blue
-                                                  ? "Blue"
-                                                  : carProvider.green
-                                                      ? "Green"
-                                                      : carProvider.yellow
-                                                          ? "Yellow"
-                                                          : "Red",
-                                            )
-                                          : dice
-                                              ? conInput(
-                                                  img: diceProvider.one
-                                                      ? "assets/images/1.png"
-                                                      : diceProvider.two
-                                                          ? "assets/images/2.png"
-                                                          : diceProvider.three
-                                                              ? "assets/images/3.png"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "assets/images/4.png"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "assets/images/5.png"
-                                                                      : "assets/images/6.png",
-                                                  predition: diceProvider.one
-                                                      ? "1"
-                                                      : diceProvider.two
-                                                          ? "2"
-                                                          : diceProvider.three
-                                                              ? "3"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "4"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "5"
-                                                                      : "6",
-                                                )
-                                              : fruit
-                                                  ? conInput(
-                                                      colorImg: true,
-                                                      predition: fruitProvider
-                                                              .banana
-                                                          ? "Bananna"
-                                                          : fruitProvider.orange
-                                                              ? "Orange"
-                                                              : fruitProvider
-                                                                      .pineapple
-                                                                  ? "Pineapple"
-                                                                  : "StrawBerry",
-                                                      color: fruitProvider
-                                                              .pineapple
-                                                          ? Color(0xfffbd604)
-                                                          : fruitProvider.orange
-                                                              ? Colors
-                                                                  .transparent
-                                                              : Colors
-                                                                  .transparent,
-                                                      img: fruitProvider
-                                                              .pineapple
-                                                          ? "assets/images/pine.png"
-                                                          : fruitProvider.orange
-                                                              ? "assets/images/orange.png"
-                                                              : fruitProvider
-                                                                      .banana
-                                                                  ? "assets/images/banana.png"
-                                                                  : "assets/images/straw.png")
-                                                  : coin
-                                                      ? conInput(
-                                                          predition:
-                                                              coinProvider.head
-                                                                  ? "Head"
-                                                                  : "Tail",
-                                                          img: coinProvider.head
-                                                              ? "assets/images/H.png"
-                                                              : "assets/images/T.png")
-                                                      : Container(),
-
-                                  //Consumer5<>(child: conInput()),
-                                  20.height,
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 7.w),
-                                    child: walletTabContainer(
-                                      inputcontroller: dice
-                                          ? diceGameController
-                                          : coin
-                                              ? coinGameController
-                                              : fruit
-                                                  ? fruitGamecontroller
-                                                  : carGameController,
-                                      wallet: userWalletProvider.currentAddress,
-                                      isConnected: userWalletProvider.connected,
-                                    ),
-                                  ),
-                                  30.height,
-                                  userWallet.connected
-                                      ? CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .toDouble(),
-                                              userWalletProvider
-                                                  .weibalance.runtimeType,
-                                              userWalletProvider.weibalance,
-                                              // userWalletProvider.weibalance /
-                                              //     BigInt.from(pow(10, 18))
-                                            ]);
-                                            if (userWalletProvider
-                                                    .userConvertedStaked ==
-                                                0) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message: "Enter Stake Amount",
-                                                  width: 195);
-                                              return;
-                                            }
-                                            if (!userWalletProvider.connected) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Please Connect Wallet",
-                                                  width: 219);
-
-                                              return;
-                                            }
-                                            if ((userWalletProvider
-                                                        .userConvertedStaked
-                                                        .toDouble() +
-                                                    0.0004) >
-                                                userWalletProvider.weibalance) {
-                                              print((userWalletProvider
-                                                          .userConvertedStaked
-                                                          .toDouble() +
-                                                      0.0004) >
-                                                  userWalletProvider
-                                                      .weibalance);
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Sorry, Insufficient Funds",
-                                                  width: 219);
-
-                                              return;
-                                            }
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .runtimeType
-                                            ]);
-                                            // userWalletProvider.initTransaction(
-                                            //     userWalletProvider
-                                            //         .userConvertedStaked,
-                                            //     context,
-                                            //     predictionContoller.text
-                                            //         .toLowerCase(),
-                                            //     //this is the bend for prediction
-                                            //     car
-                                            //         ? "race"
-                                            //         : dice
-                                            //             ? "dice"
-                                            //             : coin
-                                            //                 ? "coin"
-                                            //                 : "fruit");
-                                            userWalletProvider
-                                                .setTransactionLoader(true);
-                                            //  print(provider)
-                                            // _showAlertContainer(
-                                            //   context: context,
-                                            // );
-                                            // Add your onPressed logic here
-
-                                            // Navigator.of(context).pop();
-                                          },
-                                          color: ColorConfig.yellow,
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          )
-                                      : CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            CustomSnackBar(
-                                                context: context,
-                                                message:
-                                                    "Please Connect Wallet",
-                                                width: 219);
-                                          },
-                                          color: ColorConfig.yellow
-                                              .withOpacity(0.2),
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          ),
-                                  // Prices_tab(),
-                                ]),
-                        ),
-                      );
-                    },
-                  ),
+                  ViewBody(
+                      coinType: 'USDT',
+                      minAmount: minAmount,
+                      maxAmount: maxAmount,
+                      isEvent: isEvent,
+                      prediction: prediction,
+                      car: car,
+                      dice: dice,
+                      fruit: fruit,
+                      coin: coin,
+                      runtimeType: runtimeType),
 
                   /* -------------------------------------------------------------------------- */
                   /*                               Tab2                              */
                   /* -------------------------------------------------------------------------- */
-                  Consumer5<CarStateProvider, DiceStateProvider,
-                      FruitStateProvider, CoinStateProvider, UserWeb3Provider>(
-                    builder: (context, carProvider, diceProvider, fruitProvider,
-                        coinProvider, userWalletProvider, _) {
-                      print("raise");
-                      return Container(
-                        child: SingleChildScrollView(
-                          child: userWalletProvider.startedTransaction
-                              ? Column(
-                                  children: [
-                                    40.height,
-                                    Lottie.asset(
-                                      "assets/images/BEItrx.json",
-                                      height: 160,
-                                      width: 160,
-                                    ),
-                                    40.height,
-                                    Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Text(
-                                          'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
-                                          style: TextStyle(
-                                            fontSize: 15.sp,
-                                            color: ColorConfig.iconColor,
-                                          ),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ],
-                                )
-                              : Column(children: [
-                                  20.height,
-                                  !userWalletProvider.cryptoRate.isNotEmpty
-                                      ? Text(
-                                          "${0} SOL",
-                                          // "${userWallet.userConvertedStaked} USDT",
-                                          style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: ColorConfig.yellow,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : Lottie.asset(
-                                          "assets/images/beiLoader.json",
-                                          height: 50,
-                                          width: 50,
-                                        ),
-                                  20.height,
-                                  inputContainer(
-                                    minAmount: minAmount,
-                                    maxAmount: maxAmount,
-                                  ),
-                                  6.height,
-                                  isEvent!
-                                      ? conInput(
-                                          img: "assets/images/tesla.png",
-                                          color: Colors.transparent,
-                                          colorImg: true,
-                                          predition: prediction,
-                                        )
-                                      : car
-                                          ? conInput(
-                                              img: "assets/images/tesla.png",
-                                              color: carProvider.blue
-                                                  ? ColorConfig.blueCar
-                                                      .withOpacity(0.8)
-                                                  : carProvider.red
-                                                      ? ColorConfig.redCar
-                                                          .withOpacity(0.9)
-                                                      : carProvider.yellow
-                                                          ? ColorConfig
-                                                              .yellowCar
-                                                          : ColorConfig.greenCar
-                                                              .withOpacity(0.8),
-                                              colorImg: true,
-                                              predition: carProvider.blue
-                                                  ? "Blue"
-                                                  : carProvider.green
-                                                      ? "Green"
-                                                      : carProvider.yellow
-                                                          ? "Yellow"
-                                                          : "Red",
-                                            )
-                                          : dice
-                                              ? conInput(
-                                                  img: diceProvider.one
-                                                      ? "assets/images/1.png"
-                                                      : diceProvider.two
-                                                          ? "assets/images/2.png"
-                                                          : diceProvider.three
-                                                              ? "assets/images/3.png"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "assets/images/4.png"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "assets/images/5.png"
-                                                                      : "assets/images/6.png",
-                                                  predition: diceProvider.one
-                                                      ? "1"
-                                                      : diceProvider.two
-                                                          ? "2"
-                                                          : diceProvider.three
-                                                              ? "3"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "4"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "5"
-                                                                      : "6",
-                                                )
-                                              : fruit
-                                                  ? conInput(
-                                                      colorImg: true,
-                                                      predition: fruitProvider
-                                                              .banana
-                                                          ? "Bananna"
-                                                          : fruitProvider.orange
-                                                              ? "Orange"
-                                                              : fruitProvider
-                                                                      .pineapple
-                                                                  ? "Pineapple"
-                                                                  : "StrawBerry",
-                                                      color: fruitProvider
-                                                              .pineapple
-                                                          ? Color(0xfffbd604)
-                                                          : fruitProvider.orange
-                                                              ? Colors
-                                                                  .transparent
-                                                              : Colors
-                                                                  .transparent,
-                                                      img: fruitProvider
-                                                              .pineapple
-                                                          ? "assets/images/pine.png"
-                                                          : fruitProvider.orange
-                                                              ? "assets/images/orange.png"
-                                                              : fruitProvider
-                                                                      .banana
-                                                                  ? "assets/images/banana.png"
-                                                                  : "assets/images/straw.png")
-                                                  : coin
-                                                      ? conInput(
-                                                          predition:
-                                                              coinProvider.head
-                                                                  ? "Head"
-                                                                  : "Tail",
-                                                          img: coinProvider.head
-                                                              ? "assets/images/H.png"
-                                                              : "assets/images/T.png")
-                                                      : Container(),
 
-                                  //Consumer5<>(child: conInput()),
-                                  20.height,
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 7.w),
-                                    child: walletTabContainer(
-                                      inputcontroller: dice
-                                          ? diceGameController
-                                          : coin
-                                              ? coinGameController
-                                              : fruit
-                                                  ? fruitGamecontroller
-                                                  : carGameController,
-                                      wallet: userWalletProvider.currentAddress,
-                                      isConnected: userWalletProvider.connected,
-                                    ),
-                                  ),
-                                  30.height,
-                                  userWallet.connected
-                                      ? CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .toDouble(),
-                                              userWalletProvider
-                                                  .weibalance.runtimeType,
-                                              userWalletProvider.weibalance,
-                                              // userWalletProvider.weibalance /
-                                              //     BigInt.from(pow(10, 18))
-                                            ]);
-                                            if (userWalletProvider
-                                                    .userConvertedStaked ==
-                                                0) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message: "Enter Stake Amount",
-                                                  width: 195);
-                                              return;
-                                            }
-                                            if (!userWalletProvider.connected) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Please Connect Wallet",
-                                                  width: 219);
-
-                                              return;
-                                            }
-                                            if ((userWalletProvider
-                                                        .userConvertedStaked
-                                                        .toDouble() +
-                                                    0.0004) >
-                                                userWalletProvider.weibalance) {
-                                              print((userWalletProvider
-                                                          .userConvertedStaked
-                                                          .toDouble() +
-                                                      0.0004) >
-                                                  userWalletProvider
-                                                      .weibalance);
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Sorry, Insufficient Funds",
-                                                  width: 219);
-
-                                              return;
-                                            }
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .runtimeType
-                                            ]);
-                                            // userWalletProvider.initTransaction(
-                                            //     userWalletProvider
-                                            //         .userConvertedStaked,
-                                            //     context,
-                                            //     predictionContoller.text
-                                            //         .toLowerCase(),
-                                            //     //this is the bend for prediction
-                                            //     car
-                                            //         ? "race"
-                                            //         : dice
-                                            //             ? "dice"
-                                            //             : coin
-                                            //                 ? "coin"
-                                            //                 : "fruit");
-                                            userWalletProvider
-                                                .setTransactionLoader(true);
-                                            //  print(provider)
-                                            // _showAlertContainer(
-                                            //   context: context,
-                                            // );
-                                            // Add your onPressed logic here
-
-                                            // Navigator.of(context).pop();
-                                          },
-                                          color: ColorConfig.yellow,
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          )
-                                      : CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            CustomSnackBar(
-                                                context: context,
-                                                message:
-                                                    "Please Connect Wallet",
-                                                width: 219);
-                                          },
-                                          color: ColorConfig.yellow
-                                              .withOpacity(0.2),
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          ),
-                                  // Prices_tab(),
-                                ]),
-                        ),
-                      );
-                    },
-                  ),
-
+                  isEvent!
+                      ? comingSoon()
+                      : ViewBody(
+                          coinType: 'ETH',
+                          minAmount: minAmount,
+                          maxAmount: maxAmount,
+                          isEvent: isEvent,
+                          prediction: prediction,
+                          car: car,
+                          dice: dice,
+                          fruit: fruit,
+                          coin: coin,
+                          runtimeType: runtimeType),
                   /* ---------------------------------- TAB3 ---------------------------------- */
-                  Consumer5<CarStateProvider, DiceStateProvider,
-                      FruitStateProvider, CoinStateProvider, UserWeb3Provider>(
-                    builder: (context, carProvider, diceProvider, fruitProvider,
-                        coinProvider, userWalletProvider, _) {
-                      print("raise");
-                      return Container(
-                        child: SingleChildScrollView(
-                          child: userWalletProvider.startedTransaction
-                              ? Column(
-                                  children: [
-                                    40.height,
-                                    Lottie.asset(
-                                      "assets/images/BEItrx.json",
-                                      height: 160,
-                                      width: 160,
-                                    ),
-                                    40.height,
-                                    Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Text(
-                                          'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
-                                          style: TextStyle(
-                                            fontSize: 15.sp,
-                                            color: ColorConfig.iconColor,
-                                          ),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ],
-                                )
-                              : Column(children: [
-                                  20.height,
-                                  !userWalletProvider.cryptoRate.isNotEmpty
-                                      ? Text(
-                                          "${0} TON",
-                                          // "${userWallet.userConvertedStaked} USDT",
-                                          style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: ColorConfig.yellow,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : Lottie.asset(
-                                          "assets/images/beiLoader.json",
-                                          height: 50,
-                                          width: 50,
-                                        ),
-                                  20.height,
-                                  inputContainer(
-                                    minAmount: minAmount,
-                                    maxAmount: maxAmount,
-                                  ),
-                                  6.height,
-                                  isEvent!
-                                      ? conInput(
-                                          img: "assets/images/tesla.png",
-                                          color: Colors.transparent,
-                                          colorImg: true,
-                                          predition: prediction,
-                                        )
-                                      : car
-                                          ? conInput(
-                                              img: "assets/images/tesla.png",
-                                              color: carProvider.blue
-                                                  ? ColorConfig.blueCar
-                                                      .withOpacity(0.8)
-                                                  : carProvider.red
-                                                      ? ColorConfig.redCar
-                                                          .withOpacity(0.9)
-                                                      : carProvider.yellow
-                                                          ? ColorConfig
-                                                              .yellowCar
-                                                          : ColorConfig.greenCar
-                                                              .withOpacity(0.8),
-                                              colorImg: true,
-                                              predition: carProvider.blue
-                                                  ? "Blue"
-                                                  : carProvider.green
-                                                      ? "Green"
-                                                      : carProvider.yellow
-                                                          ? "Yellow"
-                                                          : "Red",
-                                            )
-                                          : dice
-                                              ? conInput(
-                                                  img: diceProvider.one
-                                                      ? "assets/images/1.png"
-                                                      : diceProvider.two
-                                                          ? "assets/images/2.png"
-                                                          : diceProvider.three
-                                                              ? "assets/images/3.png"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "assets/images/4.png"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "assets/images/5.png"
-                                                                      : "assets/images/6.png",
-                                                  predition: diceProvider.one
-                                                      ? "1"
-                                                      : diceProvider.two
-                                                          ? "2"
-                                                          : diceProvider.three
-                                                              ? "3"
-                                                              : diceProvider
-                                                                      .four
-                                                                  ? "4"
-                                                                  : diceProvider
-                                                                          .five
-                                                                      ? "5"
-                                                                      : "6",
-                                                )
-                                              : fruit
-                                                  ? conInput(
-                                                      colorImg: true,
-                                                      predition: fruitProvider
-                                                              .banana
-                                                          ? "Bananna"
-                                                          : fruitProvider.orange
-                                                              ? "Orange"
-                                                              : fruitProvider
-                                                                      .pineapple
-                                                                  ? "Pineapple"
-                                                                  : "StrawBerry",
-                                                      color: fruitProvider
-                                                              .pineapple
-                                                          ? Color(0xfffbd604)
-                                                          : fruitProvider.orange
-                                                              ? Colors
-                                                                  .transparent
-                                                              : Colors
-                                                                  .transparent,
-                                                      img: fruitProvider
-                                                              .pineapple
-                                                          ? "assets/images/pine.png"
-                                                          : fruitProvider.orange
-                                                              ? "assets/images/orange.png"
-                                                              : fruitProvider
-                                                                      .banana
-                                                                  ? "assets/images/banana.png"
-                                                                  : "assets/images/straw.png")
-                                                  : coin
-                                                      ? conInput(
-                                                          predition:
-                                                              coinProvider.head
-                                                                  ? "Head"
-                                                                  : "Tail",
-                                                          img: coinProvider.head
-                                                              ? "assets/images/H.png"
-                                                              : "assets/images/T.png")
-                                                      : Container(),
 
-                                  //Consumer5<>(child: conInput()),
-                                  20.height,
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 7.w),
-                                    child: walletTabContainer(
-                                      inputcontroller: dice
-                                          ? diceGameController
-                                          : coin
-                                              ? coinGameController
-                                              : fruit
-                                                  ? fruitGamecontroller
-                                                  : carGameController,
-                                      wallet: userWalletProvider.currentAddress,
-                                      isConnected: userWalletProvider.connected,
-                                    ),
-                                  ),
-                                  30.height,
-                                  userWallet.connected
-                                      ? CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .toDouble(),
-                                              userWalletProvider
-                                                  .weibalance.runtimeType,
-                                              userWalletProvider.weibalance,
-                                              // userWalletProvider.weibalance /
-                                              //     BigInt.from(pow(10, 18))
-                                            ]);
-                                            if (userWalletProvider
-                                                    .userConvertedStaked ==
-                                                0) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message: "Enter Stake Amount",
-                                                  width: 195);
-                                              return;
-                                            }
-                                            if (!userWalletProvider.connected) {
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Please Connect Wallet",
-                                                  width: 219);
+                  isEvent!
+                      ? comingSoon()
+                      : ViewBody(
+                          coinType: 'SOL',
+                          minAmount: minAmount,
+                          maxAmount: maxAmount,
+                          isEvent: isEvent,
+                          prediction: prediction,
+                          car: car,
+                          dice: dice,
+                          fruit: fruit,
+                          coin: coin,
+                          runtimeType: runtimeType),
 
-                                              return;
-                                            }
-                                            if ((userWalletProvider
-                                                        .userConvertedStaked
-                                                        .toDouble() +
-                                                    0.0004) >
-                                                userWalletProvider.weibalance) {
-                                              print((userWalletProvider
-                                                          .userConvertedStaked
-                                                          .toDouble() +
-                                                      0.0004) >
-                                                  userWalletProvider
-                                                      .weibalance);
-                                              CustomSnackBar(
-                                                  context: context,
-                                                  message:
-                                                      "Sorry, Insufficient Funds",
-                                                  width: 219);
+                  /* ---------------------------------- TAB4 ---------------------------------- */
 
-                                              return;
-                                            }
-                                            print([
-                                              userWalletProvider
-                                                  .userConvertedStaked
-                                                  .runtimeType
-                                            ]);
-                                            // userWalletProvider.initTransaction(
-                                            //     userWalletProvider
-                                            //         .userConvertedStaked,
-                                            //     context,
-                                            //     predictionContoller.text
-                                            //         .toLowerCase(),
-                                            //     //this is the bend for prediction
-                                            //     car
-                                            //         ? "race"
-                                            //         : dice
-                                            //             ? "dice"
-                                            //             : coin
-                                            //                 ? "coin"
-                                            //                 : "fruit");
-                                            userWalletProvider
-                                                .setTransactionLoader(true);
-                                            //  print(provider)
-                                            // _showAlertContainer(
-                                            //   context: context,
-                                            // );
-                                            // Add your onPressed logic here
-
-                                            // Navigator.of(context).pop();
-                                          },
-                                          color: ColorConfig.yellow,
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          )
-                                      : CustomAppButton(
-                                          text: 'Stake',
-                                          shimmer: true,
-                                          onPressed: () {
-                                            CustomSnackBar(
-                                                context: context,
-                                                message:
-                                                    "Please Connect Wallet",
-                                                width: 219);
-                                          },
-                                          color: ColorConfig.yellow
-                                              .withOpacity(0.2),
-                                          textColor: Colors.white,
-                                          borderRadius: 5,
-                                          height: 24,
-                                          width: 60,
-                                          size: 16
-                                          //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                                          ),
-                                  // Prices_tab(),
-                                ]),
-                        ),
-                      );
-                    },
-                  ),
-
-                  /* ---------------------------------- TAB$ ---------------------------------- */
+                  isEvent!
+                      ? comingSoon()
+                      : ViewBody(
+                          coinType: 'TON',
+                          minAmount: minAmount,
+                          maxAmount: maxAmount,
+                          isEvent: isEvent,
+                          prediction: prediction,
+                          car: car,
+                          dice: dice,
+                          fruit: fruit,
+                          coin: coin,
+                          runtimeType: runtimeType),
                   comingSoon(),
                 ],
                 onChange: (index) => print(index),
@@ -1293,6 +228,330 @@ class StakeContainer extends StatelessWidget {
     );
   }
 }
+
+class ViewBody extends StatelessWidget {
+  const ViewBody({
+    super.key,
+    required this.minAmount,
+    required this.coin,
+    required this.maxAmount,
+    required this.isEvent,
+    required this.prediction,
+    required this.car,
+    required this.dice,
+    required this.fruit,
+    required this.coinType,
+    required this.runtimeType,
+  });
+
+  final double minAmount;
+  final double maxAmount;
+  final bool? isEvent;
+  final String prediction;
+  final bool car;
+  final bool dice;
+  final bool fruit;
+  final bool coin;
+
+  final Type runtimeType;
+  final String coinType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer6<CarStateProvider, DiceStateProvider, FruitStateProvider,
+        CoinStateProvider, UserWeb3Provider, Web3Provider>(
+      builder: (context, carProvider, diceProvider, fruitProvider, coinProvider,
+          userWalletProvider, walletProvider, _) {
+        print("raise");
+        return Container(
+          child: SingleChildScrollView(
+            child: userWalletProvider.startedTransaction
+                ? Column(
+                    children: [
+                      40.height,
+                      Lottie.asset(
+                        "assets/images/BEItrx.json",
+                        height: 160,
+                        width: 160,
+                      ),
+                      40.height,
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                            'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              color: ColorConfig.iconColor,
+                            ),
+                            textAlign: TextAlign.center),
+                      ),
+                    ],
+                  )
+                : Column(children: [
+                    20.height,
+                    !userWalletProvider.cryptoRate.isNotEmpty
+                        ? Text(
+                            //"${0} ${coinType}",
+                            "${userWalletProvider.userConvertedStaked} $coinType",
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                color: ColorConfig.yellow,
+                                fontWeight: FontWeight.bold),
+                          )
+                        : Lottie.asset(
+                            "assets/images/beiLoader.json",
+                            height: 50,
+                            width: 50,
+                          ),
+                    20.height,
+                    inputContainer(
+                      minAmount: minAmount,
+                      maxAmount: maxAmount,
+                      coin: coinType,
+                      instances: userWalletProvider,
+                    ),
+                    6.height,
+                    isEvent!
+                        ? conInput(
+                            isEvent: isEvent,
+                            img: "assets/images/tesla.png",
+                            color: Colors.transparent,
+                            colorImg: true,
+                            predition: prediction,
+                          )
+                        : car
+                            ? conInput(
+                                img: "assets/images/tesla.png",
+                                color: carProvider.blue
+                                    ? ColorConfig.blueCar.withOpacity(0.8)
+                                    : carProvider.red
+                                        ? ColorConfig.redCar.withOpacity(0.9)
+                                        : carProvider.yellow
+                                            ? ColorConfig.yellowCar
+                                            : ColorConfig.greenCar
+                                                .withOpacity(0.8),
+                                colorImg: true,
+                                predition: carProvider.blue
+                                    ? "Blue"
+                                    : carProvider.green
+                                        ? "Green"
+                                        : carProvider.yellow
+                                            ? "Yellow"
+                                            : "Red",
+                              )
+                            : dice
+                                ? conInput(
+                                    img: diceProvider.one
+                                        ? "assets/images/1.png"
+                                        : diceProvider.two
+                                            ? "assets/images/2.png"
+                                            : diceProvider.three
+                                                ? "assets/images/3.png"
+                                                : diceProvider.four
+                                                    ? "assets/images/4.png"
+                                                    : diceProvider.five
+                                                        ? "assets/images/5.png"
+                                                        : "assets/images/6.png",
+                                    predition: diceProvider.one
+                                        ? "1"
+                                        : diceProvider.two
+                                            ? "2"
+                                            : diceProvider.three
+                                                ? "3"
+                                                : diceProvider.four
+                                                    ? "4"
+                                                    : diceProvider.five
+                                                        ? "5"
+                                                        : "6",
+                                  )
+                                : fruit
+                                    ? conInput(
+                                        colorImg: true,
+                                        predition: fruitProvider.banana
+                                            ? "Bananna"
+                                            : fruitProvider.orange
+                                                ? "Orange"
+                                                : fruitProvider.pineapple
+                                                    ? "Pineapple"
+                                                    : "StrawBerry",
+                                        color: fruitProvider.pineapple
+                                            ? Color(0xfffbd604)
+                                            : fruitProvider.orange
+                                                ? Colors.transparent
+                                                : Colors.transparent,
+                                        img: fruitProvider.pineapple
+                                            ? "assets/images/pine.png"
+                                            : fruitProvider.orange
+                                                ? "assets/images/orange.png"
+                                                : fruitProvider.banana
+                                                    ? "assets/images/banana.png"
+                                                    : "assets/images/straw.png")
+                                    : coin
+                                        ? conInput(
+                                            predition: coinProvider.head
+                                                ? "Head"
+                                                : "Tail",
+                                            img: coinProvider.head
+                                                ? "assets/images/H.png"
+                                                : "assets/images/T.png")
+                                        : Container(),
+
+                    //Consumer5<>(child: conInput()),
+                    20.height,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 7.w),
+                      child: walletTabContainer(
+                        inputcontroller: dice
+                            ? diceGameController
+                            : coin
+                                ? coinGameController
+                                : fruit
+                                    ? fruitGamecontroller
+                                    : carGameController,
+                        wallet: userWalletProvider.returnAddress(
+                                context)[coinType.toLowerCase()] ??
+                            '',
+                        isConnected: userWalletProvider.connected,
+                      ),
+                    ),
+                    30.height,
+                    userWalletProvider.userConvertedStaked.toDouble() !=
+                            0.toDouble()
+                        ? CustomAppButton(
+                            text: 'Stake',
+                            shimmer: true,
+                            onPressed: () {
+                              print([
+                                userWalletProvider.userConvertedStaked
+                                    .toDouble(),
+                                userWalletProvider.weibalance.runtimeType,
+                                userWalletProvider.weibalance,
+                                // userWalletProvider.weibalance /
+                                //     BigInt.from(pow(10, 18))
+                              ]);
+                              if (userWalletProvider.userConvertedStaked == 0) {
+                                CustomSnackBar(
+                                    context: context,
+                                    message: "Enter Stake Amount",
+                                    width: 195);
+                                return;
+                              }
+                              // if (!userWalletProvider.connected) {
+                              //   CustomSnackBar(
+                              //       context: context,
+                              //       message: "Please Connect Wallet",
+                              //       width: 219);
+
+                              //   return;
+                              // }
+                              // if ((userWalletProvider.userConvertedStaked
+                              //             .toDouble() +
+                              //         0.0004) >
+                              //     userWalletProvider.weibalance) {
+                              //   print((userWalletProvider.userConvertedStaked
+                              //               .toDouble() +
+                              //           0.0004) >
+                              //       userWalletProvider.weibalance);
+                              //   CustomSnackBar(
+                              //       context: context,
+                              //       message: "Sorry, Insufficient Funds",
+                              //       width: 219);
+
+                              //   return;
+                              // }
+                              print([
+                                userWalletProvider
+                                    .userConvertedStaked.runtimeType
+                              ]);
+                              // userWalletProvider.initTransaction(
+                              //     userWalletProvider
+                              //         .userConvertedStaked,
+                              //     context,
+                              //     predictionContoller.text
+                              //         .toLowerCase(),
+                              //     //this is the bend for prediction
+                              //     car
+                              //         ? "race"
+                              //         : dice
+                              //             ? "dice"
+                              //             : coin
+                              //                 ? "coin"
+                              //                 : "fruit");
+                              /* -------------------- this this for transaction stautus ------------------- */
+                              //  userWalletProvider.setTransactionLoader(true);
+                              //  print(provider)
+                              // _showAlertContainer(
+                              //   context: context,
+                              // );
+                              // Add your onPressed logic here
+
+                              // Navigator.of(context).pop();
+                            },
+                            color: ColorConfig.yellow,
+                            textColor: Colors.white,
+                            borderRadius: 5,
+                            height: 24,
+                            width: 60,
+                            size: 16
+                            //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                            )
+                        : CustomAppButton(
+                            text: 'Stake',
+                            shimmer: true,
+                            onPressed: () {
+                              CustomSnackBar(
+                                  context: context,
+                                  message:
+                                      "Enter $coinType amount you want to stake ",
+                                  width: 219);
+                            },
+                            color: ColorConfig.yellow.withOpacity(0.2),
+                            textColor: Colors.white,
+                            borderRadius: 5,
+                            height: 24,
+                            width: 60,
+                            size: 16
+                            //  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                            ),
+                    // Prices_tab(),
+                  ]),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class Transactionwidget extends StatelessWidget {
+  const Transactionwidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        40.height,
+        Lottie.asset(
+          "assets/images/BEItrx.json",
+          height: 160,
+          width: 160,
+        ),
+        40.height,
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+              'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
+              style: TextStyle(
+                fontSize: 15.sp,
+                color: ColorConfig.iconColor,
+              ),
+              textAlign: TextAlign.center),
+        ),
+      ],
+    );
+  }
+}
 // onPressed: () {
 //                                           // Close the dialog
 //                                         },
@@ -1300,10 +559,15 @@ class StakeContainer extends StatelessWidget {
 class inputContainer extends StatelessWidget {
   final double minAmount;
   final double maxAmount;
+  final UserWeb3Provider instances;
+
+  final String coin;
 
   const inputContainer({
     required this.minAmount,
     required this.maxAmount,
+    required this.coin,
+    required this.instances,
     super.key,
   });
 
@@ -1323,7 +587,7 @@ class inputContainer extends StatelessWidget {
           inputColor: ColorConfig.iconColor,
           hintText: 'Enter amount',
           keyboardType:
-              TextInputType.numberWithOptions(decimal: true, signed: true),
+              TextInputType.numberWithOptions(decimal: true, signed: false),
           // TextInputType.numberWithOptions(decimal: true),
           allowWordSpacing: true,
           inputFormatters: [
@@ -1332,9 +596,9 @@ class inputContainer extends StatelessWidget {
           ],
           cursorColor: Colors.white,
           onChanged: (value) {
-            final userWalletInstance =
-                Provider.of<UserWeb3Provider>(context, listen: false);
-            userWalletInstance.setcryptoBNBUSDT(value, context);
+            print([value]);
+            instances.setcryptoRate(
+                value == '' ? 0.toString() : value, context, coin);
             print(value);
           },
 

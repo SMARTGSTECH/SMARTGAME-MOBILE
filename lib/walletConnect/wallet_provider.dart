@@ -46,7 +46,7 @@ class Web3Provider with ChangeNotifier {
 
   bool _keyBoardActive = false;
   late StreamSubscription<bool> keyboardSubscription;
-
+  Map<String, dynamic> addresses = {};
   List<String> _generatedMnemonics = [];
   String enteredMnemonics = "";
   String _ethBalance = "0.0000";
@@ -216,6 +216,7 @@ class Web3Provider with ChangeNotifier {
       // log('tx: ${tx.}');
       ton.storeTransaction(tx);
       log('TON transfer: ${transfer.toString()}');
+
       ///TODO: Notify the user of the completed transaction
 
       notifyListeners();
@@ -254,9 +255,15 @@ class Web3Provider with ChangeNotifier {
     }
   }
 
+  Map<String, dynamic> useraddresses = {};
+
   Future<Map<String, dynamic>> loadWallet() async {
     try {
       String mnemonics = await Storage.readData(WALLET_MNEMONICS);
+      if (mnemonics == null || mnemonics.isEmpty || mnemonics == '') {
+        print('there is no nemoneics');
+        return {};
+      }
       log('memnonics: $mnemonics');
       HDWallet newWalletInstance = HDWallet.createWithMnemonic(mnemonics);
 
@@ -266,6 +273,7 @@ class Web3Provider with ChangeNotifier {
           _extractWalletAddresses(newWalletInstance);
       notifyListeners();
       getBalances(addresses);
+      useraddresses = addresses;
       return addresses;
     } catch (e) {
       log('Error in loading wallet: $e');
@@ -525,6 +533,7 @@ class Web3Provider with ChangeNotifier {
       );
 
       log("Transaction ID: $txid");
+
       ///TODO: Notify the user of the completed transaction
     } catch (e) {
       log('Error in sending token transaction: $e');
@@ -569,6 +578,7 @@ class Web3Provider with ChangeNotifier {
         chainId: chainId,
       );
       log("Transaction ID: $txid");
+
       ///TODO: Notify the user of the completed transaction
     } catch (e) {
       log('Error in sending token transaction: $e');

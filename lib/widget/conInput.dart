@@ -12,12 +12,14 @@ class conInput extends StatelessWidget {
       this.predition,
       this.img,
       this.colorImg = false,
+      this.isEvent = false,
       this.color});
   final double? ht;
   final double? wt;
   final String? predition;
   final String? img;
   final bool? colorImg;
+  final bool? isEvent;
   final Color? color;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class conInput extends StatelessWidget {
           ),
           9.width,
           Text(
-            'Predicted: $predition' ?? 'Predicted: 3',
+            isEvent! ? '$predition' : 'Predicted: $predition' ?? 'Predicted: 3',
             style: TextStyle(
               //  fontFamily: AppFont.euclidCircularARegular,
               fontSize: 14.sp,

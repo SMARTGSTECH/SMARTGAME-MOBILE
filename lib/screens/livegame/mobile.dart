@@ -21,6 +21,13 @@ class LiveGameMobileScreen extends StatefulWidget {
 
 class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    setState(() {});
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<LiveEventProvider>(
       builder: (BuildContext context, model, _) {
@@ -75,7 +82,7 @@ class _LiveGameMobileScreenState extends State<LiveGameMobileScreen> {
                               itemBuilder: (context, index) {
                                 final coinP = Provider.of<CoinCapProvider>(
                                   context,
-                                  listen: false,
+                                  listen: true,
                                 );
                                 // print(coinP.coinArray
                                 //     .where((element) =>

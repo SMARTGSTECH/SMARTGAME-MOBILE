@@ -102,7 +102,7 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
             ],
             centerTitle: true,
             title: Text(
-              "SmartBet",
+              "SmartGame",
               style: TextStyle(
                 color: ColorConfig.iconColor,
                 fontSize: 18.sp,
