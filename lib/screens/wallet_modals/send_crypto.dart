@@ -193,6 +193,7 @@ class _SendCryptoState extends State<SendCrypto> {
                     // if (buttonActive) {
                     //   web3provider.importWallet(context);
                     // }
+                    print('sending');
                     web3provider.sendCrypto(
                         to: addressController.text.trim(),
                         symbol: widget.assetSymbol,

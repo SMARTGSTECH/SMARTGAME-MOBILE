@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/constants/strings.dart';
 import 'package:smartbet/screens/car/desktop.dart';
 import 'package:smartbet/screens/car/provider.dart';
 import 'package:smartbet/screens/coin/provider.dart';
@@ -41,7 +42,8 @@ class StakeContainer extends StatelessWidget {
       this.prediction = '',
       this.tabWidth,
       this.maxAmount = 0.0,
-      this.minAmount = 0.0}) {
+      this.minAmount = 0.0,
+      this.gameType}) {
     // getallprices().whenComplete(() => print(getPrice("BNBUSDT")));
   }
 
@@ -57,6 +59,7 @@ class StakeContainer extends StatelessWidget {
   final double? tabWidth;
   final double minAmount;
   final double maxAmount;
+  final String? gameType;
 
   @override
   Widget build(BuildContext context) {
@@ -137,16 +140,18 @@ class StakeContainer extends StatelessWidget {
                   /*                               Tab1                               */
                   /* -------------------------------------------------------------------------- */
                   ViewBody(
-                      coinType: 'USDT',
-                      minAmount: minAmount,
-                      maxAmount: maxAmount,
-                      isEvent: isEvent,
-                      prediction: prediction,
-                      car: car,
-                      dice: dice,
-                      fruit: fruit,
-                      coin: coin,
-                      runtimeType: runtimeType),
+                    coinType: 'USDT',
+                    minAmount: minAmount,
+                    maxAmount: maxAmount,
+                    isEvent: isEvent,
+                    prediction: prediction,
+                    car: car,
+                    dice: dice,
+                    fruit: fruit,
+                    coin: coin,
+                    runtimeType: runtimeType,
+                    gameType: gameType!,
+                  ),
 
                   /* -------------------------------------------------------------------------- */
                   /*                               Tab2                              */
@@ -164,7 +169,9 @@ class StakeContainer extends StatelessWidget {
                           dice: dice,
                           fruit: fruit,
                           coin: coin,
-                          runtimeType: runtimeType),
+                          runtimeType: runtimeType,
+                          gameType: gameType!,
+                        ),
                   /* ---------------------------------- TAB3 ---------------------------------- */
 
                   isEvent!
@@ -179,7 +186,9 @@ class StakeContainer extends StatelessWidget {
                           dice: dice,
                           fruit: fruit,
                           coin: coin,
-                          runtimeType: runtimeType),
+                          runtimeType: runtimeType,
+                          gameType: gameType!,
+                        ),
 
                   /* ---------------------------------- TAB4 ---------------------------------- */
 
@@ -195,7 +204,9 @@ class StakeContainer extends StatelessWidget {
                           dice: dice,
                           fruit: fruit,
                           coin: coin,
-                          runtimeType: runtimeType),
+                          runtimeType: runtimeType,
+                          gameType: gameType!,
+                        ),
                   comingSoon(),
                 ],
                 onChange: (index) => print(index),
@@ -242,6 +253,7 @@ class ViewBody extends StatelessWidget {
     required this.fruit,
     required this.coinType,
     required this.runtimeType,
+    required this.gameType,
   });
 
   final double minAmount;
@@ -252,7 +264,7 @@ class ViewBody extends StatelessWidget {
   final bool dice;
   final bool fruit;
   final bool coin;
-
+  final String gameType;
   final Type runtimeType;
   final String coinType;
 
@@ -421,14 +433,38 @@ class ViewBody extends StatelessWidget {
                             text: 'Stake',
                             shimmer: true,
                             onPressed: () {
-                              print([
-                                userWalletProvider.userConvertedStaked
-                                    .toDouble(),
-                                userWalletProvider.weibalance.runtimeType,
-                                userWalletProvider.weibalance,
-                                // userWalletProvider.weibalance /
-                                //     BigInt.from(pow(10, 18))
-                              ]);
+                              Map gameObj = {
+                                'wallet':
+                                    '0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf',
+                                'amount': userWalletProvider.userConvertedStaked
+                                    .toString(),
+                                'base': userinput.text,
+                                'type': gameType,
+                                'chain': coinType.contains('ETH')
+                                    ? 'BASE'
+                                    : coinType.contains('USDT')
+                                        ? 'BSC'
+                                        : coinType.contains('SOL')
+                                            ? 'SOLANA'
+                                            : 'TON  ',
+                                'token': coinType.contains('USDT')
+                                    ? "USDT"
+                                    : 'NATIVE',
+                                'side': predictionContoller.text,
+                                'session': isEvent! ? 'sss' : ''
+                              };
+
+                              userWalletProvider.stakeGame(gameObj,context);
+
+                              print(gameObj);
+                              // print([
+                              //   userWalletProvider.userConvertedStaked
+                              //       .toDouble(),
+                              //   userWalletProvider.weibalance.runtimeType,
+                              //   userWalletProvider.weibalance,
+                              //   // userWalletProvider.weibalance /
+                              //   //     BigInt.from(pow(10, 18))
+                              // ]);
                               if (userWalletProvider.userConvertedStaked == 0) {
                                 CustomSnackBar(
                                     context: context,
@@ -579,6 +615,7 @@ class inputContainer extends StatelessWidget {
         // height: 90,
         width: SizeConfig.screenWidth! <= 450 ? 300.w : 400,
         child: AppInputField(
+          controller: userinput,
           prefixIcon: Icon(
             Icons.attach_money,
             color: ColorConfig.iconColor,

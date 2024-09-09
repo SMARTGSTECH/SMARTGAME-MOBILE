@@ -616,6 +616,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                                         dice: true,
                                         maxAmount: 2,
                                         minAmount: 0.000005,
+                                        gameType: 'dice',
                                       ),
                                     );
                                   },

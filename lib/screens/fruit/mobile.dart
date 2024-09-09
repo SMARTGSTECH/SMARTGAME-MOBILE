@@ -536,7 +536,7 @@ class _FruitMobileScreenState extends State<FruitMobileScreen> {
                                       coin: false,
                                       dice: false,
                                       maxAmount: 0.0009876,
-                                      minAmount: 0.000012,
+                                      minAmount: 0.000012, gameType: 'fruit',
                                     ),
                                   );
                                 },

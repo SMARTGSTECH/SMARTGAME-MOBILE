@@ -44,6 +44,8 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
   Widget build(BuildContext context) {
     Web3Provider web3provider =
         Provider.of<Web3Provider>(context, listen: false);
+    web3provider.setContext(context);
+    web3provider.loadWallet();
     return Consumer<MainScreenProvider>(
       builder: (BuildContext context, provider, _) {
         return Scaffold(
@@ -67,7 +69,7 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
                 //     return ReusableBottomModal();
                 //   },
                 // );
-                web3provider.setContext(context);
+
                 String data = await Storage.readData(WALLET_MNEMONICS) ?? "";
                 if (data.isNotEmpty) {
                   modalSetup(

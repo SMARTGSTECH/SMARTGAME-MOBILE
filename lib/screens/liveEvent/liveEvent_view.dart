@@ -390,7 +390,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                   elevation: 10,
                                   child: StakeContainer(
                                     isEvent: true,
-                                    prediction: provider.selectedOption,
+                                    prediction: provider.selectedOption, gameType: 'dynamic',
                                   ),
                                 );
                               },

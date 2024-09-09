@@ -92,6 +92,7 @@ class Web3Provider with ChangeNotifier {
   String get userTonBalance => _tonBalance;
 
   void setContext(BuildContext context) {
+    log('context initialized');
     _context = context;
   }
 
@@ -549,6 +550,7 @@ class Web3Provider with ChangeNotifier {
     required int decimal,
   }) async {
     try {
+      print('hhh');
       final client = await tokenFactory.initWebClient(networkUrl);
       final String abi = await rootBundle.loadString(bscTokenAbi);
       final contract = await tokenFactory.intContract(abi, contractAddress, '');

@@ -381,7 +381,7 @@ class _CoinMobileScreenState extends State<CoinMobileScreen> {
                             coin: true,
                             dice: false,
                             maxAmount: 1,
-                            minAmount: 0.001,
+                            minAmount: 0.001, gameType: 'coin',
                           ),
                         );
                       },

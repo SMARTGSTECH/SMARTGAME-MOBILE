@@ -544,7 +544,7 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                                         coin: false,
                                         dice: false,
                                         maxAmount: 300000,
-                                        minAmount: 0.0005,
+                                        minAmount: 0.0005, gameType: 'car',
                                       ),
                                     );
                                   },

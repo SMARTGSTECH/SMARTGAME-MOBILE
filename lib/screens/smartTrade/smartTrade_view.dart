@@ -421,9 +421,10 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                               backgroundColor: Colors.transparent,
                               elevation: 10,
                               child: StakeContainer(
-                                  isEvent: true,
-                                  prediction:
-                                      gameState.selectedOptionToDisplay),
+                                isEvent: true,
+                                prediction: gameState.selectedOptionToDisplay,
+                                gameType: widget.symbol,
+                              ),
                             );
                           },
                         );
