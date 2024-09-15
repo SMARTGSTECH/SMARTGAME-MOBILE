@@ -28,14 +28,14 @@ class FruitMobileScreen extends StatefulWidget {
 
 class _FruitMobileScreenState extends State<FruitMobileScreen> {
   late Future<List<Odds>> futureOdds;
-  late double fruitOdds;
+  late List fruitOdds;
 
   @override
   void initState() {
     print("initialized");
     super.initState();
     futureOdds = fetchOdds();
-    fruitOdds = 0.0;
+    //fruitOdds = 0.0;
   }
 
   @override
@@ -52,15 +52,17 @@ class _FruitMobileScreenState extends State<FruitMobileScreen> {
             } else {
               final oddsList = snapshot.data!;
               // Find odds for race type
-              final fruitOddsData = oddsList.firstWhere(
-                  (odd) => odd.type == 'friut',
-                  orElse: () => Odds(
-                      id: -1,
-                      maxAmount: 0,
-                      minAmount: 0,
-                      odds: 0,
-                      type: 'friut'));
-              fruitOdds = fruitOddsData.odds;
+              final fruitOddsData = oddsList
+                  .where(
+                    (odd) => odd.type == 'coin',
+                  )
+                  .toList()
+                  .first;
+              fruitOdds = [
+                fruitOddsData.minAmount,
+                fruitOddsData.maxAmount,
+                fruitOddsData.odds
+              ];
 
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -113,7 +115,7 @@ class _FruitMobileScreenState extends State<FruitMobileScreen> {
                               width: 35.h,
                               child: Center(
                                 child: Text(
-                                  "$fruitOdds" "x",
+                                  "${fruitOdds[2]}" "x",
                                   style: TextStyle(
                                     color: ColorConfig.black,
                                     fontSize: 13.sp,
@@ -535,8 +537,9 @@ class _FruitMobileScreenState extends State<FruitMobileScreen> {
                                       car: false,
                                       coin: false,
                                       dice: false,
-                                      maxAmount: 0.0009876,
-                                      minAmount: 0.000012, gameType: 'fruit',
+                                      maxAmount: fruitOdds[1],
+                                      minAmount: fruitOdds[0],
+                                      gameType: 'fruit',
                                     ),
                                   );
                                 },

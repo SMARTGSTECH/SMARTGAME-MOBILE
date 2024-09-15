@@ -30,14 +30,14 @@ class CarMobileScreen extends StatefulWidget {
 
 class _CarMobileScreenState extends State<CarMobileScreen> {
   late Future<List<Odds>> futureOdds;
-  late double raceOdds;
+  late List raceOdds;
 
   @override
   void initState() {
     print("initialized");
     super.initState();
     futureOdds = fetchOdds();
-    raceOdds = 0.0;
+    // raceOdds = 0.0;
   }
 
   @override
@@ -62,7 +62,11 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                       minAmount: 0,
                       odds: 0,
                       type: 'race'));
-              raceOdds = raceOddsData.odds;
+              raceOdds = [
+                raceOddsData.minAmount,
+                raceOddsData.maxAmount,
+                raceOddsData.odds
+              ];
               print('THIS IS THE EXPERIENCESS');
               print(raceOdds);
               return SingleChildScrollView(
@@ -116,7 +120,7 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                               width: 35.h,
                               child: Center(
                                 child: Text(
-                                  "$raceOdds" 'x',
+                                  "${raceOdds[2]}" 'x',
                                   style: TextStyle(
                                     color: ColorConfig.black,
                                     fontSize: 13.sp,
@@ -544,8 +548,8 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                                         car: true,
                                         coin: false,
                                         dice: false,
-                                        maxAmount: 300000,
-                                        minAmount: 0.0005,
+                                        maxAmount: raceOdds[1],
+                                        minAmount: raceOdds[0],
                                         gameType: 'car',
                                       ),
                                     );
