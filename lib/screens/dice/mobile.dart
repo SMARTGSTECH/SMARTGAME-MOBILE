@@ -25,13 +25,13 @@ class DiceMobileScreen extends StatefulWidget {
 
 class _DiceMobileScreenState extends State<DiceMobileScreen> {
   late Future<List<Odds>> futureOdds;
-  late double diceOdds;
+  late List diceOdds;
 
   @override
   void initState() {
     super.initState();
     futureOdds = fetchOdds();
-    diceOdds = 0.0;
+    //diceOdds = 0.0;
   }
 
   @override
@@ -48,15 +48,17 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
             } else {
               final oddsList = snapshot.data!;
               // Find odds for race type
-              final diceOddsData = oddsList.firstWhere(
-                  (odd) => odd.type == 'dice',
-                  orElse: () => Odds(
-                      id: -1,
-                      maxAmount: 0,
-                      minAmount: 0,
-                      odds: 0,
-                      type: 'dice'));
-              diceOdds = diceOddsData.odds;
+              final diceOddsData = oddsList
+                  .where(
+                    (odd) => odd.type == 'dice',
+                  )
+                  .toList()
+                  .first;
+              diceOdds = [
+                diceOddsData.minAmount,
+                diceOddsData.maxAmount,
+                diceOddsData.odds
+              ];
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Padding(
@@ -108,7 +110,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                               width: 35.h,
                               child: Center(
                                 child: Text(
-                                  "$diceOdds" "x",
+                                  "${diceOdds[2]}" "x",
                                   style: TextStyle(
                                     color: ColorConfig.black,
                                     fontSize: 13.sp,
@@ -351,6 +353,8 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                                 // border:
                                 //     Border.all(color: ColorConfig.lightBoarder),
                               ),
+                              height: 180.h,
+                              width: 200.w,
                               child: Container(
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
@@ -362,12 +366,10 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                                               provider.counter == 46
                                           ? AssetImage(
                                               "assets/images/d${provider.result["dice"]}.png")
-                                          : AssetImage(
+                                          : const AssetImage(
                                               "assets/images/loader.gif")),
                                 ),
                               ),
-                              height: 180.h,
-                              width: 200.w,
                             );
                           })
                           // Positioned(
@@ -614,8 +616,8 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                                         car: false,
                                         coin: false,
                                         dice: true,
-                                        maxAmount: 2,
-                                        minAmount: 0.000005,
+                                        maxAmount: diceOdds[1],
+                                        minAmount: diceOdds[0],
                                         gameType: 'dice',
                                       ),
                                     );

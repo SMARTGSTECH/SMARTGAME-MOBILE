@@ -108,7 +108,20 @@ class _LoginButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: context.watch<PinEntryProvider>().isPinComplete
           ? () {
-              print(context.read<PinEntryProvider>().isPinComplete);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: const Duration(milliseconds: 0),
+                  content: Text(
+                    'Authorizing',
+                    style: TextStyle(
+                        color: ColorConfig.iconColor, fontSize: 15.sp),
+                  ),
+                  backgroundColor: ColorConfig.appBar,
+                ),
+              );
+
+              // toast('');
+              // print(context.read<PinEntryProvider>().isPinComplete);
               if (context.read<PinEntryProvider>().hasSetPin &&
                   context.read<PinEntryProvider>().userPin ==
                       context.read<PinEntryProvider>().pin) {
@@ -137,7 +150,9 @@ class _LoginButton extends StatelessWidget {
           : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorConfig.appBar,
-        disabledForegroundColor: Colors.grey.withOpacity(0.38), disabledBackgroundColor: Colors.grey.withOpacity(0.12), // Disabled color
+        disabledForegroundColor: Colors.grey.withOpacity(0.38),
+        disabledBackgroundColor:
+            Colors.grey.withOpacity(0.12), // Disabled color
         padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.r),
@@ -196,7 +211,8 @@ class _Keypad extends StatelessWidget {
                     context.read<PinEntryProvider>().addDigit(digits[index]);
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: ColorConfig.appBar, backgroundColor: ColorConfig.iconColor,
+                    foregroundColor: ColorConfig.appBar,
+                    backgroundColor: ColorConfig.iconColor,
                     shape: CircleBorder(),
                   ),
                   child: Text(

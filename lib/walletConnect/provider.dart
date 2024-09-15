@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 // import 'package:particle_connect/particle_connect.dart';
 import 'package:provider/provider.dart' as p;
+import 'package:smartbet/constants/strings.dart';
 import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/utils/base-url.dart';
 import 'package:smartbet/utils/env.dart';
@@ -91,7 +92,7 @@ class UserWeb3Provider extends ChangeNotifier {
 
   returnAddress(BuildContext context) {
     final wallets =
-        p.Provider.of<Web3Provider>(context, listen: true).useraddresses;
+        p.Provider.of<Web3Provider>(context, listen: false).useraddresses;
 
     log('this is the value of wallet:${wallets}');
     return wallets;
@@ -145,6 +146,12 @@ class UserWeb3Provider extends ChangeNotifier {
   //     "https://connect.particle.network/icons/512.png",
   //     "https://connect.particle.network",
   //     "Particle Connect Flutter Demo");
+
+  resetUserbalance() {
+    userConvertedStaked = 0.0;
+    userinput.clear();
+    notifyListeners();
+  }
 
   initParticle() async {
     // ParticleInfo.set(projectId, clientK);
@@ -378,6 +385,8 @@ class UserWeb3Provider extends ChangeNotifier {
         print('Response: ${response.body}');
 
         print("its sucessful");
+
+        
         //try and fix this issue
 
         setTransactionLoader(false);
@@ -389,6 +398,7 @@ class UserWeb3Provider extends ChangeNotifier {
             width: 200,
             leftColor: Colors.green,
             icon: Icons.wallet);
+        resetUserbalance();
         return response.statusCode;
       } else {
         // Handle errors

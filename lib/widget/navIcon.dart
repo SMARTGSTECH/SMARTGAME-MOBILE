@@ -24,13 +24,13 @@ class NavIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isIcon
+        //? subWidget(name: name, img: img, size: size, removeText: false)
         ? Column(
             children: [
               position! != 1 ? 12.h.toInt().height : Container(),
               Icon(
                 Icons.home,
-                color:
-                    position! != 1 ? ColorConfig.iconColor : ColorConfig.black,
+                color: position! != 1 ? Color(0xffbcc2c6) : ColorConfig.black,
                 size: 30.sp,
               ),
               1.h.toInt().height,
@@ -46,23 +46,36 @@ class NavIcon extends StatelessWidget {
             ],
           )
         : (position == 0 && isSoccer || position == 2 && isVirtual)
-            ? subWidget(name: name, img: img, size: size, removeText: false)
-            : subWidget(name: name, img: img, size: size, removeText: true);
+            ? subWidget(
+                name: name,
+                img: img,
+                size: size,
+                removeText: false,
+                position: position!,
+              )
+            : subWidget(
+                name: name,
+                img: img,
+                size: size,
+                removeText: true,
+                position: position!);
   }
 }
 
 class subWidget extends StatelessWidget {
-  const subWidget(
+  subWidget(
       {super.key,
       required this.name,
       required this.img,
       required this.size,
-      this.removeText = false});
+      this.removeText = false,
+      required this.position});
 
   final String? name;
   final String? img;
   final int? size;
   final bool removeText;
+  final int position;
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +92,18 @@ class subWidget extends StatelessWidget {
                 name!.toLowerCase() == "virtual"
                     ? 4.w.toInt().width
                     : Container(),
-                Image.asset(
-                  img!,
-                  height: size!.h,
-                  width: size!.h,
-                ),
+                img == 'assets/images/chart1.png'
+                    ? Image.asset(
+                        img!,
+                        height: size!.h,
+                        width: size!.h,
+                        color: position == 0 ? Colors.black : Color(0xffbcc2c6),
+                      )
+                    : Image.asset(
+                        img!,
+                        height: size!.h,
+                        width: size!.h,
+                      ),
               ],
             ),
             name!.toLowerCase() == "virtual" ? 0.height : 4.h.toInt().height,

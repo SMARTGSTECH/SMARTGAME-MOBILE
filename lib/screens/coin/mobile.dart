@@ -27,6 +27,7 @@ class CoinMobileScreen extends StatefulWidget {
 class _CoinMobileScreenState extends State<CoinMobileScreen> {
   late Future<List<Odds>> futureOdds;
   late double coinOdds;
+  late List coinOddsq;
 
   @override
   void initState() {
@@ -48,16 +49,23 @@ class _CoinMobileScreenState extends State<CoinMobileScreen> {
               return Text('Error: ${snapshot.error}');
             } else {
               final oddsList = snapshot.data!;
+              print('THIS IS THE EXPERIEkekwejkwjewjekwjekweNCESS');
+              print(oddsList);
+              //    final coinOddsData = oddsList.where((e.)=>);
               // Find odds for race type
-              final coinOddsData = oddsList.firstWhere(
-                  (odd) => odd.type == 'coin',
-                  orElse: () => Odds(
-                      id: -1,
-                      maxAmount: 0,
-                      minAmount: 0,
-                      odds: 0,
-                      type: 'coin'));
-              coinOdds = coinOddsData.odds;
+              final coinOddsData = oddsList
+                  .where(
+                    (odd) => odd.type == 'coin',
+                  )
+                  .toList()
+                  .first;
+              coinOddsq = [
+                coinOddsData.minAmount,
+                coinOddsData.maxAmount,
+                coinOddsData.odds
+              ];
+              print('THIS IS THE EXPERIENCESS');
+              print(coinOddsq);
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Padding(
@@ -109,7 +117,7 @@ class _CoinMobileScreenState extends State<CoinMobileScreen> {
                               width: 35.h,
                               child: Center(
                                 child: Text(
-                                  "$coinOdds" 'x',
+                                  "${coinOddsq[2]}" 'x',
                                   style: TextStyle(
                                     color: ColorConfig.black,
                                     fontSize: 13.sp,
@@ -463,8 +471,8 @@ class _CoinMobileScreenState extends State<CoinMobileScreen> {
                                       car: false,
                                       coin: true,
                                       dice: false,
-                                      maxAmount: 0.000048,
-                                      minAmount: 0.00005,
+                                      maxAmount: coinOddsq[1],
+                                      minAmount: coinOddsq[0],
                                       gameType: 'coin',
                                     ),
                                   );

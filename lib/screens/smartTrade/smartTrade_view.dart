@@ -171,25 +171,25 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                         )
                       ],
                     ),
-                    // Consumer<SocketProvider>(
-                    //     builder: (BuildContext context, provider, _) {
-                    //   log(provider);
-                    //   return Container(
-                    //     decoration: BoxDecoration(color: ColorConfig.appBar),
-                    //     child: Center(
-                    //       child: Text(
-                    //         "${provider.counter}:00",
-                    //         style: TextStyle(
-                    //             fontSize: 16.sp,
-                    //             color: ColorConfig.iconColor,
-                    //             fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ),
-                    //   )
-                    //       .withWidth(60.w)
-                    //       .withHeight(30.h)
-                    //       .cornerRadiusWithClipRRect(5.r);
-                    // }),
+                    Consumer<SocketProvider>(
+                        builder: (BuildContext context, provider, _) {
+                      log(provider);
+                      return Container(
+                        decoration: BoxDecoration(color: ColorConfig.appBar),
+                        child: Center(
+                          child: Text(
+                            "${provider.counter}:00",
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                color: ColorConfig.iconColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
+                          .withWidth(60.w)
+                          .withHeight(30.h)
+                          .cornerRadiusWithClipRRect(5.r);
+                    }),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

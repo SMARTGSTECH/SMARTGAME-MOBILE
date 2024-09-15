@@ -63,7 +63,8 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                       odds: 0,
                       type: 'race'));
               raceOdds = raceOddsData.odds;
-
+              print('THIS IS THE EXPERIENCESS');
+              print(raceOdds);
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Padding(
@@ -544,7 +545,8 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                                         coin: false,
                                         dice: false,
                                         maxAmount: 300000,
-                                        minAmount: 0.0005, gameType: 'car',
+                                        minAmount: 0.0005,
+                                        gameType: 'car',
                                       ),
                                     );
                                   },

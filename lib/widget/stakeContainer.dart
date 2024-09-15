@@ -90,7 +90,7 @@ class StakeContainer extends StatelessWidget {
               child: ContainedTabBarView(
                 // onChange: (intt) {
                 //   print(intt);
-                // },
+                // },t
                 tabBarProperties: TabBarProperties(
                   height: 45.h,
                   width: double.infinity,
@@ -114,6 +114,9 @@ class StakeContainer extends StatelessWidget {
                   labelColor: ColorConfig.yellow,
                   unselectedLabelColor: ColorConfig.tabincurrentindex,
                 ),
+
+                tabBarViewProperties: TabBarViewProperties(
+                    physics: NeverScrollableScrollPhysics()),
                 tabs: [
                   Text('USDT\n BSC', style: TextStyle(fontSize: 12.sp)),
                   isEvent!
@@ -209,7 +212,8 @@ class StakeContainer extends StatelessWidget {
                         ),
                   comingSoon(),
                 ],
-                onChange: (index) => print(index),
+                onChange: (index) =>
+                    context.read<UserWeb3Provider>().resetUserbalance(),
               ),
             ).paddingTop(50),
           ),
@@ -278,33 +282,23 @@ class ViewBody extends StatelessWidget {
         return Container(
           child: SingleChildScrollView(
             child: userWalletProvider.startedTransaction
-                ? Column(
-                    children: [
-                      40.height,
-                      Lottie.asset(
-                        "assets/images/BEItrx.json",
-                        height: 160,
-                        width: 160,
-                      ),
-                      40.height,
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                            'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                              color: ColorConfig.iconColor,
-                            ),
-                            textAlign: TextAlign.center),
-                      ),
-                    ],
-                  )
+                ? TransactionWidget()
                 : Column(children: [
                     20.height,
                     !userWalletProvider.cryptoRate.isNotEmpty
                         ? Text(
                             //"${0} ${coinType}",
-                            "${userWalletProvider.userConvertedStaked} $coinType",
+                            double.parse(userinput.text == ''
+                                        ? '0'
+                                        : userinput.text) <
+                                    double.parse(minAmount.toString())
+                                ? "Min stake amount is \$$minAmount"
+                                : double.parse(userinput.text == ''
+                                            ? '0'
+                                            : userinput.text) >
+                                        double.parse(maxAmount.toString())
+                                    ? "Max stake amount is \$${maxAmount} "
+                                    : "${userWalletProvider.userConvertedStaked} $coinType",
                             style: TextStyle(
                                 fontSize: 16.sp,
                                 color: ColorConfig.yellow,
@@ -433,9 +427,16 @@ class ViewBody extends StatelessWidget {
                             text: 'Stake',
                             shimmer: true,
                             onPressed: () {
+                              // walletProvider.sendCrypto(
+                              //     to:
+                              //         '0x3809e082f3eA4195271825f6b724c3c3809eC127',
+                              //     symbol: coinType,
+                              //     amount: userWalletProvider.userConvertedStaked
+                              //         .toString());
+
                               Map gameObj = {
-                                'wallet':
-                                    '0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf',
+                                'wallet': userWalletProvider.returnAddress(
+                                    context)[coinType.toLowerCase()],
                                 'amount': userWalletProvider.userConvertedStaked
                                     .toString(),
                                 'base': userinput.text,
@@ -446,17 +447,22 @@ class ViewBody extends StatelessWidget {
                                         ? 'BSC'
                                         : coinType.contains('SOL')
                                             ? 'SOLANA'
-                                            : 'TON  ',
+                                            : 'TON',
                                 'token': coinType.contains('USDT')
                                     ? "USDT"
                                     : 'NATIVE',
                                 'side': predictionContoller.text,
                                 'session': isEvent! ? 'sss' : ''
                               };
-
-                              userWalletProvider.stakeGame(gameObj,context);
-
                               print(gameObj);
+                              walletProvider.stakeCrypto(context,
+                                  to: contractLive[coinType],
+                                  symbol: coinType,
+                                  amount: gameObj['amount'],
+                                  object: gameObj,
+                                  instances: userWalletProvider);
+                              // userWalletProvider.stakeGame(gameObj, context);
+
                               // print([
                               //   userWalletProvider.userConvertedStaked
                               //       .toDouble(),
@@ -558,6 +564,37 @@ class ViewBody extends StatelessWidget {
   }
 }
 
+class TransactionWidget extends StatelessWidget {
+  const TransactionWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        40.height,
+        Lottie.asset(
+          "assets/images/BEItrx.json",
+          height: 160,
+          width: 160,
+        ),
+        40.height,
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(
+              'Please wait for confirmation before exiting so that the system can accurately record your stake.Once your stake is successful, you will be automatically redirected.',
+              style: TextStyle(
+                fontSize: 15.sp,
+                color: ColorConfig.iconColor,
+              ),
+              textAlign: TextAlign.center),
+        ),
+      ],
+    );
+  }
+}
+
 class Transactionwidget extends StatelessWidget {
   const Transactionwidget({
     super.key,
@@ -633,9 +670,17 @@ class inputContainer extends StatelessWidget {
           ],
           cursorColor: Colors.white,
           onChanged: (value) {
-            print([value]);
+            print([value, maxAmount, minAmount]);
             instances.setcryptoRate(
-                value == '' ? 0.toString() : value, context, coin);
+                double.parse(value) < double.parse(minAmount.toString())
+                    ? "0"
+                    : double.parse(value) > double.parse(maxAmount.toString())
+                        ? "0"
+                        : value == ''
+                            ? 0.toString()
+                            : value,
+                context,
+                coin);
             print(value);
           },
 

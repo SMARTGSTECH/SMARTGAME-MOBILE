@@ -12,10 +12,10 @@ class MainScreenProvider extends ChangeNotifier {
   List<Widget> getItems() {
     return [
       NavIcon(
-        img: "assets/images/football.png",
+        img: "assets/images/chart1.png",
         position: currentIndex,
         name: 'Live',
-        size: 20,
+        size: 22,
         isSoccer: true,
       ),
       NavIcon(

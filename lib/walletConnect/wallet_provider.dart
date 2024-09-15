@@ -17,6 +17,8 @@ import 'package:smartbet/screens/wallet_modals/wallet.dart';
 import 'package:smartbet/services/storage.dart';
 import 'package:smartbet/services/token_factory.dart';
 import 'package:smartbet/shared/modal_sheet.dart';
+import 'package:smartbet/walletConnect/provider.dart';
+import 'package:smartbet/widget/alertSnackBar.dart';
 import 'package:tonutils/tonutils.dart' as ton;
 import 'package:trust_wallet_core_lib/trust_wallet_core_ffi.dart';
 import 'package:trust_wallet_core_lib/trust_wallet_core_lib.dart';
@@ -29,6 +31,9 @@ import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
+
+typedef Callback = void Function(dynamic result);
+typedef ErrorCallback = void Function(dynamic error);
 
 class Web3Provider with ChangeNotifier {
   TextEditingController one = TextEditingController();
@@ -109,7 +114,7 @@ class Web3Provider with ChangeNotifier {
   Future<void> createMultiWalletSystem(BuildContext modalContext) async {
     try {
       HDWallet newWalletInstance = HDWallet();
-      String mnemonics = newWalletInstance.mnemonic();
+     String mnemonics = newWalletInstance.mnemonic();
       await Storage.saveData(WALLET_MNEMONICS, mnemonics);
       _generatedMnemonics = mnemonics.split(' ').toList();
 
@@ -197,12 +202,21 @@ class Web3Provider with ChangeNotifier {
     }
   }
 
-  Future<void> sendTon({required double amount, required String to}) async {
+  Future<void> sendTon(
+      {required double amount,
+      required String to,
+      required Callback callback}) async {
     try {
+      print('sending ton transaction to \n${amount} ${to}');
       var wallet = ton.WalletContractV4R2.create(publicKey: keyPair.publicKey);
       var openedContract = tonClient.open(wallet);
-
+      print('sending ton transaction to again \n${amount} ${to}');
+      print('sending ton transaction to segno1 \n${amount} ${to}');
       var seqno = await openedContract.getSeqno();
+      print(seqno);
+      print('sending ton transaction to segno \n${amount} ${to}');
+      print(keyPair.privateKey);
+      print('sending ton transaction to segno2 \n${amount} ${to}');
       var transfer = openedContract.createTransfer(
         seqno: seqno,
         privateKey: keyPair.privateKey,
@@ -219,9 +233,13 @@ class Web3Provider with ChangeNotifier {
       log('TON transfer: ${transfer.toString()}');
 
       ///TODO: Notify the user of the completed transaction
+      ///  callback(tx);
+      ///
 
+      callback(tx);
       notifyListeners();
     } catch (e) {
+      callback('failed');
       log('Error in sending TON: $e');
     }
   }
@@ -355,50 +373,170 @@ class Web3Provider with ChangeNotifier {
     required String symbol,
     required String amount,
   }) async {
+    print([to, symbol, amount]);
     final parsedAmount = double.parse(amount);
     if (symbol == "USDT") {
-      await sendUsdt(amount: parsedAmount, to: to);
+      await sendUsdt(amount: parsedAmount, to: to, callback: (result) {});
     } else if (symbol.contains('BNB')) {
-      await sendBnb(amount: parsedAmount, to: to);
+      await sendBnb(amount: parsedAmount, to: to, callback: (result) {});
     } else if (symbol == "ETH") {
-      await sendEthBase(amount: parsedAmount, to: to);
+      await sendEthBase(amount: parsedAmount, to: to, callback: (result) {});
     } else if (symbol == "SOL") {
-      await sendSol(amount: parsedAmount, to: to);
+      await sendSol(amount: parsedAmount, to: to, callback: (result) {});
     } else if (symbol == "TON") {
-      await sendTon(amount: parsedAmount, to: to);
+      await sendTon(amount: parsedAmount, to: to, callback: (result) {});
     }
   }
 
-  Future<void> sendBnb({required double amount, required String to}) async {
+  Future<void> stakeCrypto(context,
+      {required String to,
+      required String symbol,
+      required String amount,
+      required Map object,
+      required UserWeb3Provider instances}) async {
+    instances.setTransactionLoader(true);
+    print([to, symbol, amount]);
+    final parsedAmount = double.parse(amount);
+    if (symbol == "USDT") {
+      try {
+        //
+        await sendUsdt(
+            amount: parsedAmount,
+            to: to,
+            callback: (result) {
+              if (result != 'failed') {
+                instances.stakeGame(object, context);
+              } else {
+                instances.setTransactionLoader(false);
+                CustomSnackBar(
+                    context: context,
+                    message: "Something went wrong",
+                    width: 195);
+              }
+            });
+      } catch (e) {
+        print(e);
+      }
+    } else if (symbol.contains('BNB')) {
+      try {
+        await sendBnb(amount: parsedAmount, to: to, callback: (result) {});
+      } catch (e) {
+        print(e);
+      }
+    } else if (symbol == "ETH") {
+      try {
+        await sendEthBase(
+            amount: parsedAmount,
+            to: to,
+            callback: (result) {
+              if (result != 'failed') {
+                instances.stakeGame(object, context);
+              } else {
+                instances.setTransactionLoader(false);
+                CustomSnackBar(
+                    context: context,
+                    message: "Something went wrong",
+                    width: 195);
+              }
+            });
+      } catch (e) {
+        print(e);
+      }
+    } else if (symbol == "SOL") {
+      try {
+        await sendSol(
+            amount: parsedAmount,
+            to: to,
+            callback: (result) {
+              if (result != 'failed') {
+                instances.stakeGame(object, context);
+              } else {
+                instances.setTransactionLoader(false);
+                CustomSnackBar(
+                    context: context,
+                    message: "Something went wrong",
+                    width: 195);
+              }
+            });
+      } catch (e) {
+        print(e);
+      }
+    } else if (symbol == "TON") {
+      try {
+        await sendTon(
+            amount: parsedAmount,
+            to: to,
+            callback: (result) {
+              print('this is the reault of failedtransaction  \n ${result}');
+              //
+              if (result != 'failed') {
+                instances.stakeGame(object, context);
+              } else {
+                instances.setTransactionLoader(false);
+                CustomSnackBar(
+                    context: context,
+                    message: "Something went wrong",
+                    width: 195);
+              }
+            });
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  Future<void> sendBnb({
+    required double amount,
+    required String to,
+    required Callback callback,
+  }) async {
     await _sendTransaction(
-      amount: amount,
-      to: to,
-      networkUrl: 'https://bsc-dataseed.binance.org/',
-      chainId: 56,
-    );
+        amount: amount,
+        to: to,
+        networkUrl: 'https://bsc-dataseed.binance.org/',
+        chainId: 56,
+        callback: (result) {
+          callback(result);
+        });
   }
 
-  Future<void> sendUsdt({required double amount, required String to}) async {
+  Future<void> sendUsdt({
+    required double amount,
+    required String to,
+    required Callback callback,
+  }) async {
     await _sendTokenTransaction(
-      amount: amount,
-      to: to,
-      contractAddress: "0x55d398326f99059fF775485246999027B3197955",
-      networkUrl: 'https://bsc-dataseed.binance.org/',
-      chainId: 56,
-      decimal: 18,
-    );
+        amount: amount,
+        to: to,
+        contractAddress: "0x55d398326f99059fF775485246999027B3197955",
+        networkUrl: 'https://bsc-dataseed.binance.org/',
+        chainId: 56,
+        decimal: 18,
+        callback: (result) {
+          callback(result);
+        });
   }
 
-  Future<void> sendEthBase({required double amount, required String to}) async {
+  Future<void> sendEthBase({
+    required double amount,
+    required String to,
+    required Callback callback,
+  }) async {
     await _sendTransaction(
       amount: amount,
       to: to,
       networkUrl: 'https://mainnet.base.org/',
       chainId: 8453,
+      callback: (result) {
+        callback(result);
+      },
     );
   }
 
-  Future<void> sendSol({required double amount, required String to}) async {
+  Future<void> sendSol(
+      {required double amount,
+      required String to,
+      required Callback callback}) async {
     try {
       final cluster = web3.Cluster.mainnet;
       final connection = web3.Connection(cluster);
@@ -426,7 +564,9 @@ class Web3Provider with ChangeNotifier {
       transaction.sign([wallet]);
       String txid = await connection.sendAndConfirmTransaction(transaction);
       log("Transaction ID: $txid");
+      callback(txid);
     } catch (e) {
+      callback('failed');
       log('Error in sending SOL: $e');
     }
   }
@@ -498,12 +638,12 @@ class Web3Provider with ChangeNotifier {
     }
   }
 
-  Future<void> _sendTransaction({
-    required double amount,
-    required String to,
-    required String networkUrl,
-    required int chainId,
-  }) async {
+  Future<void> _sendTransaction(
+      {required double amount,
+      required String to,
+      required String networkUrl,
+      required int chainId,
+      required Callback callback}) async {
     try {
       final client = await tokenFactory.initWebClient(networkUrl);
       final mnemonic = await Storage.readData(WALLET_MNEMONICS);
@@ -534,9 +674,11 @@ class Web3Provider with ChangeNotifier {
       );
 
       log("Transaction ID: $txid");
+      callback(txid);
 
-      ///TODO: Notify the user of the completed transaction
+      ///TODO: Notiafy the user of the completed transaction
     } catch (e) {
+      callback('failed');
       log('Error in sending token transaction: $e');
     }
   }
@@ -548,6 +690,7 @@ class Web3Provider with ChangeNotifier {
     required String networkUrl,
     required int chainId,
     required int decimal,
+    required Callback callback,
   }) async {
     try {
       print('hhh');
@@ -580,9 +723,11 @@ class Web3Provider with ChangeNotifier {
         chainId: chainId,
       );
       log("Transaction ID: $txid");
+      callback(txid);
 
       ///TODO: Notify the user of the completed transaction
     } catch (e) {
+      callback('failed');
       log('Error in sending token transaction: $e');
     }
   }
