@@ -13,6 +13,10 @@ import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/walletConnect/wallet_provider.dart';
 import 'package:smartbet/widget/connectWallet.dart';
 
+
+
+
+
 AppBar customAppbar(BuildContext context) {
   Web3Provider web3provider = Provider.of<Web3Provider>(context, listen: false);
   return AppBar(

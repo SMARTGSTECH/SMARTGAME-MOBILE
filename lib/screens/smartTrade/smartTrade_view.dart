@@ -397,27 +397,51 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
 
                       Consumer<SocketProvider>(
                           builder: (BuildContext context, model, _) {
-                        // if (model.counter <= 10) {
-                        //   return CustomAppButton(
-                        //     color: Colors.grey,
-                        //     textColor: Colors.black,
-                        //     borderRadius: 4.r,
-                        //     height: 22.h,
-                        //     width: 55.w,
-                        //     size: 14,
+                        model.getWalletState();
+                        if (!model.status) {
+                          print(model.status);
+                          print('objectobjectobjectobjectobjectobject');
+                          return CustomAppButton(
+                            color: Colors.grey,
+                            textColor: Colors.black,
+                            borderRadius: 5,
+                            height: 24,
+                            width: 60,
+                            size: 16,
 
-                        //     ///    shimmer: true,
-                        //     onPressed: () {
-                        //       CustomSnackBar(
-                        //           context: context,
-                        //           message: "Game Session Ended!",
-                        //           width: 220);
-                        //     },
+                            ///    shimmer: true,
+                            onPressed: () {
+                              CustomSnackBar(
+                                  context: context,
+                                  message: "Import Wallet",
+                                  width: 195);
+                            },
 
-                        //     ///  color: Colors.grey,
-                        //     text: 'Play',
-                        //   );
-                        // }
+                            ///  color: Colors.grey,
+                            text: 'Play',
+                          );
+                        }
+                        if (model.counter >= 60) {
+                          return CustomAppButton(
+                            color: Colors.grey,
+                            textColor: Colors.black,
+                            borderRadius: 4.r,
+                            height: 22.h,
+                            width: 55.w,
+                            size: 14,
+
+                            ///    shimmer: true,
+                            onPressed: () {
+                              CustomSnackBar(
+                                  context: context,
+                                  message: "Game Session Ended!",
+                                  width: 220);
+                            },
+
+                            ///  color: Colors.grey,
+                            text: 'Play',
+                          );
+                        }
                         return CustomAppButton(
                           text: 'Play',
                           color: ColorConfig.yellow,

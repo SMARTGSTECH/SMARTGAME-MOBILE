@@ -234,7 +234,9 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                         fontSize: 12.sp,
                                         color: ColorConfig.white,
                                         fontWeight: FontWeight.w500),
-                                  ),
+                                  ).onTap(() {
+                                    print(widget.dates.first.runtimeType);
+                                  }),
                                   Text(
                                     " ${DateFormat('dd MM yyyy hh:mm a').format(DateTime.parse(widget.dates[1]).toLocal())} ",
                                     style: TextStyle(
@@ -329,6 +331,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                       ).paddingSymmetric(horizontal: 23.w).paddingLeft(2.w),
                       Consumer<LiveEventPredictionProvider>(
                           builder: (BuildContext context, provider, _) {
+                        provider.getWalletState();
                         // : provider.isOdd(provider.gameOption.length)
                         //   ? provider.gameOption.length * 30.h
                         //   :
@@ -390,48 +393,82 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                 },
                               ),
                             ),
-                            25.h.toInt().height,
-                            CustomAppButton(
-                              text: 'Play',
-                              color: ColorConfig.yellow,
-                              textColor: Colors.white,
-                              borderRadius: 4.r,
-                              height: 22.h,
-                              width: 60.w,
-                              size: 14,
-                              onPressed: () {
-                                final gameState =
-                                    Provider.of<CoinStateProvider>(context,
-                                        listen: false);
-                                print(provider.selectedOption);
-                                if (provider.selectedOptionIndex != 100) {
-                                  showDialog(
-                                    useRootNavigator: false,
-                                    barrierDismissible: true,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                        // shape: CircleBordxer(),
-                                        backgroundColor: Colors.transparent,
-                                        elevation: 10,
-                                        child: StakeContainer(
-                                          maxAmount: livePredictionOdds[1],
-                                          minAmount: livePredictionOdds[0],
-                                          isEvent: true,
-                                          prediction: provider.selectedOption,
-                                          gameType: 'dynamic',
-                                        ),
-                                      );
-                                    },
-                                  );
-                                } else {
+                            if (provider.status)
+                              CustomAppButton(
+                                text: 'Play',
+                                color: ColorConfig.yellow,
+                                textColor: Colors.white,
+                                borderRadius: 4.r,
+                                height: 22.h,
+                                width: 60.w,
+                                size: 14,
+                                onPressed: () {
+                                  print(widget.dates.first.runtimeType);
+                                  String date1Str = widget.dates[0];
+                                  String date2Str = widget.dates[1];
+                                  DateTime date1 = DateTime.parse(date1Str);
+                                  DateTime date2 = DateTime.parse(date2Str);
+
+                                  if (date1.isAfter(date2)) {
+                                    CustomSnackBar(
+                                        context: context,
+                                        message:
+                                            "Game session Expired at\n${DateFormat('dd MM yyyy hh:mm a').format(DateTime.parse(widget.dates[1]).toLocal())}",
+                                        width: 220);
+                                    return;
+                                  }
+                                  final gameState =
+                                      Provider.of<CoinStateProvider>(context,
+                                          listen: false);
+                                  print(provider.selectedOption);
+                                  if (provider.selectedOptionIndex != 100) {
+                                    showDialog(
+                                      useRootNavigator: false,
+                                      barrierDismissible: true,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          // shape: CircleBordxer(),
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 10,
+                                          child: StakeContainer(
+                                            maxAmount: livePredictionOdds[1],
+                                            minAmount: livePredictionOdds[0],
+                                            isEvent: true,
+                                            prediction: provider.selectedOption,
+                                            gameType: 'dynamic',
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    CustomSnackBar(
+                                        context: context,
+                                        message: "Please Select A Side",
+                                        width: 220);
+                                  }
+                                },
+                              ),
+                            if (!provider.status)
+                              CustomAppButton(
+                                color: Colors.grey,
+                                textColor: Colors.black,
+                                borderRadius: 5,
+                                height: 24,
+                                width: 60,
+                                size: 16,
+
+                                ///    shimmer: true,
+                                onPressed: () {
                                   CustomSnackBar(
                                       context: context,
-                                      message: "Please Select A Side",
-                                      width: 220);
-                                }
-                              },
-                            )
+                                      message: "Import Wallet",
+                                      width: 195);
+                                },
+
+                                ///  color: Colors.grey,
+                                text: 'Play',
+                              )
                           ],
                         );
                       }).paddingTop(13.h),

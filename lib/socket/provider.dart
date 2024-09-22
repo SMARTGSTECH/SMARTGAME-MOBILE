@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:smartbet/constants/strings.dart';
+import 'package:smartbet/services/storage.dart';
 
 class SocketProvider extends ChangeNotifier {
   int _counter = 0;
@@ -7,11 +9,21 @@ class SocketProvider extends ChangeNotifier {
   Map _coin = {};
   Map smartTradeOptionValue = {};
   List _gameHistory = [];
+  bool status = false;
 
   int get counter => _counter;
   Map get coin => _coin;
   Map get result => _result;
   List get gameHistory => _gameHistory;
+
+  getWalletState() async {
+    String data = await Storage.readData(WALLET_MNEMONICS) ?? "";
+    print('GEETING WALLET STATE');
+
+    ///print(data);
+    status = data.isNotEmpty;
+    return status;
+  }
 
   void setCounter(counter) {
     _counter = counter;
@@ -32,7 +44,7 @@ class SocketProvider extends ChangeNotifier {
 
   void setInitGameVale(value) {
     smartTradeOptionValue = value;
-   // print("thi is the ${smartTradeOptionValue}");
+    // print("thi is the ${smartTradeOptionValue}");
     notifyListeners();
   }
 

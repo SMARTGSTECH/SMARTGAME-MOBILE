@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smartbet/constants/strings.dart';
+import 'package:smartbet/services/storage.dart';
 
 class LiveEventPredictionProvider extends ChangeNotifier {
   List gameOption = [
@@ -13,9 +15,19 @@ class LiveEventPredictionProvider extends ChangeNotifier {
     'Option1',
     'Option2',
   ];
+  bool status = false;
 
   bool isOdd(int number) {
     return number % 2 != 0;
+  }
+
+  getWalletState() async {
+    String data = await Storage.readData(WALLET_MNEMONICS) ?? "";
+    print('GEETING WALLET STATE');
+
+    ///print(data);
+    status = data.isNotEmpty;
+    return status;
   }
 
   int selectedOptionIndex = 100;

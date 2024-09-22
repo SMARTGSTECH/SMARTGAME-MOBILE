@@ -5,10 +5,12 @@ import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smartbet/constants/strings.dart';
 import 'package:smartbet/screens/car/carhistory/historyMobile.dart';
 import 'package:smartbet/screens/history/desktop.dart';
 import 'package:smartbet/screens/history/mobile.dart';
 import 'package:smartbet/services/oddsClient.dart';
+import 'package:smartbet/services/storage.dart';
 import 'package:smartbet/socket/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/utils/config/size.dart';
@@ -190,7 +192,7 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                                       height: 60,
                                       width: 60,
                                     )
-                                  : provider.counter <= 45
+                                  : provider.counter <= 290
                                       ? Column(
                                           children: [
                                             // First Row
@@ -500,7 +502,32 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
 
                       Consumer<SocketProvider>(
                           builder: (BuildContext context, model, _) {
-                        if (model.counter <= 10) {
+                        model.getWalletState();
+                        if (!model.status) {
+                          print(model.status);
+                          print('objectobjectobjectobjectobjectobject');
+                          return CustomAppButton(
+                            color: Colors.grey,
+                            textColor: Colors.black,
+                            borderRadius: 5,
+                            height: 24,
+                            width: 60,
+                            size: 16,
+
+                            ///    shimmer: true,
+                            onPressed: () {
+                              CustomSnackBar(
+                                  context: context,
+                                  message: "Import Wallet",
+                                  width: 195);
+                            },
+
+                            ///  color: Colors.grey,
+                            text: 'Play',
+                          );
+                        }
+
+                        if (model.counter <= 60) {
                           return CustomAppButton(
                             color: Colors.grey,
                             textColor: Colors.black,
@@ -525,7 +552,7 @@ class _CarMobileScreenState extends State<CarMobileScreen> {
                         return CustomAppButton(
                             text: 'Play',
                             shimmer: true,
-                            onPressed: () {
+                            onPressed: () async {
                               final gameState = Provider.of<CarStateProvider>(
                                   context,
                                   listen: false);
@@ -687,10 +714,16 @@ class CarGamePlayMode extends StatelessWidget {
             image: DecorationImage(
                 //  opacity: 0.5,
                 fit: BoxFit.fill,
-                image: provider.counter == 49 ||
-                        provider.counter == 48 ||
-                        provider.counter == 47 ||
-                        provider.counter == 46
+                image: provider.counter == 299 ||
+                        provider.counter == 298 ||
+                        provider.counter == 297 ||
+                        provider.counter == 296 ||
+                        provider.counter == 295 ||
+                        provider.counter == 294 ||
+                        provider.counter == 293 ||
+                        provider.counter == 292 ||
+                        provider.counter == 291 ||
+                        provider.counter == 290
                     ? AssetImage(provider.result["race"].toLowerCase() == "b"
                         ? "assets/images/bluegif.gif"
                         : "assets/images/${provider.result["race"]}.gif")

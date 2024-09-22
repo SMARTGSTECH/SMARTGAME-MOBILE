@@ -185,7 +185,7 @@ class _FruitMobileScreenState extends State<FruitMobileScreen> {
                                       height: 80,
                                       width: 80,
                                     )
-                                  : provider.counter <= 45
+                                  : provider.counter <= 290
                                       ? Column(
                                           children: [
                                             Row(
@@ -485,7 +485,32 @@ class _FruitMobileScreenState extends State<FruitMobileScreen> {
 
                       Consumer<SocketProvider>(
                           builder: (BuildContext context, model, _) {
-                        if (model.counter <= 10) {
+                        model.getWalletState();
+                        if (!model.status) {
+                          print(model.status);
+                          print('objectobjectobjectobjectobjectobject');
+                          return CustomAppButton(
+                            color: Colors.grey,
+                            textColor: Colors.black,
+                            borderRadius: 5,
+                            height: 24,
+                            width: 60,
+                            size: 16,
+
+                            ///    shimmer: true,
+                            onPressed: () {
+                              CustomSnackBar(
+                                  context: context,
+                                  message: "Import Wallet",
+                                  width: 195);
+                            },
+
+                            ///  color: Colors.grey,
+                            text: 'Play',
+                          );
+                        }
+
+                        if (model.counter <= 60) {
                           return CustomAppButton(
                             color: Colors.grey,
                             textColor: Colors.black,
@@ -670,10 +695,16 @@ class MobileFruitGamePlay extends StatelessWidget {
             image: DecorationImage(
                 //  opacity: 0.5,
                 fit: BoxFit.fill,
-                image: provider.counter == 49 ||
-                        provider.counter == 48 ||
-                        provider.counter == 47 ||
-                        provider.counter == 46
+                image: provider.counter == 299 ||
+                        provider.counter == 298 ||
+                        provider.counter == 297 ||
+                        provider.counter == 296 ||
+                        provider.counter == 295 ||
+                        provider.counter == 294 ||
+                        provider.counter == 293 ||
+                        provider.counter == 292 ||
+                        provider.counter == 291 ||
+                        provider.counter == 290
                     ? provider.result["fruit"] != null
                         ? AssetImage(
                             "assets/images/${provider.result["fruit"].toLowerCase()}.gif")

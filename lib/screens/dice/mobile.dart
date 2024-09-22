@@ -181,7 +181,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                                       height: 80,
                                       width: 80,
                                     )
-                                  : provider.counter <= 45
+                                  : provider.counter <= 290
                                       ? Column(
                                           children: [
                                             Row(
@@ -360,10 +360,16 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                                   image: DecorationImage(
                                       //  opacity: 0.5,
                                       fit: BoxFit.fill,
-                                      image: provider.counter == 49 ||
-                                              provider.counter == 48 ||
-                                              provider.counter == 47 ||
-                                              provider.counter == 46
+                                      image: provider.counter == 299 ||
+                                              provider.counter == 298 ||
+                                              provider.counter == 297 ||
+                                              provider.counter == 296 ||
+                                              provider.counter == 295 ||
+                                              provider.counter == 294 ||
+                                              provider.counter == 293 ||
+                                              provider.counter == 292 ||
+                                              provider.counter == 291 ||
+                                              provider.counter == 290
                                           ? AssetImage(
                                               "assets/images/d${provider.result["dice"]}.png")
                                           : const AssetImage(
@@ -381,7 +387,7 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                           //         endRadius: 45.r,
                           //         animate: true,
                           //         showTwoGlows: true,
-                          //         repeatPauseDuration: Duration(milliseconds: 100),
+                          //         repeatPauseD!uration: Duration(milliseconds: 100),
                           //         glowColor: ColorConfig.yellow,
                           //         duration: Duration(milliseconds: 2000),
                           //         child: CircleAvatar(
@@ -566,7 +572,31 @@ class _DiceMobileScreenState extends State<DiceMobileScreen> {
                       15.h.toInt().height,
                       Consumer<SocketProvider>(
                           builder: (BuildContext context, model, _) {
-                        if (model.counter <= 10) {
+                        model.getWalletState();
+                        if (!model.status) {
+                          print(model.status);
+                          print('objectobjectobjectobjectobjectobject');
+                          return CustomAppButton(
+                            color: Colors.grey,
+                            textColor: const Color.fromARGB(255, 44, 36, 36),
+                            borderRadius: 5,
+                            height: 24,
+                            width: 60,
+                            size: 16,
+
+                            ///    shimmer: true,
+                            onPressed: () {
+                              CustomSnackBar(
+                                  context: context,
+                                  message: "Import Wallet",
+                                  width: 195);
+                            },
+
+                            ///  color: Colors.grey,
+                            text: 'Play',
+                          );
+                        }
+                        if (model.counter <= 60) {
                           return CustomAppButton(
                             color: Colors.grey,
                             textColor: Colors.black,
