@@ -218,7 +218,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                     height: 15,
                                   ),
                                   Text(
-                                    "${DateFormat('dd MM yyyy hh:mm a').format(DateTime.parse(widget.dates[0]).toLocal())} ",
+                                    "${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse(widget.dates[0]).toLocal())} ",
                                     style: TextStyle(
                                         fontSize: 12.sp,
                                         color: ColorConfig.iconColor,
@@ -238,7 +238,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                     print(widget.dates.first.runtimeType);
                                   }),
                                   Text(
-                                    " ${DateFormat('dd MM yyyy hh:mm a').format(DateTime.parse(widget.dates[1]).toLocal())} ",
+                                    " ${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse(widget.dates[1]).toLocal())} ",
                                     style: TextStyle(
                                         fontSize: 12.sp,
                                         color: ColorConfig.iconColor,
