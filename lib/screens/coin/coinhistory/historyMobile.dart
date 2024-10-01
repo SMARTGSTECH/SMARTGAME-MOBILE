@@ -71,7 +71,6 @@ class _myStakeWidgetState extends State<myStakeWidget> {
   void initState() {
     super.initState();
     futureData = fetchCoinOdds();
-
     wallet = '';
     prediction = '';
     amount = '';

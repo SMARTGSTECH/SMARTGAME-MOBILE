@@ -14,6 +14,7 @@ import 'package:smartbet/screens/coin/provider.dart';
 import 'package:smartbet/screens/dice/provider.dart';
 import 'package:smartbet/screens/fruit/provider.dart';
 import 'package:smartbet/screens/home/provider.dart';
+import 'package:smartbet/services/apiClient.dart';
 import 'package:smartbet/utils/config/color.dart';
 import 'package:smartbet/utils/config/size.dart';
 import 'package:smartbet/utils/constants.dart';
@@ -43,7 +44,8 @@ class StakeContainer extends StatelessWidget {
       this.tabWidth,
       this.maxAmount = 0.0,
       this.minAmount = 0.0,
-      this.gameType}) {
+      this.gameType,
+      this.useSession = false}) {
     // getallprices().whenComplete(() => print(getPrice("BNBUSDT")));
   }
 
@@ -60,6 +62,7 @@ class StakeContainer extends StatelessWidget {
   final double minAmount;
   final double maxAmount;
   final String? gameType;
+  final bool? useSession;
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +146,7 @@ class StakeContainer extends StatelessWidget {
                   /*                               Tab1                               */
                   /* -------------------------------------------------------------------------- */
                   ViewBody(
+                    useSession: useSession,
                     coinType: 'USDT',
                     minAmount: minAmount,
                     maxAmount: maxAmount,
@@ -163,6 +167,7 @@ class StakeContainer extends StatelessWidget {
                   isEvent!
                       ? comingSoon()
                       : ViewBody(
+                          useSession: useSession,
                           coinType: 'ETH',
                           minAmount: minAmount,
                           maxAmount: maxAmount,
@@ -180,6 +185,7 @@ class StakeContainer extends StatelessWidget {
                   isEvent!
                       ? comingSoon()
                       : ViewBody(
+                          useSession: useSession,
                           coinType: 'SOL',
                           minAmount: minAmount,
                           maxAmount: maxAmount,
@@ -198,6 +204,7 @@ class StakeContainer extends StatelessWidget {
                   isEvent!
                       ? comingSoon()
                       : ViewBody(
+                          useSession: useSession,
                           coinType: 'TON',
                           minAmount: minAmount,
                           maxAmount: maxAmount,
@@ -258,6 +265,7 @@ class ViewBody extends StatelessWidget {
     required this.coinType,
     required this.runtimeType,
     required this.gameType,
+    this.useSession = false,
   });
 
   final double minAmount;
@@ -271,6 +279,7 @@ class ViewBody extends StatelessWidget {
   final String gameType;
   final Type runtimeType;
   final String coinType;
+  final bool? useSession;
 
   @override
   Widget build(BuildContext context) {
@@ -400,7 +409,13 @@ class ViewBody extends StatelessWidget {
                                             img: coinProvider.head
                                                 ? "assets/images/H.png"
                                                 : "assets/images/T.png")
-                                        : Container(),
+                                        : conInput(
+                                            isEvent: !false,
+                                            img: "assets/images/tesla.png",
+                                            color: Colors.transparent,
+                                            colorImg: true,
+                                            predition: prediction,
+                                          ),
 
                     //Consumer5<>(child: conInput()),
                     20.height,
@@ -452,7 +467,9 @@ class ViewBody extends StatelessWidget {
                                     ? "USDT"
                                     : 'NATIVE',
                                 'side': predictionContoller.text,
-                                'session': isEvent! ? 'sss' : ''
+                                'session': useSession!
+                                    ? ApiClientService.gamesession
+                                    : ''
                               };
                               print(gameObj);
                               walletProvider.stakeCrypto(context,

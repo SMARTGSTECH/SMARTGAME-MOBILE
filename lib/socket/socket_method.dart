@@ -18,7 +18,7 @@ class SocketMethods {
 
   void counterEvent(BuildContext context) {
     _socket.on(eventListeners["count_down"], (data) {
-      print(data["value"]);
+      // print(data["value"]);
       final socketInstance =
           Provider.of<SocketProvider>(context, listen: false);
       socketInstance.setCounter(data["value"]);
@@ -28,7 +28,7 @@ class SocketMethods {
   void initialVal(BuildContext context) {
     _socket.on(eventListeners["init_value"], (data) {
       Map initals = data["initals"];
-      // print("This is the data gotten from the socket");
+      // print("this is the response from data");
       // print(initals);
       final socketInstance =
           Provider.of<SocketProvider>(context, listen: false);

@@ -71,10 +71,10 @@ class SocketProvider extends ChangeNotifier {
 //'\$${option1} \u2014 ∞',
 
     return [
-      '\$${option1} > ∞',
+      '> \$${option1}',
       '\$${symbolValue.toStringAsFixed(2)} \u2014 \$${option1}',
       '\$$option4 \u2014 \$${option3}',
-      '\$${option4} < ∞'
+      '< \$${option4}'
     ];
   }
 

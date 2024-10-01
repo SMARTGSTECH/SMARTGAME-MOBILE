@@ -11,6 +11,7 @@ import 'package:smartbet/screens/coin/provider.dart';
 import 'package:smartbet/screens/history/mobile.dart';
 import 'package:smartbet/screens/home/provider.dart';
 import 'package:smartbet/screens/smartTrade/smartTrade_viewmodel.dart';
+import 'package:smartbet/services/apiClient.dart';
 import 'package:smartbet/services/oddsClient.dart';
 import 'package:smartbet/socket/provider.dart';
 import 'package:smartbet/utils/config/color.dart';
@@ -40,6 +41,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
   void initState() {
     super.initState();
     futureOdds = fetchOdds();
+    ApiClientService.getActiveSession('currency');
     // coinOdds = 0.0;
   }
 
@@ -58,7 +60,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
               final oddsList = snapshot.data!;
               final coinOddsData = oddsList
                   .where(
-                    (odd) => odd.type == 'coin',
+                    (odd) => odd.type == 'currency',
                   )
                   .toList()
                   .first;
@@ -421,7 +423,8 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                             text: 'Play',
                           );
                         }
-                        if (model.counter >= 60) {
+                        //   if (model.counter >= 60) {
+                        if (!true) {
                           return CustomAppButton(
                             color: Colors.grey,
                             textColor: Colors.black,
@@ -470,9 +473,10 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                     backgroundColor: Colors.transparent,
                                     elevation: 10,
                                     child: StakeContainer(
+                                      useSession:  true,
                                       minAmount: liveGameodds[0],
                                       maxAmount: liveGameodds[1],
-                                      isEvent: true,
+                                      // isEvent: !true,
                                       prediction:
                                           gameState.selectedOptionToDisplay,
                                       gameType: widget.symbol,

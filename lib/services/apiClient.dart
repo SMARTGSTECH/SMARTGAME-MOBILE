@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class ApiClientService {
   static const String getUrl = 'https://server.smartcryptobet.co/v1';
   static const String postUrl = 'https://server.smartcryptobet.co/v1';
-
+  static String gamesession = '';
   // https://server.smartcryptobet.co/v1/game/parameter?key=K10llGN3RB
 
   static Future<dynamic> get(String path) async {
@@ -38,6 +38,25 @@ class ApiClientService {
     } else {
       throw Exception(
           'Failed to load data. Status code: ${response.statusCode}');
+    }
+  }
+
+  static getActiveSession(String type) async {
+    final url = Uri.parse(
+        'https://server.smartcryptobet.co/v1/$type/activesession?key=K10llGN3RB');
+
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body)['data'];
+
+        gamesession = data['activesession'];
+        print(gamesession);
+      } else {
+        throw Exception('Failed 1');
+      }
+    } catch (e) {
+      throw Exception('Failed 2: $e');
     }
   }
 }
