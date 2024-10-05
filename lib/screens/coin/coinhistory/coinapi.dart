@@ -3,22 +3,26 @@ import 'package:http/http.dart' as http;
 
 class CoinData {
   final String wallet;
+  final String chain;
   final double amount;
   final double side;
   final String prediction;
   final double odds;
   final String type;
+  final String token;
+  // final String token;
   final DateTime createdAt;
 
-  CoinData({
-    required this.wallet,
-    required this.amount,
-    required this.side,
-    required this.prediction,
-    required this.odds,
-    required this.type,
-    required this.createdAt,
-  });
+  CoinData(
+      {required this.wallet,
+      required this.amount,
+      required this.chain,
+      required this.side,
+      required this.prediction,
+      required this.odds,
+      required this.type,
+      required this.createdAt,
+      required this.token});
 
   factory CoinData.fromJson(Map<String, dynamic> json) {
     String createdAtString = json['createdAt'] ?? '';
@@ -40,6 +44,8 @@ class CoinData {
             : 0.0,
         type: json['type'] ?? '',
         createdAt: createdAt,
+        chain: json['chain'] ?? '',
+        token: json['token'] ?? '',
       );
     } else {
       return CoinData(
@@ -50,6 +56,8 @@ class CoinData {
         side: 0.0,
         type: '',
         createdAt: DateTime.now(),
+        chain: '',
+        token: '',
       );
     }
   }
@@ -57,14 +65,15 @@ class CoinData {
 //https://server.smartcryptobet.co/v1/game/coinsessionprices
 //K10llGN3RB
 
-Future<List<CoinData>> fetchCoinOdds() async {
+Future<List<CoinData>> fetchCoinOdds(String type) async {
   final url = Uri.parse(
-      'https://server.smartcryptobet.co/v1/coin/history?key=K10llGN3RB');
+      'https://server.smartcryptobet.co/v1/$type/history?key=K10llGN3RB');
 
   try {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body)['data'];
+      print(data);
       return data.map((item) => CoinData.fromJson(item)).toList();
     } else {
       throw Exception('Failed 1');

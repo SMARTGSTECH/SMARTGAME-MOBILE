@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:enableOnBackInvokedCallback="true"
-        android:label="smartbet"
+        android:label="SmartGame"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
        

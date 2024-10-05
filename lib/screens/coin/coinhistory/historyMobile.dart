@@ -70,11 +70,7 @@ class _myStakeWidgetState extends State<myStakeWidget> {
   @override
   void initState() {
     super.initState();
-    futureData = fetchCoinOdds();
-    wallet = '';
-    prediction = '';
-    amount = '';
-    odds = '';
+    futureData = fetchCoinOdds('dynamic');
     side = '';
     createAt = '';
   }
@@ -97,17 +93,21 @@ class _myStakeWidgetState extends State<myStakeWidget> {
           print(userWallet.currentAddress ?? "0xde");
           print(widget.isStake);
           print(snapshot.data!.first.wallet);
-
+          print(userWallet.returnAddress(context));
           final dataList = widget.isStake
               ? snapshot.data!
                   .where((element) =>
                       element.wallet.toLowerCase() ==
-                      shortenWalletAddress(userWallet.currentAddress ?? "0xde")
-                          .toLowerCase())
+                      userWallet.returnAddress(context)['eth'])
                   .toList()
               : snapshot.data!;
+          //shortenWalletAddress(userWallet.currentAddress ?? "0xde")
+          // userWalletProvider.returnAddress(
+          //                       context)[coinType.toLowerCase()]
           print(dataList);
-          if (dataList.isEmpty && userWallet.currentAddress == null) {
+          SocketProvider socketinstance =
+              Provider.of<SocketProvider>(context, listen: false);
+          if (dataList.isEmpty && !socketinstance.status) {
             return const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -209,6 +209,32 @@ class _myStakeWidgetState extends State<myStakeWidget> {
                             ),
                             SizedBox(width: 10),
                             Icon(Icons.bar_chart),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("chain :"),
+                            Expanded(
+                              child: Text(
+                                raceData.chain,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                            Icon(Icons.alarm),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("token :"),
+                            Expanded(
+                              child: Text(
+                                raceData.token,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                            Icon(Icons.alarm),
                           ],
                         ),
                         Row(

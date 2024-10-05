@@ -80,7 +80,7 @@ class _CreateWalletState extends State<CreateWallet> {
                         asset: sollogo,
                       ),
                       item(
-                        assetName: 'Ethereum',
+                        assetName: 'Base',
                         asset: ethlogo,
                       ),
                       item(
@@ -88,8 +88,8 @@ class _CreateWalletState extends State<CreateWallet> {
                         asset: bnblogo,
                       ),
                       item(
-                        assetName: 'TON',
-                        asset: tonlogo,
+                        assetName: 'USDT',
+                        asset: usdtlogo,
                       ),
                     ],
                   ),

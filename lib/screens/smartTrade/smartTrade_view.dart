@@ -195,6 +195,9 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                           ),
                           Consumer<SocketProvider>(
                               builder: (BuildContext context, provider, _) {
+                            provider.counter == 300
+                                ? ApiClientService.getActiveSession('currency')
+                                : print('Data is null new');
                             log(provider);
                             return Container(
                               decoration:
@@ -423,8 +426,8 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                             text: 'Play',
                           );
                         }
-                        //   if (model.counter >= 60) {
-                        if (!true) {
+                        if (model.counter >= 60) {
+                          // if (!true) {
                           return CustomAppButton(
                             color: Colors.grey,
                             textColor: Colors.black,
@@ -437,7 +440,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                             onPressed: () {
                               CustomSnackBar(
                                   context: context,
-                                  message: "Game Session Ended!",
+                                  message: "Next Session Starts from 60sec",
                                   width: 220);
                             },
 
@@ -473,7 +476,7 @@ class _SmartTradeMobileScreenState extends State<SmartTradeMobileScreen> {
                                     backgroundColor: Colors.transparent,
                                     elevation: 10,
                                     child: StakeContainer(
-                                      useSession:  true,
+                                      useSession: true,
                                       minAmount: liveGameodds[0],
                                       maxAmount: liveGameodds[1],
                                       // isEvent: !true,

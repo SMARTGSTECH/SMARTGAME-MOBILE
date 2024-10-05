@@ -372,7 +372,7 @@ class _myStakeWidgetState extends State<myStakeWidget> {
   @override
   void initState() {
     super.initState();
-    futureData = fetchCoinOdds();
+    futureData = fetchCoinOdds('coin');
 
     wallet = '';
     prediction = '';

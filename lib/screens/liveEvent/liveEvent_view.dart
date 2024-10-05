@@ -177,7 +177,7 @@ class _LiveEventMobileScreenState extends State<LiveEventMobileScreen> {
                                   ),
                                 ),
                               ).onTap(() {
-                                CoinHistoryMobile(
+                                const CoinHistoryMobile(
                                   isStake: false,
                                 ).launch(context);
                                 // CustomSnackBar(
